@@ -1,3 +1,145 @@
-export default function login() {
-    return <div>login</div>;
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Head, Link, useForm } from '@inertiajs/react';
+import { AlertCircle, Eye, EyeOff, LogIn } from 'lucide-react';
+import { useState } from 'react';
+
+export default function Login({ status, canResetPassword }) {
+    const [showPassword, setShowPassword] = useState(false);
+
+    const { data, setData, post, processing, errors, reset } = useForm({
+        email: '',
+        password: '',
+        remember: false,
+    });
+
+    const submit = (e) => {
+        e.preventDefault();
+        post(route('login'), {
+            onFinish: () => reset('password'),
+        });
+    };
+
+    return (
+        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
+            <Head title="Login" />
+
+            <Card className="w-full max-w-md">
+                <CardHeader className="text-center">
+                    <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600">
+                        <LogIn className="h-6 w-6 text-white" />
+                    </div>
+                    <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
+                    <CardDescription>Sign in to your account to continue</CardDescription>
+                </CardHeader>
+
+                <CardContent>
+                    {status && (
+                        <Alert className="mb-4">
+                            <AlertCircle className="h-4 w-4" />
+                            <AlertDescription>{status}</AlertDescription>
+                        </Alert>
+                    )}
+
+                    <form onSubmit={submit} className="space-y-4">
+                        <div>
+                            <Label htmlFor="email">Email Address</Label>
+                            <Input
+                                id="email"
+                                type="email"
+                                name="email"
+                                value={data.email}
+                                className="mt-2"
+                                autoComplete="username"
+                                onChange={(e) => setData('email', e.target.value)}
+                                required
+                            />
+                            {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+                        </div>
+
+                        <div>
+                            <Label htmlFor="password">Password</Label>
+                            <div className="relative mt-2">
+                                <Input
+                                    id="password"
+                                    type={showPassword ? 'text' : 'password'}
+                                    name="password"
+                                    value={data.password}
+                                    className="pr-10"
+                                    autoComplete="current-password"
+                                    onChange={(e) => setData('password', e.target.value)}
+                                    required
+                                />
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="sm"
+                                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                >
+                                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                </Button>
+                            </div>
+                            {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
+                        </div>
+
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center">
+                                <input
+                                    id="remember"
+                                    name="remember"
+                                    type="checkbox"
+                                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                    checked={data.remember}
+                                    onChange={(e) => setData('remember', e.target.checked)}
+                                />
+                                <Label htmlFor="remember" className="ml-2 text-sm">
+                                    Remember me
+                                </Label>
+                            </div>
+
+                            {canResetPassword && (
+                                <Link href={route('password.request')} className="text-sm font-medium text-blue-600 hover:text-blue-500">
+                                    Forgot password?
+                                </Link>
+                            )}
+                        </div>
+
+                        <Button type="submit" className="w-full" disabled={processing}>
+                            {processing ? 'Signing in...' : 'Sign in'}
+                        </Button>
+                    </form>
+
+                    <div className="mt-6 text-center">
+                        <p className="text-sm text-muted-foreground">
+                            Don't have an account?{' '}
+                            <Link href={route('register')} className="font-medium text-blue-600 hover:text-blue-500">
+                                Sign up
+                            </Link>
+                        </p>
+                    </div>
+
+                    {/* Demo Credentials */}
+                    <div className="mt-6 border-t pt-4">
+                        <p className="mb-2 text-center text-xs text-muted-foreground">Demo Credentials:</p>
+                        <div className="grid grid-cols-2 gap-2 text-xs">
+                            <div className="rounded bg-blue-50 p-2">
+                                <p className="font-medium">Admin:</p>
+                                <p>admin@kejati.go.id</p>
+                                <p>admin123</p>
+                            </div>
+                            <div className="rounded bg-green-50 p-2">
+                                <p className="font-medium">User:</p>
+                                <p>user@kejati.go.id</p>
+                                <p>user123</p>
+                            </div>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
+        </div>
+    );
 }
