@@ -50,11 +50,11 @@ export default function Welcome() {
                     <div className="container mx-auto flex max-w-7xl items-center justify-between gap-4">
                         <div className="flex min-w-0 flex-1 items-center space-x-3">
                             <div className="flex-shrink-0 rounded-xl bg-gradient-to-br from-primary to-primary/80 p-2">
-                                <Sparkles className="h-5 w-5 md:h-6 md:w-6 text-primary-foreground" />
+                                <Sparkles className="h-5 w-5 text-primary-foreground md:h-6 md:w-6" />
                             </div>
                             <div className="min-w-0 flex-1">
-                                <h1 className="truncate text-lg md:text-xl font-bold text-foreground">ASTI Analytics</h1>
-                                <p className="truncate text-xs md:text-sm text-muted-foreground">Employee Analysis System</p>
+                                <h1 className="truncate text-lg font-bold text-foreground md:text-xl">ASTI Analytics</h1>
+                                <p className="truncate text-xs text-muted-foreground md:text-sm">Employee Analysis System</p>
                             </div>
                         </div>
 
