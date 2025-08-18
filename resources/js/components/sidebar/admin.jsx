@@ -1,8 +1,9 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BarChart3, LayoutDashboard, LogOut, Settings, Shield, Upload, Users } from 'lucide-react';
+import { BarChart3, LayoutDashboard, LogOut, Monitor, Moon, Palette, Settings, Shield, Sun, Upload, Users } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
     Sidebar,
     SidebarContent,
@@ -14,7 +15,12 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarMenuSub,
+    SidebarMenuSubButton,
+    SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
+import { getCurrentDarkMode, getEffectiveDarkMode, setDarkMode } from '@/lib/theme';
+import { useEffect, useState } from 'react';
 
 // Menu items for admin
 const menuItems = [
@@ -22,40 +28,76 @@ const menuItems = [
         title: 'Dashboard',
         url: route('admin.dashboard'),
         icon: LayoutDashboard,
-        isActive: (pathname) => pathname === '/admin/dashboard',
+        urlPattern: '/admin/dashboard',
     },
     {
         title: 'Employee Management',
         url: route('admin.employees.index'),
         icon: Users,
-        isActive: (pathname) => pathname.startsWith('/admin/employees'),
+        urlPattern: '/admin/employees',
     },
     {
         title: 'Upload Questionnaires',
         url: route('admin.questionnaires.upload'),
         icon: Upload,
-        isActive: (pathname) => pathname.startsWith('/admin/questionnaires'),
+        urlPattern: '/admin/questionnaires',
     },
     {
         title: 'Cluster Analysis',
         url: route('admin.clusters.analysis'),
         icon: BarChart3,
-        isActive: (pathname) => pathname.startsWith('/admin/clusters'),
+        urlPattern: '/admin/clusters',
     },
 ];
 
 const systemItems = [
     {
         title: 'Settings',
-        url: '#',
         icon: Settings,
+        urlPattern: '/admin/settings',
+        children: [
+            {
+                title: 'Theme',
+                icon: Palette,
+                urlPattern: '/admin/settings/theme',
+                href: route('admin.settings.theme'),
+            },
+        ],
     },
 ];
 
 export function AdminSidebar() {
-    const { auth } = usePage().props;
-    const user = auth.user;
-    const currentPath = window.location.pathname;
+    const { props, url } = usePage();
+    const user = props.auth.user;
+    const [darkMode, setDarkModeState] = useState('system');
+
+    useEffect(() => {
+        setDarkModeState(getCurrentDarkMode());
+    }, []);
+
+    const toggleDarkMode = () => {
+        const currentMode = getCurrentDarkMode();
+        let nextMode;
+
+        if (currentMode === 'light') {
+            nextMode = 'dark';
+        } else if (currentMode === 'dark') {
+            nextMode = 'system';
+        } else {
+            nextMode = 'light';
+        }
+
+        setDarkMode(nextMode);
+        setDarkModeState(nextMode);
+    };
+
+    const getDarkModeIcon = () => {
+        if (darkMode === 'system') {
+            return <Monitor className="h-4 w-4" />;
+        }
+        const effectiveMode = getEffectiveDarkMode();
+        return effectiveMode === 'dark' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />;
+    };
 
     return (
         <Sidebar className="border-r">
@@ -76,16 +118,26 @@ export function AdminSidebar() {
                     <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {menuItems.map((item) => (
-                                <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild isActive={item.isActive(currentPath)}>
-                                        <Link href={item.url}>
-                                            <item.icon className="h-4 w-4" />
-                                            <span>{item.title}</span>
-                                        </Link>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            ))}
+                            {menuItems.map((item) => {
+                                // URL starts with pattern (exact for dashboard, starts with for others)
+                                const isActive = item.title === 'Dashboard' ? url === item.urlPattern : url.startsWith?.(item.urlPattern);
+                                return (
+                                    <SidebarMenuItem key={item.title}>
+                                        <SidebarMenuButton asChild isActive={isActive}>
+                                            <Link
+                                                href={item.url}
+                                                className={`${
+                                                    isActive ? 'bg-primary font-medium text-primary-foreground' : 'hover:bg-muted'
+                                                } transition-colors duration-200`}
+                                            >
+                                                <item.icon className={`h-4 w-4`} />
+                                                <span>{item.title}</span>
+                                                {isActive && <div className="ml-auto h-2 w-2 rounded-full bg-primary-foreground" />}
+                                            </Link>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                );
+                            })}
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
@@ -96,12 +148,45 @@ export function AdminSidebar() {
                         <SidebarMenu>
                             {systemItems.map((item) => (
                                 <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild>
-                                        <Link href={item.url}>
-                                            <item.icon className="h-4 w-4" />
-                                            <span>{item.title}</span>
-                                        </Link>
-                                    </SidebarMenuButton>
+                                    {item.children ? (
+                                        <Collapsible className="group/collapsible">
+                                            <CollapsibleTrigger asChild>
+                                                <SidebarMenuButton isActive={item.children.some((child) => url.startsWith(child.urlPattern))}>
+                                                    <item.icon className="h-4 w-4" />
+                                                    <span>{item.title}</span>
+                                                    <svg
+                                                        className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-90"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                    </svg>
+                                                </SidebarMenuButton>
+                                            </CollapsibleTrigger>
+                                            <CollapsibleContent>
+                                                <SidebarMenuSub>
+                                                    {item.children.map((child) => (
+                                                        <SidebarMenuSubItem key={child.title}>
+                                                            <SidebarMenuSubButton asChild isActive={url.startsWith(child.urlPattern)}>
+                                                                <Link href={child.href}>
+                                                                    <child.icon className="h-4 w-4" />
+                                                                    <span>{child.title}</span>
+                                                                </Link>
+                                                            </SidebarMenuSubButton>
+                                                        </SidebarMenuSubItem>
+                                                    ))}
+                                                </SidebarMenuSub>
+                                            </CollapsibleContent>
+                                        </Collapsible>
+                                    ) : (
+                                        <SidebarMenuButton asChild isActive={url.startsWith(item.urlPattern)}>
+                                            <Link href={item.url}>
+                                                <item.icon className="h-4 w-4" />
+                                                <span>{item.title}</span>
+                                            </Link>
+                                        </SidebarMenuButton>
+                                    )}
                                 </SidebarMenuItem>
                             ))}
                         </SidebarMenu>
@@ -120,12 +205,20 @@ export function AdminSidebar() {
                         <p className="truncate text-xs text-muted-foreground">{user?.email}</p>
                     </div>
                 </div>
-                <Button asChild size="sm" variant="outline" className="w-full">
-                    <Link href={route('logout')} method="post">
-                        <LogOut className="mr-2 h-4 w-4" />
-                        Logout
-                    </Link>
-                </Button>
+
+                <div className="space-y-2">
+                    <Button onClick={toggleDarkMode} variant="outline" size="sm" className="w-full" title="Toggle dark mode">
+                        {getDarkModeIcon()}
+                        <span className="ml-2 text-xs">{darkMode === 'system' ? 'Auto' : darkMode === 'dark' ? 'Dark' : 'Light'}</span>
+                    </Button>
+
+                    <Button asChild size="sm" variant="outline" className="w-full">
+                        <Link href={route('logout')} method="post">
+                            <LogOut className="mr-2 h-4 w-4" />
+                            Logout
+                        </Link>
+                    </Button>
+                </div>
             </SidebarFooter>
         </Sidebar>
     );

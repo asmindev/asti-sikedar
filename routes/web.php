@@ -33,6 +33,13 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::get('/clusters/analysis', [ClusterController::class, 'analysis'])->name('clusters.analysis');
     Route::post('/clusters/run', [ClusterController::class, 'run'])->name('clusters.run');
     Route::get('/clusters/export-pdf', [ClusterController::class, 'exportPdf'])->name('clusters.export-pdf');
+
+    // Settings
+    Route::prefix('settings')->name('settings.')->group(function () {
+        Route::get('/theme', function () {
+            return Inertia::render('Admin/Settings/Theme');
+        })->name('theme');
+    });
 });
 
 // User Panel Routes

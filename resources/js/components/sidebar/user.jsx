@@ -1,8 +1,9 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BarChart3, LayoutDashboard, LogOut, Settings, User, UserCircle } from 'lucide-react';
+import { Home, LogOut, Settings, User, UserCircle } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
     Sidebar,
     SidebarContent,
@@ -14,42 +15,38 @@ import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
+    SidebarMenuSub,
+    SidebarMenuSubButton,
+    SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
 
-// Menu items for user
-const menuItems = [
-    {
-        title: 'Dashboard',
-        url: route('user.dashboard'),
-        icon: LayoutDashboard,
-        isActive: (pathname) => pathname === '/user/dashboard',
-    },
-    {
-        title: 'My Profile',
-        url: route('user.profile'),
-        icon: User,
-        isActive: (pathname) => pathname.startsWith('/user/profile'),
-    },
-    {
-        title: 'My Results',
-        url: route('user.results'),
-        icon: BarChart3,
-        isActive: (pathname) => pathname.startsWith('/user/results'),
-    },
-];
-
-const systemItems = [
-    {
-        title: 'Settings',
-        url: '#',
-        icon: Settings,
-    },
-];
-
 export function UserSidebar() {
-    const { auth } = usePage().props;
-    const user = auth.user;
-    const currentPath = window.location.pathname;
+    const { props, url } = usePage();
+    const user = props.auth.user;
+
+    const menuItems = [
+        {
+            title: 'Dashboard',
+            icon: Home,
+            urlPattern: '/dashboard',
+            href: '/dashboard',
+        },
+    ];
+
+    const systemItems = [
+        {
+            title: 'Profile',
+            icon: User,
+            urlPattern: '/user/profile',
+            href: '/user/profile',
+        },
+        {
+            title: 'Settings',
+            icon: Settings,
+            urlPattern: '/user/settings',
+            href: '/user/settings',
+        },
+    ];
 
     return (
         <Sidebar className="border-r">
@@ -72,12 +69,44 @@ export function UserSidebar() {
                         <SidebarMenu>
                             {menuItems.map((item) => (
                                 <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild isActive={item.isActive(currentPath)}>
-                                        <Link href={item.url}>
-                                            <item.icon className="h-4 w-4" />
-                                            <span>{item.title}</span>
-                                        </Link>
-                                    </SidebarMenuButton>
+                                    {item.children ? (
+                                        <Collapsible className="group/collapsible">
+                                            <CollapsibleTrigger asChild>
+                                                <SidebarMenuButton isActive={item.children.some((child) => url.startsWith(child.urlPattern))}>
+                                                    <item.icon className="h-4 w-4" />
+                                                    <span>{item.title}</span>
+                                                    <svg
+                                                        className="ml-auto h-4 w-4 transition-transform group-data-[state=open]/collapsible:rotate-90"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                                    </svg>
+                                                </SidebarMenuButton>
+                                            </CollapsibleTrigger>
+                                            <CollapsibleContent>
+                                                <SidebarMenuSub>
+                                                    {item.children.map((child) => (
+                                                        <SidebarMenuSubItem key={child.title}>
+                                                            <SidebarMenuSubButton asChild isActive={url.startsWith(child.urlPattern)}>
+                                                                <Link href={child.href}>
+                                                                    <span>{child.title}</span>
+                                                                </Link>
+                                                            </SidebarMenuSubButton>
+                                                        </SidebarMenuSubItem>
+                                                    ))}
+                                                </SidebarMenuSub>
+                                            </CollapsibleContent>
+                                        </Collapsible>
+                                    ) : (
+                                        <SidebarMenuButton asChild isActive={url.startsWith(item.urlPattern)}>
+                                            <Link href={item.href}>
+                                                <item.icon className="h-4 w-4" />
+                                                <span>{item.title}</span>
+                                            </Link>
+                                        </SidebarMenuButton>
+                                    )}
                                 </SidebarMenuItem>
                             ))}
                         </SidebarMenu>
@@ -90,8 +119,8 @@ export function UserSidebar() {
                         <SidebarMenu>
                             {systemItems.map((item) => (
                                 <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild>
-                                        <Link href={item.url}>
+                                    <SidebarMenuButton asChild isActive={url.startsWith(item.urlPattern)}>
+                                        <Link href={item.href}>
                                             <item.icon className="h-4 w-4" />
                                             <span>{item.title}</span>
                                         </Link>
@@ -115,6 +144,7 @@ export function UserSidebar() {
                         <p className="text-xs text-green-600 capitalize">{user?.role}</p>
                     </div>
                 </div>
+
                 <Button asChild size="sm" variant="outline" className="w-full">
                     <Link href={route('logout')} method="post">
                         <LogOut className="mr-2 h-4 w-4" />

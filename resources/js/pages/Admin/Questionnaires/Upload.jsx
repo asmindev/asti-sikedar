@@ -16,9 +16,10 @@ export default function QuestionnaireUpload() {
         e.preventDefault();
         post(route('admin.questionnaires.store'));
     };
-
+    //  add breadcrumb
+    const breadcrumbs = [{ label: 'Dashboard', href: route('admin.dashboard') }, { label: 'Upload Questionnaires' }];
     return (
-        <AdminLayout>
+        <AdminLayout breadcrumbs={breadcrumbs}>
             <Head title="Upload Questionnaires" />
 
             <div className="p-6">
