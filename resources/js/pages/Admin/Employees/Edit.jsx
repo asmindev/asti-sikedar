@@ -7,55 +7,46 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import AdminLayout from '@/layouts/AdminLayout';
 import { Head, useForm, usePage } from '@inertiajs/react';
-import { ArrowLeft, Save, UserPlus } from 'lucide-react';
+import { ArrowLeft, Save, UserCheck } from 'lucide-react';
 import { useState } from 'react';
 
-export default function EmployeeCreate() {
+export default function EmployeeEdit({ employee }) {
     const { flash } = usePage().props;
     const breadcrumbs = [
         { label: 'Dashboard', href: route('admin.dashboard') },
         { label: 'Employee Management', href: route('admin.employees.index') },
-        { label: 'Add Employee' },
+        { label: `Edit ${employee.name}` },
     ];
 
-    const [createUserAccount, setCreateUserAccount] = useState(false);
+    const [createUserAccount, setCreateUserAccount] = useState(!!employee.user);
 
-    const { data, setData, post, processing, errors } = useForm({
-        employee_code: '',
-        name: '',
-        department: '',
-        position: '',
-        hire_date: '',
-        phone: '',
-        address: '',
-        create_user_account: false,
-        email: null,
-        password: null,
-        password_confirmation: null,
-        role: 'user',
+    const { data, setData, put, processing, errors } = useForm({
+        employee_code: employee.employee_code || '',
+        name: employee.name || '',
+        department: employee.department || '',
+        position: employee.position || '',
+        hire_date: employee.hire_date ? new Date(employee.hire_date).toISOString().split('T')[0] : '',
+        phone: employee.phone || '',
+        address: employee.address || '',
+        create_user_account: !!employee.user,
+        email: employee.user?.email || '',
+        password: '',
+        password_confirmation: '',
+        role: employee.user?.role || 'user',
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        // Prepare data, exclude empty user account fields if not creating user account
-        const submitData = { ...data };
-        if (!data.create_user_account) {
-            delete submitData.email;
-            delete submitData.password;
-            delete submitData.password_confirmation;
-            delete submitData.role;
-        }
-        
-        console.log('Create form submitted with data:', submitData);
-        post(route('admin.employees.store'), {
-            data: submitData,
+        console.log('Form submitted with data:', data);
+        console.log('Email value:', data.email);
+        console.log('Create user account:', data.create_user_account);
+        put(route('admin.employees.update', employee.id), {
             onSuccess: () => {
-                console.log('Create successful');
+                console.log('Update successful');
             },
             onError: (errors) => {
-                console.log('Create errors:', errors);
-            }
+                console.log('Update errors:', errors);
+            },
         });
     };
 
@@ -64,28 +55,34 @@ export default function EmployeeCreate() {
         setData((prevData) => ({
             ...prevData,
             create_user_account: checked,
-            // Reset user fields if unchecked
-            ...(!checked && {
-                email: null,
-                password: null,
-                password_confirmation: null,
-                role: 'user',
-            }),
+            // Reset user fields if unchecked and no existing user
+            ...(!checked &&
+                !employee.user && {
+                    email: '',
+                    password: '',
+                    password_confirmation: '',
+                    role: 'user',
+                }),
+            // Keep existing email if user exists and checkbox is unchecked
+            ...(!checked &&
+                employee.user && {
+                    email: employee.user.email,
+                }),
         }));
     };
 
     return (
         <AdminLayout breadcrumbs={breadcrumbs}>
-            <Head title="Add Employee" />
+            <Head title={`Edit Employee - ${employee.name}`} />
 
             <div className="p-6">
                 {/* Flash Messages */}
-                {flash?.success && (
+                {flash.success && (
                     <div className="mb-6 rounded-md border border-green-200 bg-green-50 p-4">
                         <p className="text-green-800">{flash.success}</p>
                     </div>
                 )}
-                {flash?.error && (
+                {flash.error && (
                     <div className="mb-6 rounded-md border border-red-200 bg-red-50 p-4">
                         <p className="text-red-800">{flash.error}</p>
                     </div>
@@ -93,8 +90,8 @@ export default function EmployeeCreate() {
 
                 <div className="mb-8 flex items-center justify-between">
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">Add Employee</h1>
-                        <p className="text-muted-foreground">Create a new employee record with optional user account</p>
+                        <h1 className="text-3xl font-bold tracking-tight">Edit Employee</h1>
+                        <p className="text-muted-foreground">Update employee information and manage user account</p>
                     </div>
                     <Button variant="outline" asChild>
                         <a href={route('admin.employees.index')}>
@@ -109,11 +106,8 @@ export default function EmployeeCreate() {
                         {/* Employee Information */}
                         <Card>
                             <CardHeader>
-                                <CardTitle className="flex items-center">
-                                    <UserPlus className="mr-2 h-5 w-5" />
-                                    Employee Information
-                                </CardTitle>
-                                <CardDescription>Fill in the employee's personal and professional details</CardDescription>
+                                <CardTitle>Employee Information</CardTitle>
+                                <CardDescription>Update the employee's personal and professional details</CardDescription>
                             </CardHeader>
                             <CardContent>
                                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -211,8 +205,8 @@ export default function EmployeeCreate() {
                                     </div>
                                 </div>
 
-                                {/* Address - Full width outside grid */}
-                                <div className="space-y-2">
+                                {/* Address */}
+                                <div className="mt-6 space-y-2">
                                     <Label htmlFor="address">Address</Label>
                                     <Textarea
                                         id="address"
@@ -233,9 +227,14 @@ export default function EmployeeCreate() {
                                 <div className="flex items-center space-x-3">
                                     <Checkbox id="create_user_account" checked={createUserAccount} onCheckedChange={toggleUserAccount} />
                                     <div>
-                                        <CardTitle className="text-lg">Create User Account</CardTitle>
+                                        <CardTitle className="flex items-center text-lg">
+                                            {employee.user && <UserCheck className="mr-2 h-5 w-5 text-green-600" />}
+                                            {employee.user ? 'Update User Account' : 'Create User Account'}
+                                        </CardTitle>
                                         <CardDescription>
-                                            Check this option to create a user account that allows the employee to log in to the system
+                                            {employee.user
+                                                ? 'Manage the existing user account for this employee'
+                                                : 'Check this option to create a user account that allows the employee to log in to the system'}
                                         </CardDescription>
                                     </div>
                                 </div>
@@ -279,14 +278,17 @@ export default function EmployeeCreate() {
                                         {/* Password */}
                                         <div className="space-y-2">
                                             <Label htmlFor="password">
-                                                Password <span className="text-red-500">*</span>
+                                                Password {!employee.user && <span className="text-red-500">*</span>}
+                                                {employee.user && (
+                                                    <span className="text-sm text-muted-foreground">(leave blank to keep current)</span>
+                                                )}
                                             </Label>
                                             <Input
                                                 id="password"
                                                 type="password"
                                                 value={data.password}
                                                 onChange={(e) => setData('password', e.target.value)}
-                                                placeholder="Minimum 8 characters"
+                                                placeholder={employee.user ? 'Enter new password (optional)' : 'Minimum 8 characters'}
                                                 className={errors.password ? 'border-red-500' : ''}
                                             />
                                             {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
@@ -295,7 +297,7 @@ export default function EmployeeCreate() {
                                         {/* Password Confirmation */}
                                         <div className="space-y-2">
                                             <Label htmlFor="password_confirmation">
-                                                Confirm Password <span className="text-red-500">*</span>
+                                                Confirm Password {!employee.user && <span className="text-red-500">*</span>}
                                             </Label>
                                             <Input
                                                 id="password_confirmation"
@@ -319,7 +321,7 @@ export default function EmployeeCreate() {
                             </Button>
                             <Button type="submit" disabled={processing}>
                                 <Save className="mr-2 h-4 w-4" />
-                                {processing ? 'Creating...' : 'Create Employee'}
+                                {processing ? 'Saving...' : 'Save Changes'}
                             </Button>
                         </div>
                     </form>

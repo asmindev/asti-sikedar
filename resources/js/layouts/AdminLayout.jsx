@@ -13,16 +13,16 @@ export default function AdminLayout({ children, breadcrumbs = [] }) {
                         <Breadcrumb>
                             <BreadcrumbList>
                                 {breadcrumbs.map((crumb, index) => (
-                                    <BreadcrumbItem key={index}>
-                                        {index < breadcrumbs.length - 1 ? (
-                                            <>
+                                    <>
+                                        <BreadcrumbItem key={`item-${index}-${crumb.label.replace(/\s+/g, '-')}`}>
+                                            {index < breadcrumbs.length - 1 ? (
                                                 <BreadcrumbLink href={crumb.href}>{crumb.label}</BreadcrumbLink>
-                                                <BreadcrumbSeparator />
-                                            </>
-                                        ) : (
-                                            <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
-                                        )}
-                                    </BreadcrumbItem>
+                                            ) : (
+                                                <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
+                                            )}
+                                        </BreadcrumbItem>
+                                        {index < breadcrumbs.length - 1 && <BreadcrumbSeparator key={`separator-${index}`} />}
+                                    </>
                                 ))}
                             </BreadcrumbList>
                         </Breadcrumb>

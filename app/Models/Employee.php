@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Employee extends Model
@@ -17,13 +16,13 @@ class Employee extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'nip',
+        'employee_code',
         'name',
-        'age',
-        'education',
+        'department',
         'position',
-        'gender',
-        'user_id',
+        'hire_date',
+        'phone',
+        'address',
     ];
 
     /**
@@ -32,15 +31,15 @@ class Employee extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'age' => 'integer',
+        'hire_date' => 'date',
     ];
 
     /**
      * Get the user associated with the employee.
      */
-    public function user(): BelongsTo
+    public function user(): HasOne
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(User::class);
     }
 
     /**

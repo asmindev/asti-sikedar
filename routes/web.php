@@ -25,6 +25,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
 
     // Employee Management
     Route::resource('employees', EmployeeController::class);
+    Route::delete('/employees/{employee}/user', [EmployeeController::class, 'removeUserAccount'])->name('employees.remove-user');
 
     // Questionnaire Management
     Route::get('/questionnaires', [QuestionnaireController::class, 'index'])->name('questionnaires.index');

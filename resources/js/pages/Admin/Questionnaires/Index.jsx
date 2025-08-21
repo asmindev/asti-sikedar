@@ -1,16 +1,29 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AdminLayout from '@/layouts/AdminLayout';
 import { Head, Link, router } from '@inertiajs/react';
 import { Edit, Eye, Plus, Trash2, Upload } from 'lucide-react';
+import { useState } from 'react';
 
 export default function QuestionnaireIndex({ questionnaires, totalEmployees, completedQuestionnaires }) {
-    const handleDelete = (id) => {
-        if (confirm('Are you sure you want to delete this questionnaire?')) {
-            router.delete(route('admin.questionnaires.destroy', id));
+    const [deleteDialog, setDeleteDialog] = useState({ open: false, id: null, name: '' });
+
+    const handleDeleteClick = (id, employeeName) => {
+        setDeleteDialog({ open: true, id, name: employeeName });
+    };
+
+    const handleDeleteConfirm = () => {
+        if (deleteDialog.id) {
+            router.delete(route('admin.questionnaires.destroy', deleteDialog.id));
+            setDeleteDialog({ open: false, id: null, name: '' });
         }
+    };
+
+    const handleDeleteCancel = () => {
+        setDeleteDialog({ open: false, id: null, name: '' });
     };
 
     const breadcrumbs = [{ label: 'Dashboard', href: route('admin.dashboard') }, { label: 'Questionnaires' }];
@@ -19,7 +32,7 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
         <AdminLayout breadcrumbs={breadcrumbs}>
             <Head title="Questionnaires" />
 
-            <div className="space-y-6">
+            <div className="space-y-6 p-6">
                 {/* Header */}
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
@@ -144,7 +157,11 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                                                                 <Edit className="h-4 w-4" />
                                                             </Link>
                                                         </Button>
-                                                        <Button variant="outline" size="sm" onClick={() => handleDelete(questionnaire.id)}>
+                                                        <Button
+                                                            variant="outline"
+                                                            size="sm"
+                                                            onClick={() => handleDeleteClick(questionnaire.id, questionnaire.employee.name)}
+                                                        >
                                                             <Trash2 className="h-4 w-4" />
                                                         </Button>
                                                     </div>
@@ -167,6 +184,27 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                         )}
                     </CardContent>
                 </Card>
+
+                {/* Delete Confirmation Dialog */}
+                <Dialog open={deleteDialog.open} onOpenChange={(open) => !open && handleDeleteCancel()}>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Delete Questionnaire</DialogTitle>
+                            <DialogDescription>
+                                Are you sure you want to delete the questionnaire for <strong>{deleteDialog.name}</strong>? This action cannot be
+                                undone.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <DialogFooter>
+                            <Button variant="outline" onClick={handleDeleteCancel}>
+                                Cancel
+                            </Button>
+                            <Button variant="destructive" onClick={handleDeleteConfirm}>
+                                Delete
+                            </Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
             </div>
         </AdminLayout>
     );
