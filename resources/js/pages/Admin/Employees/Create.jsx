@@ -37,7 +37,7 @@ export default function EmployeeCreate() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
+
         // Prepare data, exclude empty user account fields if not creating user account
         const submitData = { ...data };
         if (!data.create_user_account) {
@@ -46,7 +46,7 @@ export default function EmployeeCreate() {
             delete submitData.password_confirmation;
             delete submitData.role;
         }
-        
+
         console.log('Create form submitted with data:', submitData);
         post(route('admin.employees.store'), {
             data: submitData,
@@ -55,7 +55,7 @@ export default function EmployeeCreate() {
             },
             onError: (errors) => {
                 console.log('Create errors:', errors);
-            }
+            },
         });
     };
 
