@@ -3,77 +3,149 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ClusterResult;
+use App\Models\Employee;
+use App\Models\Questionnaire;
+use App\Services\KMeansService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ClusterController extends Controller
 {
-    public function analysis()
+    public function __construct(
+        protected KMeansService $kmeansService
+    ) {}
+
+    /**
+     * Show the cluster analysis page.
+     */
+    public function analysis(): Response
     {
+        $totalEmployees = Employee::count();
+        $completedQuestionnaires = Questionnaire::count();
+        $existingResults = ClusterResult::count();
+
+        $clusterSummary = ClusterResult::select('cluster', 'label')
+            ->selectRaw('COUNT(*) as count')
+            ->selectRaw('AVG(score_k) as avg_k')
+            ->selectRaw('AVG(score_a) as avg_a')
+            ->selectRaw('AVG(score_b) as avg_b')
+            ->groupBy('cluster', 'label')
+            ->orderBy('cluster')
+            ->get();
+
         return Inertia::render('Admin/Clusters/Analysis', [
-            'clusters' => [] // TODO: Get cluster data
+            'statistics' => [
+                'total_employees' => $totalEmployees,
+                'completed_questionnaires' => $completedQuestionnaires,
+                'existing_results' => $existingResults,
+            ],
+            'cluster_summary' => $clusterSummary,
         ]);
-    }
-
-    public function run(Request $request)
-    {
-        // Validate the required parameters
-        $request->validate([
-            'clusters' => 'required|integer|min:2|max:10',
-        ]);
-
-        // Since we're only using K-Means with Selected Features,
-        // we can directly process with these fixed values
-        $algorithm = 'kmeans';
-        $features = 'selected';
-        $clusterCount = $request->input('clusters');
-
-        // TODO: Implement K-Means clustering algorithm
-        // For now, we'll simulate the process with the specified cluster count
-
-        // Simulate processing time
-        sleep(1);
-
-        // TODO: Replace this with actual clustering logic
-        $results = [
-            'algorithm_used' => 'K-Means',
-            'features_used' => 'Selected Features',
-            'clusters_count' => $clusterCount,
-            'processed_at' => now(),
-            'sample_results' => $this->generateSampleClusters($clusterCount)
-        ];
-
-        return redirect()->back()->with([
-            'success' => 'K-Means clustering analysis completed successfully!',
-            'results' => $results
-        ]);
-    }
-
-    public function exportPdf()
-    {
-        // TODO: Implement PDF export
-
-        return redirect()->back()->with('success', 'Cluster results exported as PDF');
     }
 
     /**
-     * Generate sample cluster data for demonstration
+     * Run K-Means clustering analysis.
      */
-    private function generateSampleClusters(int $clusterCount): array
+    public function run(Request $request)
     {
-        $results = [];
+        $request->validate([
+            'clusters' => 'required|integer|min:2|max:5',
+        ]);
 
-        for ($i = 1; $i <= $clusterCount; $i++) {
-            $results["cluster_{$i}"] = [
-                'members' => rand(10, 30),
-                'characteristics' => [
-                    'avg_age' => rand(25, 45),
-                    'avg_experience' => rand(1, 10),
-                    'common_skills' => ['Leadership', 'Communication', 'Problem Solving']
-                ]
-            ];
+        try {
+            // Get all questionnaires with employee data
+            $questionnaires = Questionnaire::with('employee')->get();
+
+            if ($questionnaires->count() < $request->clusters) {
+                return back()->withErrors([
+                    'clusters' => 'Number of clusters cannot exceed number of completed questionnaires.',
+                ]);
+            }
+
+            // Prepare data samples for clustering
+            $samples = [];
+            $employeeIds = [];
+
+            foreach ($questionnaires as $questionnaire) {
+                $samples[] = [
+                    $questionnaire->k_average,
+                    $questionnaire->a_average,
+                    $questionnaire->b_average,
+                ];
+                $employeeIds[] = $questionnaire->employee_id;
+            }
+
+            DB::beginTransaction();
+
+            // Clear existing cluster results
+            ClusterResult::truncate();
+
+            // Run K-Means clustering
+            $clusterResults = $this->kmeansService->cluster($samples, $request->clusters);
+
+            // Process and save results
+            foreach ($clusterResults as $index => $cluster) {
+                $employeeId = $employeeIds[$index];
+                $sample = $samples[$index];
+
+                // Determine performance label based on average scores
+                $avgScore = array_sum($sample) / 3;
+                $label = $this->determinePerformanceLabel($avgScore);
+
+                ClusterResult::create([
+                    'employee_id' => $employeeId,
+                    'cluster' => $cluster,
+                    'label' => $label,
+                    'score_k' => $sample[0],
+                    'score_a' => $sample[1],
+                    'score_b' => $sample[2],
+                ]);
+            }
+
+            DB::commit();
+
+            return back()->with('success', 'K-Means clustering analysis completed successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return back()->withErrors([
+                'error' => 'Clustering analysis failed: ' . $e->getMessage(),
+            ]);
         }
+    }
 
-        return $results;
+    /**
+     * Export cluster results as PDF.
+     */
+    public function exportPdf()
+    {
+        $results = ClusterResult::with('employee')
+            ->orderBy('cluster')
+            ->orderBy('label')
+            ->get();
+
+        // TODO: Implement PDF generation using DomPDF
+        // For now, return JSON response
+        return response()->json([
+            'message' => 'PDF export functionality will be implemented',
+            'results_count' => $results->count(),
+        ]);
+    }
+
+    /**
+     * Determine performance label based on average score.
+     */
+    private function determinePerformanceLabel(float $avgScore): string
+    {
+        if ($avgScore >= 4.0) {
+            return 'High';
+        } elseif ($avgScore >= 3.0) {
+            return 'Medium';
+        } else {
+            return 'Low';
+        }
     }
 }

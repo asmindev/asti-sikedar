@@ -3,73 +3,110 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class EmployeeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of employees.
      */
-    public function index()
+    public function index(): Response
     {
+        $employees = Employee::with(['user', 'questionnaire', 'clusterResult'])
+            ->latest()
+            ->paginate(10);
+
         return Inertia::render('Admin/Employees/Index', [
-            'employees' => [] // TODO: Add employee data
+            'employees' => $employees,
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new employee.
      */
-    public function create()
+    public function create(): Response
     {
         return Inertia::render('Admin/Employees/Create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created employee in storage.
      */
     public function store(Request $request)
     {
-        // TODO: Implement employee creation
-        return redirect()->route('admin.employees.index')->with('success', 'Employee created successfully');
+        $validated = $request->validate([
+            'nip' => 'required|string|unique:employees,nip|max:255',
+            'name' => 'required|string|max:255',
+            'age' => 'required|integer|min:18|max:100',
+            'education' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'gender' => 'required|in:male,female',
+            'user_id' => 'nullable|exists:users,id',
+        ]);
+
+        $employee = Employee::create($validated);
+
+        return redirect()
+            ->route('admin.employees.index')
+            ->with('success', 'Employee created successfully.');
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified employee.
      */
-    public function show(string $id)
+    public function show(Employee $employee): Response
     {
+        $employee->load(['user', 'questionnaire', 'clusterResult']);
+
         return Inertia::render('Admin/Employees/Show', [
-            'employee' => [] // TODO: Get employee data
+            'employee' => $employee,
         ]);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified employee.
      */
-    public function edit(string $id)
+    public function edit(Employee $employee): Response
     {
         return Inertia::render('Admin/Employees/Edit', [
-            'employee' => [] // TODO: Get employee data
+            'employee' => $employee,
         ]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified employee in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Employee $employee)
     {
-        // TODO: Implement employee update
-        return redirect()->route('admin.employees.index')->with('success', 'Employee updated successfully');
+        $validated = $request->validate([
+            'nip' => 'required|string|max:255|unique:employees,nip,' . $employee->id,
+            'name' => 'required|string|max:255',
+            'age' => 'required|integer|min:18|max:100',
+            'education' => 'required|string|max:255',
+            'position' => 'required|string|max:255',
+            'gender' => 'required|in:male,female',
+            'user_id' => 'nullable|exists:users,id',
+        ]);
+
+        $employee->update($validated);
+
+        return redirect()
+            ->route('admin.employees.index')
+            ->with('success', 'Employee updated successfully.');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified employee from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Employee $employee)
     {
-        // TODO: Implement employee deletion
-        return redirect()->route('admin.employees.index')->with('success', 'Employee deleted successfully');
+        $employee->delete();
+
+        return redirect()
+            ->route('admin.employees.index')
+            ->with('success', 'Employee deleted successfully.');
     }
 }

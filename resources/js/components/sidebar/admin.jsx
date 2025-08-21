@@ -37,8 +37,8 @@ const menuItems = [
         urlPattern: '/admin/employees',
     },
     {
-        title: 'Upload Questionnaires',
-        url: route('admin.questionnaires.upload'),
+        title: 'Questionnaires',
+        url: route('admin.questionnaires.index'),
         icon: Upload,
         urlPattern: '/admin/questionnaires',
     },

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\ClusterController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\QuestionnaireController;
 use App\Http\Controllers\Admin\QuestionnaireImportController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\User\UserProfileController;
@@ -25,9 +26,18 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     // Employee Management
     Route::resource('employees', EmployeeController::class);
 
-    // Questionnaire Import
+    // Questionnaire Management
+    Route::get('/questionnaires', [QuestionnaireController::class, 'index'])->name('questionnaires.index');
+    Route::get('/questionnaires/create', [QuestionnaireController::class, 'create'])->name('questionnaires.create');
+    Route::post('/questionnaires', [QuestionnaireController::class, 'store'])->name('questionnaires.store');
+    Route::get('/questionnaires/{questionnaire}', [QuestionnaireController::class, 'show'])->name('questionnaires.show');
+    Route::get('/questionnaires/{questionnaire}/edit', [QuestionnaireController::class, 'edit'])->name('questionnaires.edit');
+    Route::put('/questionnaires/{questionnaire}', [QuestionnaireController::class, 'update'])->name('questionnaires.update');
+    Route::delete('/questionnaires/{questionnaire}', [QuestionnaireController::class, 'destroy'])->name('questionnaires.destroy');
+
+    // Questionnaire Import (using different controller)
     Route::get('/questionnaires/upload', [QuestionnaireImportController::class, 'index'])->name('questionnaires.upload');
-    Route::post('/questionnaires/upload', [QuestionnaireImportController::class, 'upload'])->name('questionnaires.store');
+    Route::post('/questionnaires/upload', [QuestionnaireImportController::class, 'upload'])->name('questionnaires.import');
 
     // Cluster Analysis
     Route::get('/clusters/analysis', [ClusterController::class, 'analysis'])->name('clusters.analysis');

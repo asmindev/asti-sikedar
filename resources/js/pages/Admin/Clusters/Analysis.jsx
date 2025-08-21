@@ -7,7 +7,7 @@ import AdminLayout from '@/layouts/AdminLayout';
 import { Head, useForm } from '@inertiajs/react';
 import { BarChart3, Download, Info, Play, Settings } from 'lucide-react';
 
-export default function ClusterAnalysis({ clusters = [], flash = {} }) {
+export default function ClusterAnalysis({ statistics, cluster_summary, flash = {} }) {
     const breadcrumbs = [{ label: 'Dashboard', href: route('admin.dashboard') }, { label: 'Cluster Analysis' }];
 
     const { data, setData, post, processing, errors } = useForm({
@@ -80,24 +80,37 @@ export default function ClusterAnalysis({ clusters = [], flash = {} }) {
                                         <BarChart3 className="mr-2 h-4 w-4" />
                                         Results
                                     </h4>
-                                    {clusters && clusters.length > 0 ? (
+                                    {cluster_summary && cluster_summary.length > 0 ? (
                                         <div className="space-y-3">
                                             <div className="rounded bg-green-50 p-2">
                                                 <div className="flex items-center justify-between text-xs text-green-700">
                                                     <span>
-                                                        <strong>Clusters:</strong> {clusters.length}
+                                                        <strong>Employees:</strong> {statistics?.total_employees || 0}
                                                     </span>
                                                     <span>
-                                                        <strong>Status:</strong> Complete
+                                                        <strong>Questionnaires:</strong> {statistics?.completed_questionnaires || 0}
+                                                    </span>
+                                                    <span>
+                                                        <strong>Results:</strong> {statistics?.existing_results || 0}
                                                     </span>
                                                 </div>
                                             </div>
 
                                             <div className="space-y-1">
-                                                {clusters.map((cluster, index) => (
+                                                {cluster_summary.map((cluster, index) => (
                                                     <div key={index} className="flex items-center justify-between rounded bg-gray-50 p-2">
-                                                        <span className="text-xs">Cluster {index + 1}</span>
-                                                        <span className="text-xs font-medium">{cluster.members || 0} members</span>
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-xs">Cluster {cluster.cluster}</span>
+                                                            <span className="text-xs font-medium text-blue-600">{cluster.label}</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-2 text-xs">
+                                                            <span>{cluster.count} members</span>
+                                                            <span className="text-muted-foreground">
+                                                                K:{parseFloat(cluster.avg_k).toFixed(1)}
+                                                                A:{parseFloat(cluster.avg_a).toFixed(1)}
+                                                                B:{parseFloat(cluster.avg_b).toFixed(1)}
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 ))}
                                             </div>
