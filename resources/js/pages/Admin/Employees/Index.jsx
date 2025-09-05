@@ -10,7 +10,7 @@ import { Head, router, usePage } from '@inertiajs/react';
 import { Edit, Eye, Plus, Search, Trash2, UserCheck, UserMinus, UserPlus, Users } from 'lucide-react';
 import { useState } from 'react';
 
-export default function EmployeeIndex({ employees, departments, filters }) {
+export default function Employee({ employees, departments, filters }) {
     const { flash } = usePage().props;
     console.log('EmployeeIndex props:', flash);
     const breadcrumbs = [{ label: 'Dashboard', href: route('admin.dashboard') }, { label: 'Employee Management' }];
