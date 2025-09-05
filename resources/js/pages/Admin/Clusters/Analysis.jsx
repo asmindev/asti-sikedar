@@ -1,8 +1,8 @@
-import AdminLayout from '@/layouts/AdminLayout';
-
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import AdminLayout from '@/layouts/AdminLayout';
 import axios from 'axios';
 import { kmeans } from 'ml-kmeans';
 import { useState } from 'react';
@@ -28,10 +28,12 @@ export default function ClusterPage({ questionnaires, proposalMeta }) {
             return [avgK, avgA, avgB];
         });
 
-        // Normalisasi data
+        // Normalisasi data dengan pengecekan
         const normalize = (arr) => {
-            const min = Math.min(...arr.flat());
-            const max = Math.max(...arr.flat());
+            const flatData = arr.flat();
+            const min = Math.min(...flatData);
+            const max = Math.max(...flatData);
+            if (max === min) return arr.map((row) => row.map((val) => 0)); // Handle kasus semua nilai sama
             return arr.map((row) => row.map((val) => (val - min) / (max - min)));
         };
         const normalizedData = normalize(data);
@@ -62,7 +64,7 @@ export default function ClusterPage({ questionnaires, proposalMeta }) {
             const avgA = (q.a1 + q.a2 + q.a3 + q.a4 + q.a5 + q.a6 + q.a7) / 7;
             const avgB = (q.b1 + q.b2 + q.b3 + q.b4 + q.b5 + q.b6 + q.b7) / 7;
             return {
-                employee_id: q.employee_id,
+                employee: q.employee,
                 avgK,
                 avgA,
                 avgB,
@@ -75,7 +77,7 @@ export default function ClusterPage({ questionnaires, proposalMeta }) {
         axios
             .post('/api/save-clusters', {
                 clusters: clusteredData.map((c) => ({
-                    employee_id: c.employee_id,
+                    employee: c.employee.name, // Ganti dari employee_id
                     cluster: c.cluster,
                     label: c.label,
                     score_k: c.avgK,
@@ -96,20 +98,33 @@ export default function ClusterPage({ questionnaires, proposalMeta }) {
         y: d.avgA,
         z: d.avgB,
         label: d.label,
-        employee_id: d.employee_id,
-        name: `Employee ${d.employee_id}`,
+        employee: d.employee, // Ganti dari employee_id
+        name: d.employee.name, // Ganti dari employee_id
     }));
 
     return (
         <AdminLayout breadcrumbs={breadcrumbs}>
             <div className="container mx-auto p-4">
+                {/* <p className="mb-4">Waktu Proses: 07:29 PM WITA, 05 Sep 2025</p> */}
+                <p className="mb-4">
+                    {/* date */}
+                    {new Date().toLocaleString('id-ID', {
+                        day: '2-digit',
+                        month: 'short',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false,
+                        timeZone: 'Asia/Makassar',
+                    })}
+                </p>
                 <Button onClick={handleCluster} className="mb-4">
                     Jalankan K-Means
                 </Button>
 
                 {labeledClusters.length > 0 && (
                     <>
-                        <div className="mb-6 rounded-lg bg-gray-50 p-4">
+                        <Card className="mb-6 rounded-lg p-4">
                             <h2 className="mb-3 text-xl font-semibold">Clustering Summary</h2>
                             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                                 <div className="text-center">
@@ -133,7 +148,7 @@ export default function ClusterPage({ questionnaires, proposalMeta }) {
                                     <div className="text-sm text-gray-600">Low Performers</div>
                                 </div>
                             </div>
-                        </div>
+                        </Card>
 
                         <h2 className="mb-2 text-xl font-semibold">Hasil Clustering</h2>
                         <div className="mb-4">
@@ -146,51 +161,25 @@ export default function ClusterPage({ questionnaires, proposalMeta }) {
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>Employee ID</TableHead>
-                                    <TableHead>Knowledge</TableHead>
-                                    <TableHead>Attitude</TableHead>
-                                    <TableHead>Behavior</TableHead>
+                                    <TableHead>No</TableHead>
+                                    <TableHead>Employee</TableHead>
                                     <TableHead>Cluster</TableHead>
-                                    <TableHead>Performance</TableHead>
-                                    <TableHead>Details</TableHead>
+                                    <TableHead>Keterangan</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
                                 {labeledClusters.map((res, index) => (
                                     <TableRow key={index}>
-                                        <TableCell className="font-medium">{res.employee_id}</TableCell>
-                                        <TableCell>
-                                            <div className="flex flex-col">
-                                                <span className="font-semibold">{res.avgK.toFixed(2)}</span>
-                                                <span className="text-xs text-muted-foreground">
-                                                    ({questionnaires[index].k1}-{questionnaires[index].k7})
-                                                </span>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className="flex flex-col">
-                                                <span className="font-semibold">{res.avgA.toFixed(2)}</span>
-                                                <span className="text-xs text-muted-foreground">
-                                                    ({questionnaires[index].a1}-{questionnaires[index].a7})
-                                                </span>
-                                            </div>
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className="flex flex-col">
-                                                <span className="font-semibold">{res.avgB.toFixed(2)}</span>
-                                                <span className="text-xs text-muted-foreground">
-                                                    ({questionnaires[index].b1}-{questionnaires[index].b7})
-                                                </span>
-                                            </div>
-                                        </TableCell>
+                                        <TableCell className="font-medium">{index + 1}</TableCell>
+                                        <TableCell className="font-medium">{res.employee.name}</TableCell> {/* Ganti dari employee_id */}
                                         <TableCell>
                                             <span
                                                 className={`rounded-full px-2 py-1 text-xs font-medium ${
                                                     res.cluster === 0
-                                                        ? 'bg-red-100 text-red-800'
+                                                        ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
                                                         : res.cluster === 1
-                                                          ? 'bg-yellow-100 text-yellow-800'
-                                                          : 'bg-green-100 text-green-800'
+                                                          ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
+                                                          : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
                                                 }`}
                                             >
                                                 {res.cluster}
@@ -200,33 +189,14 @@ export default function ClusterPage({ questionnaires, proposalMeta }) {
                                             <span
                                                 className={`rounded-full px-2 py-1 text-xs font-medium ${
                                                     res.label === 'Low'
-                                                        ? 'bg-red-100 text-red-800'
+                                                        ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
                                                         : res.label === 'Medium'
-                                                          ? 'bg-yellow-100 text-yellow-800'
-                                                          : 'bg-green-100 text-green-800'
+                                                          ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
+                                                          : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
                                                 }`}
                                             >
                                                 {res.label}
                                             </span>
-                                        </TableCell>
-                                        <TableCell>
-                                            <div className="text-xs">
-                                                <div>
-                                                    K: {questionnaires[index].k1},{questionnaires[index].k2},{questionnaires[index].k3},
-                                                    {questionnaires[index].k4},{questionnaires[index].k5},{questionnaires[index].k6},
-                                                    {questionnaires[index].k7}
-                                                </div>
-                                                <div>
-                                                    A: {questionnaires[index].a1},{questionnaires[index].a2},{questionnaires[index].a3},
-                                                    {questionnaires[index].a4},{questionnaires[index].a5},{questionnaires[index].a6},
-                                                    {questionnaires[index].a7}
-                                                </div>
-                                                <div>
-                                                    B: {questionnaires[index].b1},{questionnaires[index].b2},{questionnaires[index].b3},
-                                                    {questionnaires[index].b4},{questionnaires[index].b5},{questionnaires[index].b6},
-                                                    {questionnaires[index].b7}
-                                                </div>
-                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -255,52 +225,54 @@ export default function ClusterPage({ questionnaires, proposalMeta }) {
                                     className="h-[400px] w-full"
                                 >
                                     <ScatterChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
-                                        <CartesianGrid strokeDasharray="3 3" />
+                                        <CartesianGrid />
                                         <XAxis type="number" dataKey="x" name="Knowledge" unit="" domain={[0, 5]} tick={{ fontSize: 12 }} />
                                         <YAxis type="number" dataKey="y" name="Attitude" unit="" domain={[0, 5]} tick={{ fontSize: 12 }} />
-                                        <ZAxis type="number" dataKey="z" range={[0, 5]} name="Behavior" unit="" />
+                                        <ZAxis type="number" dataKey="z" range={[101, 100]} name="Behavior" unit="" />
                                         <ChartTooltip
+                                            cursor={{ strokeDasharray: '3 3' }}
                                             content={
                                                 <ChartTooltipContent
-                                                    formatter={(value, name) => [
-                                                        value.toFixed(2),
-                                                        name === 'x' ? 'Knowledge' : name === 'y' ? 'Attitude' : 'Behavior',
-                                                    ]}
-                                                    labelFormatter={(label, payload) => `Employee ${payload?.[0]?.payload?.employee_id || label}`}
+                                                    formatter={(value, name, props) => [value.toFixed(2), name]}
+                                                    labelFormatter={(label, payload) => payload?.[0]?.payload?.name || label}
                                                 />
                                             }
                                         />
                                         <ChartLegend content={<ChartLegendContent />} />
-                                        <Scatter name="Low" data={chartData.filter((d) => d.label === 'Low')} fill="#EF4444" shape="circle" />
-                                        <Scatter name="Medium" data={chartData.filter((d) => d.label === 'Medium')} fill="#F59E0B" shape="triangle" />
-                                        <Scatter name="High" data={chartData.filter((d) => d.label === 'High')} fill="#10B981" shape="square" />
+                                        <Scatter name="Low" data={chartData.filter((d) => d.label === 'Low')} fill="#EF4444" />
+                                        <Scatter name="Medium" data={chartData.filter((d) => d.label === 'Medium')} fill="#F59E0B" />
+                                        <Scatter name="High" data={chartData.filter((d) => d.label === 'High')} fill="#10B981" />
                                     </ScatterChart>
                                 </ChartContainer>
                             </div>
-
-                            <div>
+                            {/* cluster statistics */}
+                            {/* <div>
                                 <h3 className="mb-2 text-lg font-medium">Cluster Statistics</h3>
                                 <div className="space-y-4">
                                     {['Low', 'Medium', 'High'].map((label) => {
                                         const clusterData = labeledClusters.filter((c) => c.label === label);
-                                        const avgK = clusterData.reduce((sum, c) => sum + c.avgK, 0) / clusterData.length;
-                                        const avgA = clusterData.reduce((sum, c) => sum + c.avgA, 0) / clusterData.length;
-                                        const avgB = clusterData.reduce((sum, c) => sum + c.avgB, 0) / clusterData.length;
+                                        const avgK = clusterData.reduce((sum, c) => sum + c.avgK, 0) / clusterData.length || 0;
+                                        const avgA = clusterData.reduce((sum, c) => sum + c.avgA, 0) / clusterData.length || 0;
+                                        const avgB = clusterData.reduce((sum, c) => sum + c.avgB, 0) / clusterData.length || 0;
 
                                         return (
                                             <div
                                                 key={label}
                                                 className={`rounded-lg border p-4 ${
                                                     label === 'Low'
-                                                        ? 'border-red-200 bg-red-50'
+                                                        ? 'border-red-200 bg-red-50 dark:border-red-700/20 dark:bg-red-900/20'
                                                         : label === 'Medium'
-                                                          ? 'border-yellow-200 bg-yellow-50'
-                                                          : 'border-green-200 bg-green-50'
+                                                          ? 'border-yellow-200 bg-yellow-50 dark:border-yellow-700/20 dark:bg-yellow-900/20'
+                                                          : 'border-green-200 bg-green-50 dark:border-green-700/20 dark:bg-green-900/20'
                                                 }`}
                                             >
                                                 <h4
                                                     className={`text-lg font-semibold ${
-                                                        label === 'Low' ? 'text-red-800' : label === 'Medium' ? 'text-yellow-800' : 'text-green-800'
+                                                        label === 'Low'
+                                                            ? 'text-red-800 dark:text-red-400'
+                                                            : label === 'Medium'
+                                                              ? 'text-yellow-800 dark:text-yellow-400'
+                                                              : 'text-green-800 dark:text-green-400'
                                                     }`}
                                                 >
                                                     {label} Performance ({clusterData.length} employees)
@@ -326,12 +298,12 @@ export default function ClusterPage({ questionnaires, proposalMeta }) {
                                         );
                                     })}
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                     </>
                 )}
-
-                {clusters && (
+                {/* cluster centroids */}
+                {/* {clusters && (
                     <div className="mt-6">
                         <h2 className="mb-4 text-xl font-semibold">Cluster Centroids</h2>
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -342,15 +314,19 @@ export default function ClusterPage({ questionnaires, proposalMeta }) {
                                         key={index}
                                         className={`rounded-lg border p-4 ${
                                             index === 0
-                                                ? 'border-red-200 bg-red-50'
+                                                ? 'border-red-200 bg-red-50 dark:border-red-700/20 dark:bg-red-900/20'
                                                 : index === 1
-                                                  ? 'border-yellow-200 bg-yellow-50'
-                                                  : 'border-green-200 bg-green-50'
+                                                  ? 'border-yellow-200 bg-yellow-50 dark:border-yellow-700/20 dark:bg-yellow-900/20'
+                                                  : 'border-green-200 bg-green-50 dark:border-green-700/20 dark:bg-green-900/20'
                                         }`}
                                     >
                                         <h3
                                             className={`mb-2 text-lg font-semibold ${
-                                                index === 0 ? 'text-red-800' : index === 1 ? 'text-yellow-800' : 'text-green-800'
+                                                index === 0
+                                                    ? 'text-red-800 dark:text-red-400'
+                                                    : index === 1
+                                                      ? 'text-yellow-800 dark:text-yellow-400'
+                                                      : 'text-green-800 dark:text-green-400'
                                             }`}
                                         >
                                             {label} Cluster Center
@@ -374,7 +350,7 @@ export default function ClusterPage({ questionnaires, proposalMeta }) {
                             })}
                         </div>
                     </div>
-                )}
+                )} */}
             </div>
         </AdminLayout>
     );

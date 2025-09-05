@@ -12,7 +12,7 @@ class ClusterController extends Controller
         $questionnaires = Questionnaire::with('employee')->get()->map(function ($q) {
             return [
                 'id' => $q->id,
-                'employee_id' => $q->employee_id,
+                'employee' => $q->employee,
                 'k1' => $q->k1,
                 'k2' => $q->k2,
                 'k3' => $q->k3,
