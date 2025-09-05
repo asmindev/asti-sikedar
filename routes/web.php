@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\ClusterController;
+use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\QuestionnaireController;
 use App\Http\Controllers\Admin\QuestionnaireImportController;
@@ -41,8 +41,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::post('/questionnaires/upload', [QuestionnaireImportController::class, 'upload'])->name('questionnaires.import');
 
     // Cluster Analysis
-    Route::get('/clusters/analysis', [ClusterController::class, 'analysis'])->name('clusters.analysis');
-    Route::post('/clusters/run', [ClusterController::class, 'run'])->name('clusters.run');
+    Route::get('/clusters/analysis', [ClusterController::class, 'index'])->name('clusters.analysis');
     Route::get('/clusters/export-pdf', [ClusterController::class, 'exportPdf'])->name('clusters.export-pdf');
 
     // Settings
