@@ -122,6 +122,41 @@ export default function ClusterPage({ questionnaires, proposalMeta }) {
                     Jalankan K-Means
                 </Button>
 
+                {!questionnaires || questionnaires.length === 0 && (
+                    <Card className="mb-6 rounded-lg p-8 text-center">
+                        <div className="text-gray-400 mb-4">
+                            <svg className="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                        </div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Tidak Ada Data</h3>
+                        <p className="text-gray-600">
+                            Belum ada data kuesioner yang tersedia untuk dianalisis. Pastikan karyawan telah mengisi kuesioner terlebih dahulu.
+                        </p>
+                    </Card>
+                )}
+
+                {questionnaires && questionnaires.length > 0 && labeledClusters.length === 0 && (
+                    <Card className="mb-6 rounded-lg p-4">
+                        <h3 className="text-lg font-semibold mb-2">Data Overview</h3>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div className="text-center">
+                                <div className="text-2xl font-bold text-blue-600">{questionnaires.length}</div>
+                                <div className="text-sm text-gray-600">Total Questionnaires</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-2xl font-bold text-green-600">
+                                    {questionnaires.filter(q => q.employee).length}
+                                </div>
+                                <div className="text-sm text-gray-600">Active Employees</div>
+                            </div>
+                        </div>
+                        <p className="text-sm text-muted-foreground mt-3">
+                            Klik tombol "Jalankan K-Means" untuk melakukan analisis clustering berdasarkan penilaian Knowledge, Attitude, dan Behavior karyawan.
+                        </p>
+                    </Card>
+                )}
+
                 {labeledClusters.length > 0 && (
                     <>
                         <Card className="mb-6 rounded-lg p-4">
@@ -158,50 +193,52 @@ export default function ClusterPage({ questionnaires, proposalMeta }) {
                                 {labeledClusters.filter((c) => c.label === 'High').length}
                             </p>
                         </div>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>No</TableHead>
-                                    <TableHead>Employee</TableHead>
-                                    <TableHead>Cluster</TableHead>
-                                    <TableHead>Keterangan</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {labeledClusters.map((res, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell className="font-medium">{index + 1}</TableCell>
-                                        <TableCell className="font-medium">{res.employee.name}</TableCell> {/* Ganti dari employee_id */}
-                                        <TableCell>
-                                            <span
-                                                className={`rounded-full px-2 py-1 text-xs font-medium ${
-                                                    res.cluster === 0
-                                                        ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
-                                                        : res.cluster === 1
-                                                          ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
-                                                          : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
-                                                }`}
-                                            >
-                                                {res.cluster}
-                                            </span>
-                                        </TableCell>
-                                        <TableCell>
-                                            <span
-                                                className={`rounded-full px-2 py-1 text-xs font-medium ${
-                                                    res.label === 'Low'
-                                                        ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
-                                                        : res.label === 'Medium'
-                                                          ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
-                                                          : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
-                                                }`}
-                                            >
-                                                {res.label}
-                                            </span>
-                                        </TableCell>
+                        <Card className="mb-4 rounded-lg p-0 shadow-none">
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>No</TableHead>
+                                        <TableHead>Employee</TableHead>
+                                        <TableHead>Cluster</TableHead>
+                                        <TableHead>Keterangan</TableHead>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                                </TableHeader>
+                                <TableBody>
+                                    {labeledClusters.map((res, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell className="font-medium">{index + 1}</TableCell>
+                                            <TableCell className="font-medium">{res.employee.name}</TableCell> {/* Ganti dari employee_id */}
+                                            <TableCell>
+                                                <span
+                                                    className={`rounded-full px-2 py-1 text-xs font-medium ${
+                                                        res.cluster === 0
+                                                            ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
+                                                            : res.cluster === 1
+                                                              ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
+                                                              : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                                                    }`}
+                                                >
+                                                    {res.cluster}
+                                                </span>
+                                            </TableCell>
+                                            <TableCell>
+                                                <span
+                                                    className={`rounded-full px-2 py-1 text-xs font-medium ${
+                                                        res.label === 'Low'
+                                                            ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400'
+                                                            : res.label === 'Medium'
+                                                              ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
+                                                              : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                                                    }`}
+                                                >
+                                                    {res.label}
+                                                </span>
+                                            </TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </Card>
 
                         <h2 className="mt-6 mb-2 text-xl font-semibold">Visualisasi Klaster</h2>
                         <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
