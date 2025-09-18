@@ -3,6 +3,7 @@ import '../css/app.css';
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
+import { Toaster } from 'sonner';
 import { initializeTheme } from './lib/theme';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -16,7 +17,12 @@ createInertiaApp({
         // Initialize theme on app startup
         initializeTheme();
 
-        root.render(<App {...props} />);
+        root.render(
+            <>
+                <App {...props} />
+                <Toaster richColors closeButton position="top-right" />
+            </>
+        );
     },
     progress: {
         color: '#4B5563',

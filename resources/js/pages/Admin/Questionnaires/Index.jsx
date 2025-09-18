@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AdminLayout from '@/layouts/AdminLayout';
 import { Head, Link, router } from '@inertiajs/react';
-import { Edit, Eye, Plus, Trash2, Upload } from 'lucide-react';
+import { Edit, Eye, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 export default function QuestionnaireIndex({ questionnaires, totalEmployees, completedQuestionnaires }) {
@@ -38,20 +38,6 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                     <div>
                         <h1 className="text-2xl font-bold text-foreground">Questionnaires</h1>
                         <p className="text-muted-foreground">Manage employee questionnaire responses</p>
-                    </div>
-                    <div className="flex gap-2">
-                        <Button asChild variant="outline">
-                            <Link href={route('admin.questionnaires.upload')}>
-                                <Upload className="mr-2 h-4 w-4" />
-                                Upload CSV
-                            </Link>
-                        </Button>
-                        <Button asChild>
-                            <Link href={route('admin.questionnaires.create')}>
-                                <Plus className="mr-2 h-4 w-4" />
-                                Add Questionnaire
-                            </Link>
-                        </Button>
                     </div>
                 </div>
 
@@ -174,12 +160,6 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                         ) : (
                             <div className="py-8 text-center">
                                 <p className="text-muted-foreground">No questionnaires found</p>
-                                <Button asChild className="mt-4">
-                                    <Link href={route('admin.questionnaires.create')}>
-                                        <Plus className="mr-2 h-4 w-4" />
-                                        Add First Questionnaire
-                                    </Link>
-                                </Button>
                             </div>
                         )}
                     </CardContent>

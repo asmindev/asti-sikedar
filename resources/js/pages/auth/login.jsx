@@ -1,11 +1,13 @@
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Head, Link, useForm } from '@inertiajs/react';
 import { AlertCircle, Eye, EyeOff, LogIn } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { initializeTheme } from '@/lib/theme';
 
 export default function Login({ status, canResetPassword }) {
     const [showPassword, setShowPassword] = useState(false);
@@ -16,6 +18,11 @@ export default function Login({ status, canResetPassword }) {
         remember: false,
     });
 
+    useEffect(() => {
+        // Initialize theme on component mount
+        initializeTheme();
+    }, []);
+
     const submit = (e) => {
         e.preventDefault();
         post(route('login'), {
@@ -24,12 +31,12 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
+        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-blue-900 px-4">
             <Head title="Login" />
 
             <Card className="w-full max-w-md">
                 <CardHeader className="text-center">
-                    <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600">
+                    <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 dark:bg-blue-500">
                         <LogIn className="h-6 w-6 text-white" />
                     </div>
                     <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
@@ -57,7 +64,7 @@ export default function Login({ status, canResetPassword }) {
                                 onChange={(e) => setData('email', e.target.value)}
                                 required
                             />
-                            {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+                            {errors.email && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>}
                         </div>
 
                         <div>
@@ -83,26 +90,23 @@ export default function Login({ status, canResetPassword }) {
                                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                                 </Button>
                             </div>
-                            {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
+                            {errors.password && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.password}</p>}
                         </div>
 
                         <div className="flex items-center justify-between">
-                            <div className="flex items-center">
-                                <input
+                            <div className="flex items-center space-x-2">
+                                <Checkbox
                                     id="remember"
-                                    name="remember"
-                                    type="checkbox"
-                                    className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                                     checked={data.remember}
-                                    onChange={(e) => setData('remember', e.target.checked)}
+                                    onCheckedChange={(checked) => setData('remember', checked)}
                                 />
-                                <Label htmlFor="remember" className="ml-2 text-sm">
+                                <Label htmlFor="remember" className="text-sm">
                                     Remember me
                                 </Label>
                             </div>
 
                             {canResetPassword && (
-                                <Link href={route('password.request')} className="text-sm font-medium text-blue-600 hover:text-blue-500">
+                                <Link href={route('password.request')} className="text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
                                     Forgot password?
                                 </Link>
                             )}
@@ -116,7 +120,7 @@ export default function Login({ status, canResetPassword }) {
                     <div className="mt-6 text-center">
                         <p className="text-sm text-muted-foreground">
                             Don't have an account?{' '}
-                            <Link href={route('register')} className="font-medium text-blue-600 hover:text-blue-500">
+                            <Link href={route('register')} className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
                                 Sign up
                             </Link>
                         </p>
@@ -126,12 +130,12 @@ export default function Login({ status, canResetPassword }) {
                     <div className="mt-6 border-t pt-4">
                         <p className="mb-2 text-center text-xs text-muted-foreground">Demo Credentials:</p>
                         <div className="grid grid-cols-2 gap-2 text-xs">
-                            <div className="rounded bg-blue-50 p-2">
+                            <div className="rounded bg-blue-50 dark:bg-blue-900/30 p-2">
                                 <p className="font-medium">Admin:</p>
                                 <p>admin@kejati.go.id</p>
                                 <p>admin123</p>
                             </div>
-                            <div className="rounded bg-green-50 p-2">
+                            <div className="rounded bg-green-50 dark:bg-green-900/30 p-2">
                                 <p className="font-medium">User:</p>
                                 <p>user@kejati.go.id</p>
                                 <p>user123</p>

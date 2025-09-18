@@ -1,8 +1,12 @@
 import { UserSidebar } from '@/components/sidebar/user';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { useFlashToast } from '@/hooks/useFlashToast';
 
 export default function UserLayout({ children, breadcrumbs = [] }) {
+    // Handle flash messages
+    useFlashToast();
+
     return (
         <SidebarProvider>
             <UserSidebar />

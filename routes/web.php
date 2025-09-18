@@ -4,9 +4,12 @@ use App\Http\Controllers\ClusterController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\QuestionnaireController;
 use App\Http\Controllers\Admin\QuestionnaireImportController;
+use App\Http\Controllers\Admin\QuizManagementController;
+use App\Http\Controllers\Api\QuizDataController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\User\UserResultController;
+use App\Http\Controllers\User\QuizController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -42,7 +45,17 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
 
     // Cluster Analysis
     Route::get('/clusters/analysis', [ClusterController::class, 'index'])->name('clusters.analysis');
+    Route::post('/clusters/analysis', [ClusterController::class, 'store'])->name('clusters.store');
     Route::get('/clusters/export-pdf', [ClusterController::class, 'exportPdf'])->name('clusters.export-pdf');
+
+    // Quiz Management
+    Route::resource('quiz-management', QuizManagementController::class);
+    Route::patch('quiz-management/{question}/toggle', [QuizManagementController::class, 'toggleQuestion'])
+        ->name('quiz-management.toggle');
+    Route::patch('quiz-management/{question}/reorder', [QuizManagementController::class, 'reorderQuestions'])
+        ->name('quiz-management.reorder');
+    Route::patch('quiz-management/likert-options/{option}', [QuizManagementController::class, 'updateLikertOption'])
+        ->name('quiz-management.likert-options.update');
 
     // Settings
     Route::prefix('settings')->name('settings.')->group(function () {
@@ -56,12 +69,22 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
 Route::middleware(['auth', 'verified', 'role:user'])->prefix('user')->name('user.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // Quiz Routes
+    Route::get('/quiz', [QuizController::class, 'index'])->name('quiz');
+    Route::post('/quiz', [QuizController::class, 'store'])->name('quiz.store');
+    Route::get('/quiz/result', [QuizController::class, 'result'])->name('quiz.result');
+
     // Profile Management
     Route::get('/profile', [UserProfileController::class, 'index'])->name('profile');
     Route::put('/profile', [UserProfileController::class, 'update'])->name('profile.update');
 
     // View Results
     Route::get('/results', [UserResultController::class, 'index'])->name('results');
+});
+
+// API Routes
+Route::middleware(['auth'])->prefix('api')->name('api.')->group(function () {
+    Route::get('/quiz-data', [QuizDataController::class, 'getQuizData'])->name('quiz-data');
 });
 
 require __DIR__ . '/settings.php';

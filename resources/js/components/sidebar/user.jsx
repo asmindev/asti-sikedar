@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { Home, LogOut, Settings, User, UserCircle } from 'lucide-react';
+import { Home, LogOut, Settings, User, UserCircle, FileText, ClipboardCheck } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -30,6 +30,28 @@ export function UserSidebar() {
             icon: Home,
             urlPattern: '/dashboard',
             href: '/dashboard',
+        },
+        {
+            title: 'Kuesioner',
+            icon: FileText,
+            urlPattern: '/user/quiz',
+            children: [
+                {
+                    title: 'Isi Kuesioner',
+                    urlPattern: '/user/quiz',
+                    href: '/user/quiz',
+                },
+                {
+                    title: 'Lihat Jawaban',
+                    urlPattern: '/user/quiz/result',
+                    href: '/user/quiz/result',
+                },
+                {
+                    title: 'Hasil Assessment',
+                    urlPattern: '/user/results',
+                    href: '/user/results',
+                },
+            ],
         },
     ];
 

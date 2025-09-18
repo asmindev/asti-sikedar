@@ -7,6 +7,45 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Sonner Toast Customization */
+[data-sonner-toaster] {
+    --normal-bg: hsl(var(--background));
+    --normal-border: hsl(var(--border));
+    --normal-text: hsl(var(--foreground));
+    --success-bg: hsl(var(--background));
+    --success-border: hsl(142.1 76.2% 36.3%);
+    --success-text: hsl(142.1 76.2% 36.3%);
+    --error-bg: hsl(var(--background));
+    --error-border: hsl(var(--destructive));
+    --error-text: hsl(var(--destructive));
+    --warning-bg: hsl(var(--background));
+    --warning-border: hsl(32.9 95.6% 58.4%);
+    --warning-text: hsl(32.9 95.6% 58.4%);
+}
+
+[data-sonner-toast] {
+    border-radius: calc(var(--radius) - 2px);
+    box-shadow: 0 4px 12px hsl(var(--foreground) / 0.15);
+}
+
+[data-sonner-toast][data-type="success"] {
+    background: var(--success-bg);
+    border: 1px solid var(--success-border);
+    color: var(--success-text);
+}
+
+[data-sonner-toast][data-type="error"] {
+    background: var(--error-bg);
+    border: 1px solid var(--error-border);
+    color: var(--error-text);
+}
+
+[data-sonner-toast][data-type="warning"] {
+    background: var(--warning-bg);
+    border: 1px solid var(--warning-border);
+    color: var(--warning-text);
+}
+
 @theme {
     --font-sans:
         'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';

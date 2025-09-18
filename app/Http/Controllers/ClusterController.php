@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use App\Models\Questionnaire;
+use App\Models\ClusterResult;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClusterController extends Controller
 {
@@ -37,8 +40,88 @@ class ClusterController extends Controller
             ];
         });
 
+        // Get analysis statistics
+        $totalSavedResults = ClusterResult::count();
+        $lastAnalysisDate = ClusterResult::latest('updated_at')->first()?->updated_at;
+
+        // Get cluster distribution
+        $clusterDistribution = ClusterResult::selectRaw('label, COUNT(*) as count')
+            ->groupBy('label')
+            ->get()
+            ->keyBy('label');
+
+        // Get saved cluster results with employee details
+        $savedResults = ClusterResult::with('employee')
+            ->orderBy('updated_at', 'desc')
+            ->get()
+            ->map(function ($result) {
+                return [
+                    'id' => $result->id,
+                    'employee' => $result->employee,
+                    'cluster' => $result->cluster,
+                    'label' => $result->label,
+                    'score_k' => $result->score_k,
+                    'score_a' => $result->score_a,
+                    'score_b' => $result->score_b,
+                    'updated_at' => $result->updated_at,
+                ];
+            });
+
         return Inertia::render('Admin/Clusters/Analysis', [
             'questionnaires' => $questionnaires,
+            'savedResults' => $savedResults,
+            'analysisStats' => [
+                'totalSavedResults' => $totalSavedResults,
+                'lastAnalysisDate' => $lastAnalysisDate,
+                'clusterDistribution' => [
+                    'low' => $clusterDistribution->get('Low')?->count ?? 0,
+                    'medium' => $clusterDistribution->get('Medium')?->count ?? 0,
+                    'high' => $clusterDistribution->get('High')?->count ?? 0,
+                ]
+            ]
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'results' => 'required|array',
+            'results.*.employee_id' => 'required|integer|exists:employees,id',
+            'results.*.cluster' => 'required|integer',
+            'results.*.label' => 'required|string|in:Low,Medium,High',
+            'results.*.score_k' => 'required|numeric',
+            'results.*.score_a' => 'required|numeric',
+            'results.*.score_b' => 'required|numeric',
+        ]);
+
+        try {
+            DB::transaction(function () use ($request) {
+                // Delete existing cluster results for these employees
+                $employeeIds = collect($request->results)->pluck('employee_id');
+                ClusterResult::whereIn('employee_id', $employeeIds)->delete();
+
+                // Insert new cluster results
+                foreach ($request->results as $result) {
+                    ClusterResult::create([
+                        'employee_id' => $result['employee_id'],
+                        'cluster' => $result['cluster'],
+                        'label' => $result['label'],
+                        'score_k' => $result['score_k'],
+                        'score_a' => $result['score_a'],
+                        'score_b' => $result['score_b'],
+                    ]);
+                }
+            });
+
+            return response()->json([
+                'message' => 'Cluster results saved successfully',
+                'saved_count' => count($request->results)
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to save cluster results',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

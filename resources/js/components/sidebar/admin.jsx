@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BarChart3, LayoutDashboard, LogOut, Monitor, Moon, Palette, Settings, Shield, Sun, Upload, Users } from 'lucide-react';
+import { BarChart3, LayoutDashboard, LogOut, Monitor, Moon, Palette, Settings, Shield, Sun, Upload, Users, Brain } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -35,6 +35,12 @@ const menuItems = [
         url: route('admin.employees.index'),
         icon: Users,
         urlPattern: '/admin/employees',
+    },
+    {
+        title: 'Quiz Management',
+        url: route('admin.quiz-management.index'),
+        icon: Brain,
+        urlPattern: '/admin/quiz-management',
     },
     {
         title: 'Questionnaires',
