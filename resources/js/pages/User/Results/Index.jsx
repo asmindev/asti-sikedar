@@ -16,35 +16,35 @@ export default function UserResults({ user, employee, questionnaire, hasComplete
     };
 
     const getScoreLevel = (score) => {
-        if (score >= 4.5) return 'Excellent';
-        if (score >= 3.5) return 'Good';
-        if (score >= 2.5) return 'Fair';
-        return 'Needs Improvement';
+        if (score >= 4.5) return 'Sangat Baik';
+        if (score >= 3.5) return 'Baik';
+        if (score >= 2.5) return 'Cukup';
+        return 'Perlu Peningkatan';
     };
 
     return (
         <UserLayout>
-            <Head title="My Results" />
+            <Head title="Hasil Saya" />
 
             <div className="p-6">
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold tracking-tight">My Quiz Results</h1>
-                    <p className="text-muted-foreground">View your cyber security awareness assessment results</p>
+                    <h1 className="text-3xl font-bold tracking-tight">Hasil Kuis Saya</h1>
+                    <p className="text-muted-foreground">Lihat hasil penilaian kesadaran keamanan siber Anda</p>
                 </div>
 
                 {!hasCompletedQuiz ? (
                     <Card className="border-orange-200 bg-orange-50 dark:border-orange-800 dark:bg-orange-950">
                         <CardContent className="py-12 text-center">
                             <AlertCircle className="mx-auto h-12 w-12 text-orange-600 dark:text-orange-400" />
-                            <h3 className="mt-4 text-lg font-semibold text-orange-800 dark:text-orange-200">Quiz Not Completed</h3>
+                            <h3 className="mt-4 text-lg font-semibold text-orange-800 dark:text-orange-200">Kuis Belum Diselesaikan</h3>
                             <p className="mt-2 text-orange-700 dark:text-orange-300">
-                                You haven't completed the cyber security awareness quiz yet.
+                                Anda belum menyelesaikan kuis kesadaran keamanan siber.
                             </p>
                             <div className="mt-6">
                                 <Button asChild className="bg-orange-600 hover:bg-orange-700 dark:bg-orange-500 dark:hover:bg-orange-600">
                                     <Link href={route('user.quiz')}>
                                         <FileText className="mr-2 h-4 w-4" />
-                                        Take Quiz Now
+                                        Kerjakan Kuis Sekarang
                                     </Link>
                                 </Button>
                             </div>
@@ -58,12 +58,12 @@ export default function UserResults({ user, employee, questionnaire, hasComplete
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-2">
                                         <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
-                                        <CardTitle className="text-green-800 dark:text-green-200">Quiz Completed Successfully</CardTitle>
+                                        <CardTitle className="text-green-800 dark:text-green-200">Kuis Berhasil Diselesaikan</CardTitle>
                                     </div>
-                                    <Badge className="bg-green-600 dark:bg-green-500">Completed</Badge>
+                                    <Badge className="bg-green-600 dark:bg-green-500">Selesai</Badge>
                                 </div>
                                 <CardDescription className="text-green-700 dark:text-green-300">
-                                    Thank you for completing the cyber security awareness assessment.
+                                    Terima kasih telah menyelesaikan penilaian kesadaran keamanan siber.
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>
@@ -72,21 +72,21 @@ export default function UserResults({ user, employee, questionnaire, hasComplete
                                         <div className="text-2xl font-bold text-green-700 dark:text-green-300">
                                             {results ? results.overall_score.toFixed(1) : 'N/A'}
                                         </div>
-                                        <p className="text-sm text-green-600 dark:text-green-400">Overall Score</p>
+                                        <p className="text-sm text-green-600 dark:text-green-400">Skor Keseluruhan</p>
                                     </div>
                                     <div className="text-center">
                                         <div className="text-2xl font-bold text-green-700 dark:text-green-300">21</div>
-                                        <p className="text-sm text-green-600 dark:text-green-400">Questions Answered</p>
+                                        <p className="text-sm text-green-600 dark:text-green-400">Pertanyaan Dijawab</p>
                                     </div>
                                     <div className="text-center">
                                         <div className="text-2xl font-bold text-green-700 dark:text-green-300">3</div>
-                                        <p className="text-sm text-green-600 dark:text-green-400">Aspects Assessed</p>
+                                        <p className="text-sm text-green-600 dark:text-green-400">Aspek Dinilai</p>
                                     </div>
                                     <div className="text-center">
                                         <div className="text-2xl font-bold text-green-700 dark:text-green-300">
                                             {questionnaire ? new Date(questionnaire.created_at).toLocaleDateString() : 'N/A'}
                                         </div>
-                                        <p className="text-sm text-green-600 dark:text-green-400">Completed On</p>
+                                        <p className="text-sm text-green-600 dark:text-green-400">Diselesaikan Pada</p>
                                     </div>
                                 </div>
                             </CardContent>
@@ -103,7 +103,7 @@ export default function UserResults({ user, employee, questionnaire, hasComplete
                                             <CardTitle>Knowledge (Pengetahuan)</CardTitle>
                                         </div>
                                         <CardDescription>
-                                            Understanding of cyber security concepts and risks
+                                            Pemahaman tentang konsep dan risiko keamanan siber
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent>
@@ -134,7 +134,7 @@ export default function UserResults({ user, employee, questionnaire, hasComplete
                                             <CardTitle>Attitude (Sikap)</CardTitle>
                                         </div>
                                         <CardDescription>
-                                            Mindset and beliefs about cyber security practices
+                                            Pola pikir dan keyakinan tentang praktik keamanan siber
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent>
@@ -165,7 +165,7 @@ export default function UserResults({ user, employee, questionnaire, hasComplete
                                             <CardTitle>Behavior (Perilaku)</CardTitle>
                                         </div>
                                         <CardDescription>
-                                            Actual practices and actions in cyber security
+                                            Praktik dan tindakan nyata dalam keamanan siber
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent>

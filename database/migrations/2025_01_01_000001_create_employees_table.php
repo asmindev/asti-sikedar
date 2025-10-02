@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('department');
             $table->string('position');
-            $table->date('hire_date');
+            $table->enum('gender', ['Laki-laki', 'Perempuan'])->comment('Gender/Jenis Kelamin');
             $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->timestamps();

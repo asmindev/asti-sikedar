@@ -9,7 +9,7 @@ import { toast } from 'sonner';
  */
 export const saveClusterResults = async (labeledClusters, setIsSaving) => {
     if (!labeledClusters || labeledClusters.length === 0) {
-        toast.error('No clustering results to save.');
+        toast.error('Tidak ada hasil clustering untuk disimpan.');
         return;
     }
 
@@ -29,10 +29,10 @@ export const saveClusterResults = async (labeledClusters, setIsSaving) => {
             results: results
         });
 
-        toast.success(`Successfully saved ${response.data.saved_count} cluster results to database!`);
+        toast.success(`Berhasil menyimpan ${response.data.saved_count} hasil clustering ke database!`);
         return response.data;
     } catch (error) {
-        toast.error('Failed to save cluster results to database.');
+        toast.error('Gagal menyimpan hasil clustering ke database.');
         console.error('Save error:', error);
         throw error;
     } finally {

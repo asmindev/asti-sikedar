@@ -8,7 +8,7 @@ export default function DatabaseStatistics({ analysisStats }) {
     return (
         <Card className="mb-6 rounded-lg p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950">
             <h3 className="text-lg font-semibold mb-3 text-blue-900 dark:text-blue-100">
-                Database Statistics
+                Statistik Database
             </h3>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
                 <div className="text-center">
@@ -19,19 +19,19 @@ export default function DatabaseStatistics({ analysisStats }) {
                     <div className="text-2xl font-bold text-green-600">
                         {analysisStats.clusterDistribution?.high || 0}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">High Level</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">Tingkat Tinggi</div>
                 </div>
                 <div className="text-center">
                     <div className="text-2xl font-bold text-yellow-600">
                         {analysisStats.clusterDistribution?.medium || 0}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Medium Level</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">Tingkat Sedang</div>
                 </div>
                 <div className="text-center">
                     <div className="text-2xl font-bold text-red-600">
                         {analysisStats.clusterDistribution?.low || 0}
                     </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-400">Low Level</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-400">Tingkat Rendah</div>
                 </div>
             </div>
             {analysisStats.lastAnalysisDate && (

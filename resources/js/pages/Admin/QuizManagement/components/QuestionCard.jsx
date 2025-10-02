@@ -56,7 +56,7 @@ export default function QuestionCard({ question, aspectTitle, canEdit = true }) 
                                 size="sm"
                             />
                             <Label className="text-xs text-muted-foreground">
-                                Active
+                                Aktif
                             </Label>
                         </div>
                         {canEdit && !isEditing && (
@@ -78,13 +78,13 @@ export default function QuestionCard({ question, aspectTitle, canEdit = true }) 
                     <div className="space-y-3">
                         <div>
                             <Label htmlFor={`question-${question.id}`} className="text-xs font-medium">
-                                Question Text
+                                Teks Pertanyaan
                             </Label>
                             <Textarea
                                 id={`question-${question.id}`}
                                 value={data.question}
                                 onChange={(e) => setData('question', e.target.value)}
-                                placeholder="Enter question text..."
+                                placeholder="Masukkan teks pertanyaan..."
                                 className="mt-1 min-h-[80px] text-sm"
                                 autoFocus
                             />
@@ -113,7 +113,7 @@ export default function QuestionCard({ question, aspectTitle, canEdit = true }) 
                                 className="h-7 px-2 text-xs"
                             >
                                 <Save className="h-3 w-3 mr-1" />
-                                Save
+                                Simpan
                             </Button>
                         </div>
                     </div>
@@ -124,7 +124,7 @@ export default function QuestionCard({ question, aspectTitle, canEdit = true }) 
                         </p>
                         {!question.is_active && (
                             <Badge variant="secondary" className="text-xs px-1.5 py-0.5">
-                                Inactive
+                                Tidak Aktif
                             </Badge>
                         )}
                     </div>

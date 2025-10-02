@@ -18,9 +18,9 @@ export default function LikertOptionsManager({ options }) {
                 <div className="flex items-center gap-2">
                     <Settings className="h-5 w-5 text-primary" />
                     <div>
-                        <CardTitle>Likert Scale Options</CardTitle>
+                        <CardTitle>Opsi Skala Likert</CardTitle>
                         <CardDescription>
-                            Configure the response options for quiz questions
+                            Konfigurasi opsi respons untuk pertanyaan kuis
                         </CardDescription>
                     </div>
                 </div>
@@ -41,13 +41,13 @@ export default function LikertOptionsManager({ options }) {
 
                 <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg">
                     <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">
-                        Likert Scale Guidelines
+                        Panduan Skala Likert
                     </h4>
                     <ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
-                        <li>• Options are ordered from highest agreement (5) to lowest (1)</li>
-                        <li>• Labels should be short abbreviations (SS, S, CS, TS, STS)</li>
-                        <li>• Descriptions should be clear and unambiguous</li>
-                        <li>• Changes affect all future quiz responses</li>
+                        <li>• Opsi diurutkan dari persetujuan tertinggi (5) ke terendah (1)</li>
+                        <li>• Label harus berupa singkatan pendek (SS, S, CS, TS, STS)</li>
+                        <li>• Deskripsi harus jelas dan tidak ambigu</li>
+                        <li>• Perubahan memengaruhi semua respons kuis di masa depan</li>
                     </ul>
                 </div>
             </CardContent>
@@ -112,7 +112,7 @@ function LikertOptionCard({ option, isEditing, onEdit, onCancel, onSave }) {
 
                         <div>
                             <Label htmlFor={`description-${option.id}`} className="text-sm">
-                                Description
+                                Deskripsi
                             </Label>
                             <Input
                                 id={`description-${option.id}`}
@@ -134,7 +134,7 @@ function LikertOptionCard({ option, isEditing, onEdit, onCancel, onSave }) {
                             onClick={handleCancel}
                             disabled={processing}
                         >
-                            Cancel
+                            Batal
                         </Button>
                         <Button
                             size="sm"
@@ -142,7 +142,7 @@ function LikertOptionCard({ option, isEditing, onEdit, onCancel, onSave }) {
                             disabled={processing || !data.label.trim() || !data.description.trim()}
                         >
                             <Save className="h-4 w-4 mr-1" />
-                            Save
+                            Simpan
                         </Button>
                     </div>
                 </div>

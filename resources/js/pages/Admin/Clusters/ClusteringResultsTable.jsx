@@ -14,7 +14,7 @@ export default function ClusteringResultsTable({ labeledClusters }) {
                     <TableHeader>
                         <TableRow>
                             <TableHead>No</TableHead>
-                            <TableHead>Employee</TableHead>
+                            <TableHead>Karyawan</TableHead>
                             <TableHead>Cluster</TableHead>
                             <TableHead>Label</TableHead>
                             <TableHead>Skor KAB</TableHead>
@@ -46,15 +46,15 @@ export default function ClusteringResultsTable({ labeledClusters }) {
                                 <TableCell>
                                     <div className="text-xs space-y-1">
                                         <div className="flex justify-between">
-                                            <span className="text-blue-600 font-medium">Knowledge:</span>
+                                            <span className="text-blue-600 font-medium">Pengetahuan:</span>
                                             <span>{res.scoreK.toFixed(1)}%</span>
                                         </div>
                                         <div className="flex justify-between">
-                                            <span className="text-green-600 font-medium">Attitude:</span>
+                                            <span className="text-green-600 font-medium">Sikap:</span>
                                             <span>{res.scoreA.toFixed(1)}%</span>
                                         </div>
                                         <div className="flex justify-between">
-                                            <span className="text-purple-600 font-medium">Behavior:</span>
+                                            <span className="text-purple-600 font-medium">Perilaku:</span>
                                             <span>{res.scoreB.toFixed(1)}%</span>
                                         </div>
                                     </div>

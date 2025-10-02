@@ -25,7 +25,7 @@ export default function EmployeeCreate() {
         name: '',
         department: '',
         position: '',
-        hire_date: '',
+        gender: '',
         phone: '',
         address: '',
         create_user_account: false,
@@ -181,19 +181,21 @@ export default function EmployeeCreate() {
                                         {errors.position && <p className="text-sm text-red-500">{errors.position}</p>}
                                     </div>
 
-                                    {/* Hire Date */}
+                                    {/* Gender */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="hire_date">
-                                            Hire Date <span className="text-red-500">*</span>
+                                        <Label htmlFor="gender">
+                                            Jenis Kelamin <span className="text-red-500">*</span>
                                         </Label>
-                                        <Input
-                                            id="hire_date"
-                                            type="date"
-                                            value={data.hire_date}
-                                            onChange={(e) => setData('hire_date', e.target.value)}
-                                            className={errors.hire_date ? 'border-red-500' : ''}
-                                        />
-                                        {errors.hire_date && <p className="text-sm text-red-500">{errors.hire_date}</p>}
+                                        <Select value={data.gender} onValueChange={(value) => setData('gender', value)}>
+                                            <SelectTrigger className={errors.gender ? 'border-red-500' : ''}>
+                                                <SelectValue placeholder="Pilih jenis kelamin" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="Laki-laki">Laki-laki</SelectItem>
+                                                <SelectItem value="Perempuan">Perempuan</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.gender && <p className="text-sm text-red-500">{errors.gender}</p>}
                                     </div>
 
                                     {/* Phone */}

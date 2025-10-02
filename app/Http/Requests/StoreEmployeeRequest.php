@@ -45,10 +45,10 @@ class StoreEmployeeRequest extends FormRequest
                 'string',
                 'max:100'
             ],
-            'hire_date' => [
+            'gender' => [
                 'required',
-                'date',
-                'before_or_equal:today'
+                'string',
+                Rule::in(['Laki-laki', 'Perempuan'])
             ],
             'phone' => [
                 'nullable',
@@ -99,8 +99,8 @@ class StoreEmployeeRequest extends FormRequest
             'name.required' => 'The employee name is required.',
             'department.required' => 'The department is required.',
             'position.required' => 'The position is required.',
-            'hire_date.required' => 'The hire date is required.',
-            'hire_date.before_or_equal' => 'The hire date cannot be in the future.',
+            'gender.required' => 'The gender is required.',
+            'gender.in' => 'Gender must be either Laki-laki or Perempuan.',
             'email.required_if' => 'Email is required when creating a user account.',
             'email.unique' => 'This email is already registered.',
             'password.required_if' => 'Password is required when creating a user account.',
@@ -120,7 +120,7 @@ class StoreEmployeeRequest extends FormRequest
     {
         return [
             'employee_code' => 'employee code',
-            'hire_date' => 'hire date',
+            'gender' => 'gender',
         ];
     }
 }

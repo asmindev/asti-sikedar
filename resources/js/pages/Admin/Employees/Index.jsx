@@ -13,7 +13,7 @@ import { useState } from 'react';
 export default function Employee({ employees, departments, filters }) {
     const { flash } = usePage().props;
     console.log('EmployeeIndex props:', flash);
-    const breadcrumbs = [{ label: 'Dashboard', href: route('admin.dashboard') }, { label: 'Employee Management' }];
+    const breadcrumbs = [{ label: 'Dashboard', href: route('admin.dashboard') }, { label: 'Manajemen Karyawan' }];
 
     const [deleteDialog, setDeleteDialog] = useState({
         open: false,
@@ -92,7 +92,7 @@ export default function Employee({ employees, departments, filters }) {
 
     return (
         <AdminLayout breadcrumbs={breadcrumbs}>
-            <Head title="Employees" />
+            <Head title="Karyawan" />
 
             <div className="p-6">
                 {/* Flash Messages */}
@@ -109,13 +109,13 @@ export default function Employee({ employees, departments, filters }) {
 
                 <div className="mb-8 flex items-center justify-between">
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">Employee Management</h1>
-                        <p className="text-muted-foreground">Manage your employees and their user accounts</p>
+                        <h1 className="text-3xl font-bold tracking-tight">Manajemen Karyawan</h1>
+                        <p className="text-muted-foreground">Kelola karyawan dan akun pengguna mereka</p>
                     </div>
                     <Button asChild>
                         <a href={route('admin.employees.create')}>
                             <Plus className="mr-2 h-4 w-4" />
-                            Add Employee
+                            Tambah Karyawan
                         </a>
                     </Button>
                 </div>
@@ -123,7 +123,7 @@ export default function Employee({ employees, departments, filters }) {
                 {/* Filters */}
                 <Card className="mb-6">
                     <CardHeader>
-                        <CardTitle className="text-lg">Search & Filter</CardTitle>
+                        <CardTitle className="text-lg">Cari & Filter</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSearch} className="flex gap-4">
@@ -132,7 +132,7 @@ export default function Employee({ employees, departments, filters }) {
                                     <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                                     <Input
                                         type="text"
-                                        placeholder="Search by name, code, department, or position..."
+                                        placeholder="Cari berdasarkan nama, kode, departemen, atau posisi..."
                                         value={search}
                                         onChange={(e) => setSearch(e.target.value)}
                                         className="pl-10"
@@ -141,10 +141,10 @@ export default function Employee({ employees, departments, filters }) {
                             </div>
                             <Select value={department} onValueChange={setDepartment}>
                                 <SelectTrigger className="w-48">
-                                    <SelectValue placeholder="All Departments" />
+                                    <SelectValue placeholder="Semua Departemen" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value="all">All Departments</SelectItem>
+                                    <SelectItem value="all">Semua Departemen</SelectItem>
                                     {departments?.map((dept) => (
                                         <SelectItem key={dept} value={dept}>
                                             {dept}
@@ -161,10 +161,10 @@ export default function Employee({ employees, departments, filters }) {
                     <CardHeader>
                         <CardTitle className="flex items-center">
                             <Users className="mr-2 h-5 w-5" />
-                            Employee List
+                            Daftar Karyawan
                         </CardTitle>
                         <CardDescription>
-                            {employees?.data?.length > 0 ? `${employees.total} employees found` : 'No employees added yet'}
+                            {employees?.data?.length > 0 ? `${employees.total} karyawan ditemukan` : 'Belum ada karyawan yang ditambahkan'}
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -173,13 +173,13 @@ export default function Employee({ employees, departments, filters }) {
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead>Employee Code</TableHead>
-                                            <TableHead>Name</TableHead>
-                                            <TableHead>Department</TableHead>
-                                            <TableHead>Position</TableHead>
-                                            <TableHead>Hire Date</TableHead>
-                                            <TableHead>User Account</TableHead>
-                                            <TableHead className="text-right">Actions</TableHead>
+                                            <TableHead>Kode Karyawan</TableHead>
+                                            <TableHead>Nama</TableHead>
+                                            <TableHead>Departemen</TableHead>
+                                            <TableHead>Posisi</TableHead>
+                                            <TableHead>Jenis Kelamin</TableHead>
+                                            <TableHead>Akun Pengguna</TableHead>
+                                            <TableHead className="text-right">Aksi</TableHead>
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
@@ -189,7 +189,7 @@ export default function Employee({ employees, departments, filters }) {
                                                 <TableCell className="font-medium">{employee.name}</TableCell>
                                                 <TableCell>{employee.department}</TableCell>
                                                 <TableCell>{employee.position}</TableCell>
-                                                <TableCell>{formatDate(employee.hire_date)}</TableCell>
+                                                <TableCell>{employee.gender}</TableCell>
                                                 <TableCell>
                                                     {employee.user ? (
                                                         <div className="flex items-center gap-2">
@@ -200,7 +200,7 @@ export default function Employee({ employees, departments, filters }) {
                                                             <span className="text-xs text-muted-foreground">{employee.user.email}</span>
                                                         </div>
                                                     ) : (
-                                                        <Badge variant="outline">No Account</Badge>
+                                                        <Badge variant="outline">Tidak Ada Akun</Badge>
                                                     )}
                                                 </TableCell>
                                                 <TableCell className="text-right">
@@ -255,17 +255,17 @@ export default function Employee({ employees, departments, filters }) {
                                 {employees.total > employees.per_page && (
                                     <div className="flex items-center justify-between pt-4">
                                         <p className="text-sm text-muted-foreground">
-                                            Showing {employees.from} to {employees.to} of {employees.total} employees
+                                            Menampilkan {employees.from} sampai {employees.to} dari {employees.total} karyawan
                                         </p>
                                         <div className="flex gap-2">
                                             {employees.prev_page_url && (
                                                 <Button variant="outline" size="sm" asChild>
-                                                    <a href={employees.prev_page_url}>Previous</a>
+                                                    <a href={employees.prev_page_url}>Sebelumnya</a>
                                                 </Button>
                                             )}
                                             {employees.next_page_url && (
                                                 <Button variant="outline" size="sm" asChild>
-                                                    <a href={employees.next_page_url}>Next</a>
+                                                    <a href={employees.next_page_url}>Selanjutnya</a>
                                                 </Button>
                                             )}
                                         </div>
@@ -275,13 +275,13 @@ export default function Employee({ employees, departments, filters }) {
                         ) : (
                             <div className="py-12 text-center">
                                 <Users className="mx-auto h-12 w-12 text-muted-foreground" />
-                                <h3 className="mt-2 text-sm font-semibold">No employees</h3>
-                                <p className="mt-1 text-sm text-muted-foreground">Get started by adding your first employee.</p>
+                                <h3 className="mt-2 text-sm font-semibold">Tidak ada karyawan</h3>
+                                <p className="mt-1 text-sm text-muted-foreground">Mulai dengan menambahkan karyawan pertama Anda.</p>
                                 <div className="mt-6">
                                     <Button asChild>
                                         <a href={route('admin.employees.create')}>
                                             <Plus className="mr-2 h-4 w-4" />
-                                            Add Employee
+                                            Tambah Karyawan
                                         </a>
                                     </Button>
                                 </div>
@@ -294,23 +294,23 @@ export default function Employee({ employees, departments, filters }) {
                 <Dialog open={deleteDialog.open} onOpenChange={(open) => !open && handleDeleteCancel()}>
                     <DialogContent>
                         <DialogHeader>
-                            <DialogTitle>Delete Employee</DialogTitle>
+                            <DialogTitle>Hapus Karyawan</DialogTitle>
                             <DialogDescription>
-                                Are you sure you want to delete employee <strong>{deleteDialog.employee?.name}</strong> (Code:{' '}
-                                {deleteDialog.employee?.employee_code})? This action cannot be undone.
+                                Apakah Anda yakin ingin menghapus karyawan <strong>{deleteDialog.employee?.name}</strong> (Kode:{' '}
+                                {deleteDialog.employee?.employee_code})? Tindakan ini tidak dapat dibatalkan.
                                 {deleteDialog.employee?.user && (
                                     <span className="mt-2 block text-orange-600">
-                                        Note: The associated user account will be unlinked but not deleted.
+                                        Catatan: Akun pengguna yang terkait akan dilepas namun tidak dihapus.
                                     </span>
                                 )}
                             </DialogDescription>
                         </DialogHeader>
                         <DialogFooter>
                             <Button variant="outline" onClick={handleDeleteCancel}>
-                                Cancel
+                                Batal
                             </Button>
                             <Button variant="destructive" onClick={handleDeleteConfirm}>
-                                Delete Employee
+                                Hapus Karyawan
                             </Button>
                         </DialogFooter>
                     </DialogContent>
@@ -320,19 +320,18 @@ export default function Employee({ employees, departments, filters }) {
                 <Dialog open={removeUserDialog.open} onOpenChange={(open) => !open && handleRemoveUserCancel()}>
                     <DialogContent>
                         <DialogHeader>
-                            <DialogTitle>Remove User Account</DialogTitle>
+                            <DialogTitle>Hapus Akun Pengguna</DialogTitle>
                             <DialogDescription>
-                                Are you sure you want to remove the user account for <strong>{removeUserDialog.employee?.name}</strong>? The employee
-                                record will remain, but they will no longer be able to log in to the system.
-                                <span className="mt-2 block text-red-600">This action cannot be undone.</span>
+                                Apakah Anda yakin ingin menghapus akun pengguna untuk <strong>{removeUserDialog.employee?.name}</strong>? Data karyawan akan tetap ada, namun mereka tidak akan dapat masuk ke sistem lagi.
+                                <span className="mt-2 block text-red-600">Tindakan ini tidak dapat dibatalkan.</span>
                             </DialogDescription>
                         </DialogHeader>
                         <DialogFooter>
                             <Button variant="outline" onClick={handleRemoveUserCancel}>
-                                Cancel
+                                Batal
                             </Button>
                             <Button variant="destructive" onClick={handleRemoveUserConfirm}>
-                                Remove User Account
+                                Hapus Akun Pengguna
                             </Button>
                         </DialogFooter>
                     </DialogContent>

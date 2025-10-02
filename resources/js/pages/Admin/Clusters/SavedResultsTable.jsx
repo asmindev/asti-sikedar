@@ -14,10 +14,10 @@ export default function SavedResultsTable({ savedResults }) {
                     <TableHeader>
                         <TableRow>
                             <TableHead>No</TableHead>
-                            <TableHead>Employee</TableHead>
+                            <TableHead>Karyawan</TableHead>
                             <TableHead>NIP</TableHead>
-                            <TableHead>Cluster</TableHead>
-                            <TableHead>Label</TableHead>
+                            <TableHead>Kluster</TableHead>
+                            <TableHead>Kategori</TableHead>
                             <TableHead>Skor KAB</TableHead>
                             <TableHead>Tanggal Update</TableHead>
                         </TableRow>

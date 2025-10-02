@@ -35,11 +35,11 @@ export default function ThemeSettings() {
         setCurrentDarkMode(mode);
     };
 
-    const breadcrumbs = [{ label: 'Dashboard', href: route('admin.dashboard') }, { label: 'Settings', href: '#' }, { label: 'Theme Customization' }];
+    const breadcrumbs = [{ label: 'Dasbor', href: route('admin.dashboard') }, { label: 'Pengaturan', href: '#' }, { label: 'Kustomisasi Tema' }];
 
     return (
         <AdminLayout breadcrumbs={breadcrumbs}>
-            <Head title="Theme Settings" />
+            <Head title="Pengaturan Tema" />
 
             <div className="container mx-auto max-w-6xl space-y-8 p-6">
                 {/* Header Section */}
@@ -49,8 +49,8 @@ export default function ThemeSettings() {
                             <Palette className="h-6 w-6 text-primary-foreground" />
                         </div>
                         <div className="space-y-1">
-                            <h1 className="text-3xl font-bold tracking-tight text-foreground">Theme Customization</h1>
-                            <p className="text-muted-foreground">Personalize your admin panel with beautiful color themes</p>
+                            <h1 className="text-3xl font-bold tracking-tight text-foreground">Kustomisasi Tema</h1>
+                            <p className="text-muted-foreground">Personalisasi panel admin Anda dengan tema warna yang indah</p>
                         </div>
                     </div>
                     <Separator />
@@ -63,12 +63,12 @@ export default function ThemeSettings() {
                             <div className="space-y-2">
                                 <CardTitle className="flex items-center gap-2">
                                     <Sparkles className="h-5 w-5 text-primary" />
-                                    Current Active Theme
+                                    Tema Aktif Saat Ini
                                 </CardTitle>
-                                <CardDescription>Your selected theme affects the entire admin interface</CardDescription>
+                                <CardDescription>Tema yang dipilih memengaruhi seluruh antarmuka admin</CardDescription>
                             </div>
                             <Badge variant="secondary" className="bg-primary/10 text-primary">
-                                Active
+                                Aktif
                             </Badge>
                         </div>
                     </CardHeader>
@@ -81,15 +81,15 @@ export default function ThemeSettings() {
                                         <div className="flex space-x-2">
                                             <div
                                                 className={`h-8 w-8 rounded-lg border-2 border-white shadow-lg ${theme.colorClass}`}
-                                                title="Primary Color"
+                                                title="Warna Utama"
                                             />
                                             <div
                                                 className={`h-8 w-8 rounded-lg border-2 border-white shadow-lg ${theme.secondaryClass}`}
-                                                title="Secondary Color"
+                                                title="Warna Sekunder"
                                             />
                                             <div
                                                 className={`h-8 w-8 rounded-lg border-2 border-white shadow-lg ${theme.accentClass}`}
-                                                title="Accent Color"
+                                                title="Warna Aksen"
                                             />
                                         </div>
 
@@ -107,9 +107,9 @@ export default function ThemeSettings() {
                 {/* Theme Selection */}
                 <div className="space-y-6">
                     <div>
-                        <h2 className="mb-2 text-xl font-semibold">Available Themes</h2>
+                        <h2 className="mb-2 text-xl font-semibold">Tema yang Tersedia</h2>
                         <p className="mb-6 text-sm text-muted-foreground">
-                            Choose from our carefully crafted color palettes designed for optimal user experience
+                            Pilih dari palet warna yang dirancang dengan hati-hati untuk pengalaman pengguna optimal
                         </p>
                     </div>
 
@@ -131,7 +131,7 @@ export default function ThemeSettings() {
                                             {isActive && (
                                                 <Badge variant="default" className="bg-primary">
                                                     <Check className="mr-1 h-3 w-3" />
-                                                    Active
+                                                    Aktif
                                                 </Badge>
                                             )}
                                         </div>
@@ -145,7 +145,7 @@ export default function ThemeSettings() {
                                                 <div
                                                     className={`h-16 flex-1 rounded-lg border shadow-sm ${theme.colorClass} flex items-center justify-center`}
                                                 >
-                                                    <span className="text-xs font-medium text-white">Primary</span>
+                                                    <span className="text-xs font-medium text-white">Utama</span>
                                                 </div>
                                                 <div className="space-y-2">
                                                     <div
@@ -167,7 +167,7 @@ export default function ThemeSettings() {
                                             {isActive ? (
                                                 <Button disabled className="w-full" variant="default">
                                                     <Check className="mr-2 h-4 w-4" />
-                                                    Currently Active
+                                                    Saat Ini Aktif
                                                 </Button>
                                             ) : (
                                                 <Button
@@ -176,7 +176,7 @@ export default function ThemeSettings() {
                                                     onClick={() => handleThemeChange(theme.key)}
                                                 >
                                                     <Palette className="mr-2 h-4 w-4" />
-                                                    Apply Theme
+                                                    Terapkan Tema
                                                 </Button>
                                             )}
                                         </div>
@@ -192,17 +192,17 @@ export default function ThemeSettings() {
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <Monitor className="h-5 w-5" />
-                            Display Preferences
+                            Preferensi Tampilan
                         </CardTitle>
-                        <CardDescription>Customize how your interface appears</CardDescription>
+                        <CardDescription>Sesuaikan tampilan antarmuka Anda</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         {/* Dark Mode Settings */}
                         <div className="space-y-4">
                             <div>
-                                <h4 className="mb-2 text-sm font-medium">Appearance Mode</h4>
+                                <h4 className="mb-2 text-sm font-medium">Mode Tampilan</h4>
                                 <p className="mb-4 text-xs text-muted-foreground">
-                                    Choose how the interface should appear or let it follow your system preference
+                                    Pilih bagaimana antarmuka harus muncul atau biarkan mengikuti preferensi sistem Anda
                                 </p>
                             </div>
 
@@ -221,13 +221,13 @@ export default function ThemeSettings() {
                                             </div>
                                         </div>
                                         <div>
-                                            <h5 className="text-sm font-medium">Light Mode</h5>
-                                            <p className="text-xs text-muted-foreground">Bright and clean interface</p>
+                                            <h5 className="text-sm font-medium">Mode Terang</h5>
+                                            <p className="text-xs text-muted-foreground">Antarmuka terang dan bersih</p>
                                         </div>
                                         {currentDarkMode === 'light' && (
                                             <Badge variant="default" className="text-xs">
                                                 <Check className="mr-1 h-3 w-3" />
-                                                Active
+                                                Aktif
                                             </Badge>
                                         )}
                                     </CardContent>
@@ -247,13 +247,13 @@ export default function ThemeSettings() {
                                             </div>
                                         </div>
                                         <div>
-                                            <h5 className="text-sm font-medium">Dark Mode</h5>
-                                            <p className="text-xs text-muted-foreground">Easy on the eyes</p>
+                                            <h5 className="text-sm font-medium">Mode Gelap</h5>
+                                            <p className="text-xs text-muted-foreground">Mudah pada mata</p>
                                         </div>
                                         {currentDarkMode === 'dark' && (
                                             <Badge variant="default" className="text-xs">
                                                 <Check className="mr-1 h-3 w-3" />
-                                                Active
+                                                Aktif
                                             </Badge>
                                         )}
                                     </CardContent>
@@ -273,13 +273,13 @@ export default function ThemeSettings() {
                                             </div>
                                         </div>
                                         <div>
-                                            <h5 className="text-sm font-medium">System</h5>
-                                            <p className="text-xs text-muted-foreground">Follow device setting</p>
+                                            <h5 className="text-sm font-medium">Sistem</h5>
+                                            <p className="text-xs text-muted-foreground">Ikuti pengaturan perangkat</p>
                                         </div>
                                         {currentDarkMode === 'system' && (
                                             <Badge variant="default" className="text-xs">
                                                 <Check className="mr-1 h-3 w-3" />
-                                                Active
+                                                Aktif
                                             </Badge>
                                         )}
                                     </CardContent>
@@ -292,12 +292,12 @@ export default function ThemeSettings() {
                         {/* Future Features */}
                         <div className="flex items-center justify-between rounded-lg border p-4 opacity-50">
                             <div className="space-y-1">
-                                <h4 className="font-medium">Custom Colors</h4>
-                                <p className="text-sm text-muted-foreground">Create your own color palette (Coming Soon)</p>
+                                <h4 className="font-medium">Warna Kustom</h4>
+                                <p className="text-sm text-muted-foreground">Buat palet warna Anda sendiri (Segera Hadir)</p>
                             </div>
                             <Button variant="outline" size="sm" disabled>
                                 <Palette className="mr-2 h-4 w-4" />
-                                Customize
+                                Kustomisasi
                             </Button>
                         </div>
                     </CardContent>
@@ -307,11 +307,11 @@ export default function ThemeSettings() {
                 <Card className="bg-muted/50">
                     <CardContent className="pt-6">
                         <div className="space-y-2 text-center">
-                            <h3 className="font-semibold">💡 Pro Tips</h3>
+                            <h3 className="font-semibold">💡 Tips Pro</h3>
                             <div className="space-y-1 text-sm text-muted-foreground">
-                                <p>• Theme and dark mode changes are applied instantly and saved automatically</p>
-                                <p>• System mode follows your operating system's appearance preference</p>
-                                <p>• All changes are preserved across browser sessions</p>
+                                <p>• Perubahan tema dan mode gelap diterapkan secara instan dan disimpan secara otomatis</p>
+                                <p>• Mode sistem mengikuti preferensi tampilan sistem operasi Anda</p>
+                                <p>• Semua perubahan dipertahankan di seluruh sesi browser</p>
                             </div>
                         </div>
                     </CardContent>

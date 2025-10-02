@@ -42,9 +42,9 @@ export default function Index({ auth, questions, likertOptions, stats }) {
     return (
         <AdminLayout breadcrumbs={[
             { label: 'Admin', href: '/admin' },
-            { label: 'Quiz Management' }
+            { label: 'Manajemen Kuis' }
         ]}>
-            <Head title="Quiz Management" />
+            <Head title="Manajemen Kuis" />
 
             <div className="p-6">
                 {/* Stats Overview */}
@@ -55,7 +55,7 @@ export default function Index({ auth, questions, likertOptions, stats }) {
                                     <BarChart3 className="h-5 w-5 text-primary" />
                                     <div>
                                         <p className="text-sm font-medium text-muted-foreground">
-                                            Total Questions
+                                            Total Pertanyaan
                                         </p>
                                         <p className="text-2xl font-bold">{questions.length}</p>
                                     </div>
@@ -69,7 +69,7 @@ export default function Index({ auth, questions, likertOptions, stats }) {
                                     <Brain className="h-5 w-5 text-blue-600" />
                                     <div>
                                         <p className="text-sm font-medium text-muted-foreground">
-                                            Knowledge
+                                            Pengetahuan
                                         </p>
                                         <p className="text-2xl font-bold text-blue-600">
                                             {aspects.knowledge.length}
@@ -85,7 +85,7 @@ export default function Index({ auth, questions, likertOptions, stats }) {
                                     <Brain className="h-5 w-5 text-green-600" />
                                     <div>
                                         <p className="text-sm font-medium text-muted-foreground">
-                                            Attitude
+                                            Sikap
                                         </p>
                                         <p className="text-2xl font-bold text-green-600">
                                             {aspects.attitude.length}
@@ -101,7 +101,7 @@ export default function Index({ auth, questions, likertOptions, stats }) {
                                     <Brain className="h-5 w-5 text-purple-600" />
                                     <div>
                                         <p className="text-sm font-medium text-muted-foreground">
-                                            Behavior
+                                            Perilaku
                                         </p>
                                         <p className="text-2xl font-bold text-purple-600">
                                             {aspects.behavior.length}
@@ -117,8 +117,8 @@ export default function Index({ auth, questions, likertOptions, stats }) {
                         <Alert className="mb-8 border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950">
                             <AlertTriangle className="h-4 w-4 text-amber-600" />
                             <AlertDescription className="text-amber-800 dark:text-amber-200">
-                                <strong>Constraint Violation:</strong> Each aspect must have exactly 7 questions.
-                                Please review and adjust the questions to meet this requirement.
+                                <strong>Pelanggaran Batasan:</strong> Setiap aspek harus memiliki tepat 7 pertanyaan.
+                                Silakan tinjau dan sesuaikan pertanyaan untuk memenuhi persyaratan ini.
                             </AlertDescription>
                         </Alert>
                     )}
@@ -127,11 +127,11 @@ export default function Index({ auth, questions, likertOptions, stats }) {
                         <TabsList className="grid w-full grid-cols-2">
                             <TabsTrigger value="questions" className="flex items-center gap-2">
                                 <Brain className="h-4 w-4" />
-                                Questions Management
+                                Manajemen Pertanyaan
                             </TabsTrigger>
                             <TabsTrigger value="settings" className="flex items-center gap-2">
                                 <Settings className="h-4 w-4" />
-                                Quiz Settings
+                                Pengaturan Kuis
                             </TabsTrigger>
                         </TabsList>
 
@@ -139,35 +139,35 @@ export default function Index({ auth, questions, likertOptions, stats }) {
                             {/* Instructions */}
                             <Card>
                                 <CardHeader>
-                                    <CardTitle>Quiz Questions Overview</CardTitle>
+                                    <CardTitle>Ringkasan Pertanyaan Kuis</CardTitle>
                                     <CardDescription>
-                                        Manage quiz questions across three aspects. Each aspect must contain exactly 7 questions.
+                                        Kelola pertanyaan kuis di tiga aspek. Setiap aspek harus berisi tepat 7 pertanyaan.
                                     </CardDescription>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                                         <div className="p-3 bg-blue-50 dark:bg-blue-950 rounded-lg border border-blue-200 dark:border-blue-800">
                                             <h4 className="font-medium text-blue-900 dark:text-blue-100 mb-1">
-                                                Knowledge Aspect
+                                                Aspek Pengetahuan
                                             </h4>
                                             <p className="text-blue-700 dark:text-blue-300">
-                                                Measures understanding and factual knowledge
+                                                Mengukur pemahaman dan pengetahuan faktual
                                             </p>
                                         </div>
                                         <div className="p-3 bg-green-50 dark:bg-green-950 rounded-lg border border-green-200 dark:border-green-800">
                                             <h4 className="font-medium text-green-900 dark:text-green-100 mb-1">
-                                                Attitude Aspect
+                                                Aspek Sikap
                                             </h4>
                                             <p className="text-green-700 dark:text-green-300">
-                                                Measures opinions, beliefs, and feelings
+                                                Mengukur pendapat, keyakinan, dan perasaan
                                             </p>
                                         </div>
                                         <div className="p-3 bg-purple-50 dark:bg-purple-950 rounded-lg border border-purple-200 dark:border-purple-800">
                                             <h4 className="font-medium text-purple-900 dark:text-purple-100 mb-1">
-                                                Behavior Aspect
+                                                Aspek Perilaku
                                             </h4>
                                             <p className="text-purple-700 dark:text-purple-300">
-                                                Measures actions and behavioral intentions
+                                                Mengukur tindakan dan niat perilaku
                                             </p>
                                         </div>
                                     </div>
@@ -179,15 +179,15 @@ export default function Index({ auth, questions, likertOptions, stats }) {
                                 <TabsList className="grid w-full grid-cols-3">
                                     <TabsTrigger value="knowledge" className="flex items-center gap-2">
                                         <Brain className="h-4 w-4 text-blue-600" />
-                                        Knowledge ({aspects.knowledge.length})
+                                        Pengetahuan ({aspects.knowledge.length})
                                     </TabsTrigger>
                                     <TabsTrigger value="attitude" className="flex items-center gap-2">
                                         <Brain className="h-4 w-4 text-green-600" />
-                                        Attitude ({aspects.attitude.length})
+                                        Sikap ({aspects.attitude.length})
                                     </TabsTrigger>
                                     <TabsTrigger value="behavior" className="flex items-center gap-2">
                                         <Brain className="h-4 w-4 text-purple-600" />
-                                        Behavior ({aspects.behavior.length})
+                                        Perilaku ({aspects.behavior.length})
                                     </TabsTrigger>
                                 </TabsList>
 
@@ -210,23 +210,23 @@ export default function Index({ auth, questions, likertOptions, stats }) {
                             {stats && (
                                 <Card>
                                     <CardHeader>
-                                        <CardTitle>Quiz Statistics</CardTitle>
+                                        <CardTitle>Statistik Kuis</CardTitle>
                                         <CardDescription>
-                                            Usage statistics and performance metrics
+                                            Statistik penggunaan dan metrik performa
                                         </CardDescription>
                                     </CardHeader>
                                     <CardContent>
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                                             <div className="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
-                                                <p className="text-sm font-medium text-muted-foreground">Total Responses</p>
+                                                <p className="text-sm font-medium text-muted-foreground">Total Respons</p>
                                                 <p className="text-xl font-bold">{stats.totalResponses || 0}</p>
                                             </div>
                                             <div className="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
-                                                <p className="text-sm font-medium text-muted-foreground">Avg. Completion Time</p>
+                                                <p className="text-sm font-medium text-muted-foreground">Rata-rata Waktu Penyelesaian</p>
                                                 <p className="text-xl font-bold">{stats.avgCompletionTime || 'N/A'}</p>
                                             </div>
                                             <div className="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
-                                                <p className="text-sm font-medium text-muted-foreground">Last Updated</p>
+                                                <p className="text-sm font-medium text-muted-foreground">Terakhir Diperbarui</p>
                                                 <p className="text-xl font-bold">
                                                     {questions.length > 0
                                                         ? new Date(Math.max(...questions.map(q => new Date(q.updated_at)))).toLocaleDateString()
@@ -235,7 +235,7 @@ export default function Index({ auth, questions, likertOptions, stats }) {
                                                 </p>
                                             </div>
                                             <div className="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
-                                                <p className="text-sm font-medium text-muted-foreground">Active Questions</p>
+                                                <p className="text-sm font-medium text-muted-foreground">Pertanyaan Aktif</p>
                                                 <p className="text-xl font-bold">
                                                     {questions.filter(q => q.is_active).length}
                                                 </p>

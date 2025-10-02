@@ -14,7 +14,7 @@ export default function EmployeeEdit({ employee }) {
     const { flash } = usePage().props;
     const breadcrumbs = [
         { label: 'Dashboard', href: route('admin.dashboard') },
-        { label: 'Employee Management', href: route('admin.employees.index') },
+        { label: 'Manajemen Karyawan', href: route('admin.employees.index') },
         { label: `Edit ${employee.name}` },
     ];
 
@@ -25,7 +25,7 @@ export default function EmployeeEdit({ employee }) {
         name: employee.name || '',
         department: employee.department || '',
         position: employee.position || '',
-        hire_date: employee.hire_date ? new Date(employee.hire_date).toISOString().split('T')[0] : '',
+        gender: employee.gender || '',
         phone: employee.phone || '',
         address: employee.address || '',
         create_user_account: !!employee.user,
@@ -73,7 +73,7 @@ export default function EmployeeEdit({ employee }) {
 
     return (
         <AdminLayout breadcrumbs={breadcrumbs}>
-            <Head title={`Edit Employee - ${employee.name}`} />
+            <Head title={`Edit Karyawan - ${employee.name}`} />
 
             <div className="p-6">
                 {/* Flash Messages */}
@@ -90,13 +90,13 @@ export default function EmployeeEdit({ employee }) {
 
                 <div className="mb-8 flex items-center justify-between">
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">Edit Employee</h1>
-                        <p className="text-muted-foreground">Update employee information and manage user account</p>
+                        <h1 className="text-3xl font-bold tracking-tight">Edit Karyawan</h1>
+                        <p className="text-muted-foreground">Perbarui informasi karyawan dan kelola akun pengguna</p>
                     </div>
                     <Button variant="outline" asChild>
                         <a href={route('admin.employees.index')}>
                             <ArrowLeft className="mr-2 h-4 w-4" />
-                            Back to List
+                            Kembali ke Daftar
                         </a>
                     </Button>
                 </div>
@@ -106,22 +106,22 @@ export default function EmployeeEdit({ employee }) {
                         {/* Employee Information */}
                         <Card>
                             <CardHeader>
-                                <CardTitle>Employee Information</CardTitle>
-                                <CardDescription>Update the employee's personal and professional details</CardDescription>
+                                <CardTitle>Informasi Karyawan</CardTitle>
+                                <CardDescription>Perbarui detail pribadi dan profesional karyawan</CardDescription>
                             </CardHeader>
                             <CardContent>
                                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                                     {/* Employee Code */}
                                     <div className="space-y-2">
                                         <Label htmlFor="employee_code">
-                                            Employee Code <span className="text-red-500">*</span>
+                                            Kode Karyawan <span className="text-red-500">*</span>
                                         </Label>
                                         <Input
                                             id="employee_code"
                                             type="text"
                                             value={data.employee_code}
                                             onChange={(e) => setData('employee_code', e.target.value)}
-                                            placeholder="e.g., EMP001"
+                                            placeholder="contoh: EMP001"
                                             className={errors.employee_code ? 'border-red-500' : ''}
                                         />
                                         {errors.employee_code && <p className="text-sm text-red-500">{errors.employee_code}</p>}
@@ -130,14 +130,14 @@ export default function EmployeeEdit({ employee }) {
                                     {/* Name */}
                                     <div className="space-y-2">
                                         <Label htmlFor="name">
-                                            Full Name <span className="text-red-500">*</span>
+                                            Nama Lengkap <span className="text-red-500">*</span>
                                         </Label>
                                         <Input
                                             id="name"
                                             type="text"
                                             value={data.name}
                                             onChange={(e) => setData('name', e.target.value)}
-                                            placeholder="Employee full name"
+                                            placeholder="Nama lengkap karyawan"
                                             className={errors.name ? 'border-red-500' : ''}
                                         />
                                         {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
@@ -146,14 +146,14 @@ export default function EmployeeEdit({ employee }) {
                                     {/* Department */}
                                     <div className="space-y-2">
                                         <Label htmlFor="department">
-                                            Department <span className="text-red-500">*</span>
+                                            Departemen <span className="text-red-500">*</span>
                                         </Label>
                                         <Input
                                             id="department"
                                             type="text"
                                             value={data.department}
                                             onChange={(e) => setData('department', e.target.value)}
-                                            placeholder="e.g., Human Resources"
+                                            placeholder="contoh: Sumber Daya Manusia"
                                             className={errors.department ? 'border-red-500' : ''}
                                         />
                                         {errors.department && <p className="text-sm text-red-500">{errors.department}</p>}
@@ -162,43 +162,45 @@ export default function EmployeeEdit({ employee }) {
                                     {/* Position */}
                                     <div className="space-y-2">
                                         <Label htmlFor="position">
-                                            Position <span className="text-red-500">*</span>
+                                            Posisi <span className="text-red-500">*</span>
                                         </Label>
                                         <Input
                                             id="position"
                                             type="text"
                                             value={data.position}
                                             onChange={(e) => setData('position', e.target.value)}
-                                            placeholder="e.g., HR Manager"
+                                            placeholder="contoh: Manajer HR"
                                             className={errors.position ? 'border-red-500' : ''}
                                         />
                                         {errors.position && <p className="text-sm text-red-500">{errors.position}</p>}
                                     </div>
 
-                                    {/* Hire Date */}
+                                    {/* Gender */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="hire_date">
-                                            Hire Date <span className="text-red-500">*</span>
+                                        <Label htmlFor="gender">
+                                            Jenis Kelamin <span className="text-red-500">*</span>
                                         </Label>
-                                        <Input
-                                            id="hire_date"
-                                            type="date"
-                                            value={data.hire_date}
-                                            onChange={(e) => setData('hire_date', e.target.value)}
-                                            className={errors.hire_date ? 'border-red-500' : ''}
-                                        />
-                                        {errors.hire_date && <p className="text-sm text-red-500">{errors.hire_date}</p>}
+                                        <Select value={data.gender} onValueChange={(value) => setData('gender', value)}>
+                                            <SelectTrigger className={errors.gender ? 'border-red-500' : ''}>
+                                                <SelectValue placeholder="Pilih jenis kelamin" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="Laki-laki">Laki-laki</SelectItem>
+                                                <SelectItem value="Perempuan">Perempuan</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.gender && <p className="text-sm text-red-500">{errors.gender}</p>}
                                     </div>
 
                                     {/* Phone */}
                                     <div className="space-y-2">
-                                        <Label htmlFor="phone">Phone Number</Label>
+                                        <Label htmlFor="phone">Nomor Telepon</Label>
                                         <Input
                                             id="phone"
                                             type="tel"
                                             value={data.phone}
                                             onChange={(e) => setData('phone', e.target.value)}
-                                            placeholder="e.g., +62 812 3456 7890"
+                                            placeholder="contoh: +62 812 3456 7890"
                                             className={errors.phone ? 'border-red-500' : ''}
                                         />
                                         {errors.phone && <p className="text-sm text-red-500">{errors.phone}</p>}
@@ -207,13 +209,13 @@ export default function EmployeeEdit({ employee }) {
 
                                 {/* Address */}
                                 <div className="mt-6 space-y-2">
-                                    <Label htmlFor="address">Address</Label>
+                                    <Label htmlFor="address">Alamat</Label>
                                     <Textarea
                                         id="address"
                                         rows={3}
                                         value={data.address}
                                         onChange={(e) => setData('address', e.target.value)}
-                                        placeholder="Employee address"
+                                        placeholder="Alamat karyawan"
                                         className={errors.address ? 'border-red-500' : ''}
                                     />
                                     {errors.address && <p className="text-sm text-red-500">{errors.address}</p>}
@@ -229,12 +231,12 @@ export default function EmployeeEdit({ employee }) {
                                     <div>
                                         <CardTitle className="flex items-center text-lg">
                                             {employee.user && <UserCheck className="mr-2 h-5 w-5 text-green-600" />}
-                                            {employee.user ? 'Update User Account' : 'Create User Account'}
+                                            {employee.user ? 'Perbarui Akun Pengguna' : 'Buat Akun Pengguna'}
                                         </CardTitle>
                                         <CardDescription>
                                             {employee.user
-                                                ? 'Manage the existing user account for this employee'
-                                                : 'Check this option to create a user account that allows the employee to log in to the system'}
+                                                ? 'Kelola akun pengguna yang sudah ada untuk karyawan ini'
+                                                : 'Centang opsi ini untuk membuat akun pengguna yang memungkinkan karyawan masuk ke sistem'}
                                         </CardDescription>
                                     </div>
                                 </div>
@@ -245,14 +247,14 @@ export default function EmployeeEdit({ employee }) {
                                         {/* Email */}
                                         <div className="space-y-2">
                                             <Label htmlFor="email">
-                                                Email Address <span className="text-red-500">*</span>
+                                                Alamat Email <span className="text-red-500">*</span>
                                             </Label>
                                             <Input
                                                 id="email"
                                                 type="email"
                                                 value={data.email}
                                                 onChange={(e) => setData('email', e.target.value)}
-                                                placeholder="user@example.com"
+                                                placeholder="user@contoh.com"
                                                 className={errors.email ? 'border-red-500' : ''}
                                             />
                                             {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
@@ -261,14 +263,14 @@ export default function EmployeeEdit({ employee }) {
                                         {/* Role */}
                                         <div className="space-y-2">
                                             <Label htmlFor="role">
-                                                Role <span className="text-red-500">*</span>
+                                                Peran <span className="text-red-500">*</span>
                                             </Label>
                                             <Select value={data.role} onValueChange={(value) => setData('role', value)}>
                                                 <SelectTrigger className={errors.role ? 'border-red-500' : ''}>
-                                                    <SelectValue placeholder="Select role" />
+                                                    <SelectValue placeholder="Pilih peran" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    <SelectItem value="user">User</SelectItem>
+                                                    <SelectItem value="user">Pengguna</SelectItem>
                                                     <SelectItem value="admin">Admin</SelectItem>
                                                 </SelectContent>
                                             </Select>
@@ -278,9 +280,9 @@ export default function EmployeeEdit({ employee }) {
                                         {/* Password */}
                                         <div className="space-y-2">
                                             <Label htmlFor="password">
-                                                Password {!employee.user && <span className="text-red-500">*</span>}
+                                                Kata Sandi {!employee.user && <span className="text-red-500">*</span>}
                                                 {employee.user && (
-                                                    <span className="text-sm text-muted-foreground">(leave blank to keep current)</span>
+                                                    <span className="text-sm text-muted-foreground">(biarkan kosong untuk mempertahankan yang sekarang)</span>
                                                 )}
                                             </Label>
                                             <Input
@@ -288,7 +290,7 @@ export default function EmployeeEdit({ employee }) {
                                                 type="password"
                                                 value={data.password}
                                                 onChange={(e) => setData('password', e.target.value)}
-                                                placeholder={employee.user ? 'Enter new password (optional)' : 'Minimum 8 characters'}
+                                                placeholder={employee.user ? 'Masukkan kata sandi baru (opsional)' : 'Minimal 8 karakter'}
                                                 className={errors.password ? 'border-red-500' : ''}
                                             />
                                             {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
@@ -297,14 +299,14 @@ export default function EmployeeEdit({ employee }) {
                                         {/* Password Confirmation */}
                                         <div className="space-y-2">
                                             <Label htmlFor="password_confirmation">
-                                                Confirm Password {!employee.user && <span className="text-red-500">*</span>}
+                                                Konfirmasi Kata Sandi {!employee.user && <span className="text-red-500">*</span>}
                                             </Label>
                                             <Input
                                                 id="password_confirmation"
                                                 type="password"
                                                 value={data.password_confirmation}
                                                 onChange={(e) => setData('password_confirmation', e.target.value)}
-                                                placeholder="Repeat password"
+                                                placeholder="Ulangi kata sandi"
                                                 className={errors.password_confirmation ? 'border-red-500' : ''}
                                             />
                                             {errors.password_confirmation && <p className="text-sm text-red-500">{errors.password_confirmation}</p>}
@@ -317,11 +319,11 @@ export default function EmployeeEdit({ employee }) {
                         {/* Submit Buttons */}
                         <div className="flex justify-end gap-4 border-t pt-6">
                             <Button type="button" variant="outline" asChild>
-                                <a href={route('admin.employees.index')}>Cancel</a>
+                                <a href={route('admin.employees.index')}>Batal</a>
                             </Button>
                             <Button type="submit" disabled={processing}>
                                 <Save className="mr-2 h-4 w-4" />
-                                {processing ? 'Saving...' : 'Save Changes'}
+                                {processing ? 'Menyimpan...' : 'Simpan Perubahan'}
                             </Button>
                         </div>
                     </form>

@@ -14,27 +14,27 @@ export default function Welcome() {
     const features = [
         {
             icon: BarChart3,
-            title: 'Data Analysis',
-            description: 'Advanced clustering algorithms for employee behavior analysis',
+            title: 'Analisis Data',
+            description: 'Algoritma pengelompokan canggih untuk analisis perilaku karyawan',
             gradient: 'from-blue-500 to-cyan-500',
         },
         {
             icon: Users,
-            title: 'Employee Management',
-            description: 'Comprehensive employee data management and tracking',
+            title: 'Manajemen Karyawan',
+            description: 'Manajemen dan pelacakan data karyawan yang komprehensif',
             gradient: 'from-green-500 to-emerald-500',
         },
         {
             icon: Shield,
-            title: 'Secure Access',
-            description: 'Role-based access control with admin and user panels',
+            title: 'Akses Aman',
+            description: 'Kontrol akses berbasis peran dengan panel admin dan pengguna',
             gradient: 'from-purple-500 to-violet-500',
         },
     ];
 
     return (
         <>
-            <Head title="Welcome" />
+            <Head title="Selamat Datang" />
 
             {/* Background with animated gradient */}
             <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-background via-background to-muted/20">
@@ -54,7 +54,7 @@ export default function Welcome() {
                             </div>
                             <div className="min-w-0 flex-1">
                                 <h1 className="truncate text-lg font-bold text-foreground md:text-xl">ASTI Analytics</h1>
-                                <p className="truncate text-xs text-muted-foreground md:text-sm">Employee Analysis System</p>
+                                <p className="truncate text-xs text-muted-foreground md:text-sm">Sistem Analisis Karyawan</p>
                             </div>
                         </div>
 
@@ -63,7 +63,7 @@ export default function Welcome() {
                                 <DarkModeSwitcher variant="outline" size="sm" />
                             </div>
                             <Button asChild variant="outline" size="sm" className="text-sm">
-                                <Link href="/login">Sign In</Link>
+                                <Link href="/login">Masuk</Link>
                             </Button>
                         </div>
                     </div>
@@ -89,12 +89,11 @@ export default function Welcome() {
                                 <div className="space-y-6">
                                     <h1 className="text-5xl font-bold tracking-tight md:text-7xl">
                                         <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
-                                            Smart Analytics
+                                            Analitik Cerdas
                                         </span>
                                     </h1>
                                     <p className="mx-auto max-w-3xl text-xl leading-relaxed text-muted-foreground md:text-2xl">
-                                        Advanced employee behavior analysis system with powerful clustering algorithms and comprehensive data
-                                        management capabilities.
+                                        Sistem analisis perilaku karyawan canggih dengan algoritma pengelompokan yang kuat dan kemampuan manajemen data yang komprehensif.
                                     </p>
                                 </div>
 
@@ -106,13 +105,13 @@ export default function Welcome() {
                                         className="bg-gradient-to-r from-primary to-primary/90 px-8 py-6 text-lg shadow-xl hover:from-primary/90 hover:to-primary"
                                     >
                                         <Link href="/login">
-                                            Get Started
+                                            Mulai
                                             <ArrowRight className="ml-2 h-5 w-5" />
                                         </Link>
                                     </Button>
-                                    <Button asChild variant="outline" size="lg" className="border-2 px-8 py-6 text-lg">
-                                        <Link href="/register">Create Account</Link>
-                                    </Button>
+                                    {/* <Button asChild variant="outline" size="lg" className="border-2 px-8 py-6 text-lg">
+                                        <Link href="/register">Buat Akun</Link>
+                                    </Button> */}
                                 </div>
                             </div>
                         </section>
@@ -120,9 +119,9 @@ export default function Welcome() {
                         {/* Features Section */}
                         <section className="py-20">
                             <div className="mb-16 text-center">
-                                <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">Powerful Features</h2>
+                                <h2 className="mb-4 text-3xl font-bold text-foreground md:text-4xl">Fitur Unggulan</h2>
                                 <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-                                    Everything you need to analyze and manage employee data effectively
+                                    Semua yang Anda butuhkan untuk menganalisis dan mengelola data karyawan secara efektif
                                 </p>
                             </div>
 
@@ -162,19 +161,19 @@ export default function Welcome() {
                                             <div className="bg-gradient-to-br from-primary to-primary/80 bg-clip-text text-4xl font-bold text-transparent">
                                                 K-Means
                                             </div>
-                                            <div className="font-medium text-muted-foreground">Clustering Algorithm</div>
+                                            <div className="font-medium text-muted-foreground">Algoritma Pengelompokan</div>
                                         </div>
                                         <div className="space-y-2">
                                             <div className="bg-gradient-to-br from-green-600 to-green-500 bg-clip-text text-4xl font-bold text-transparent">
                                                 Multi-Panel
                                             </div>
-                                            <div className="font-medium text-muted-foreground">System Architecture</div>
+                                            <div className="font-medium text-muted-foreground">Arsitektur Sistem</div>
                                         </div>
                                         <div className="space-y-2">
                                             <div className="bg-gradient-to-br from-purple-600 to-purple-500 bg-clip-text text-4xl font-bold text-transparent">
                                                 Role-Based
                                             </div>
-                                            <div className="font-medium text-muted-foreground">Access Control</div>
+                                            <div className="font-medium text-muted-foreground">Kontrol Akses</div>
                                         </div>
                                     </div>
                                 </CardContent>
@@ -193,7 +192,7 @@ export default function Welcome() {
                                 </div>
                                 <span className="font-semibold text-foreground">ASTI Analytics</span>
                             </div>
-                            <div className="text-sm text-muted-foreground">© 2025 ASTI Analytics. Built with modern web technologies.</div>
+                            <div className="text-sm text-muted-foreground">© 2025 ASTI Analytics. Dibangun dengan teknologi web modern.</div>
                         </div>
                     </div>
                 </footer>

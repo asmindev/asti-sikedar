@@ -62,12 +62,12 @@ export function UserSidebar() {
             urlPattern: '/user/profile',
             href: '/user/profile',
         },
-        {
-            title: 'Settings',
-            icon: Settings,
-            urlPattern: '/user/settings',
-            href: '/user/settings',
-        },
+        // {
+        //     title: 'Settings',
+        //     icon: Settings,
+        //     urlPattern: '/user/settings',
+        //     href: '/user/settings',
+        // },
     ];
 
     return (

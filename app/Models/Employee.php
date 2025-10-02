@@ -20,7 +20,7 @@ class Employee extends Model
         'name',
         'department',
         'position',
-        'hire_date',
+        'gender',
         'phone',
         'address',
     ];
@@ -31,7 +31,7 @@ class Employee extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'hire_date' => 'date',
+        // No casts needed for gender
     ];
 
     /**

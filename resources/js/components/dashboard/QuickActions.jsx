@@ -11,13 +11,13 @@ export default function QuickActions() {
             href: route('admin.employees.index'),
             variant: 'default'
         },
-        {
-            title: 'Upload Kuesioner',
-            description: 'Import data kuesioner dari file Excel',
-            icon: FileText,
-            href: route('admin.questionnaires.upload'),
-            variant: 'outline'
-        },
+        // {
+        //     title: 'Upload Kuesioner',
+        //     description: 'Import data kuesioner dari file Excel',
+        //     icon: FileText,
+        //     href: route('admin.questionnaires.upload'),
+        //     variant: 'outline'
+        // },
         {
             title: 'Analisis Klaster',
             description: 'Jalankan analisis K-Means clustering',

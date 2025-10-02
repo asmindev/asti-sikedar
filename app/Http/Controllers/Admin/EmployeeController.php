@@ -81,7 +81,7 @@ class EmployeeController extends Controller
                 'name',
                 'department',
                 'position',
-                'hire_date',
+                'gender',
                 'phone',
                 'address'
             ]));
@@ -160,7 +160,7 @@ class EmployeeController extends Controller
                 'name',
                 'department',
                 'position',
-                'hire_date',
+                'gender',
                 'phone',
                 'address'
             ]));

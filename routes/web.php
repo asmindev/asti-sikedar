@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::get('/clusters/analysis', [ClusterController::class, 'index'])->name('clusters.analysis');
     Route::post('/clusters/analysis', [ClusterController::class, 'store'])->name('clusters.store');
     Route::get('/clusters/export-pdf', [ClusterController::class, 'exportPdf'])->name('clusters.export-pdf');
+    Route::get('/clusters/export-excel', [ClusterController::class, 'exportExcel'])->name('clusters.export-excel');
 
     // Quiz Management
     Route::resource('quiz-management', QuizManagementController::class);

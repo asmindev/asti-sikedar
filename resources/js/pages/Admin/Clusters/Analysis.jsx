@@ -9,17 +9,18 @@ import DataOverview from './DataOverview';
 import DatabaseStatistics from './DatabaseStatistics';
 import SavedResultsTable from './SavedResultsTable';
 import { saveClusterResults } from './clusterService';
+import { FileSpreadsheet } from 'lucide-react';
 
 export default function ClusterPage({ questionnaires, analysisStats, savedResults }) {
     const [clusters, setClusters] = useState(null);
     const [labeledClusters, setLabeledClusters] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
-    const breadcrumbs = [{ label: 'Dashboard', href: route('admin.dashboard') }, { label: 'Cluster Analysis' }];
+    const breadcrumbs = [{ label: 'Dashboard', href: route('admin.dashboard') }, { label: 'Analisis Cluster' }];
 
     const handleCluster = () => {
         if (!questionnaires || questionnaires.length === 0) {
-            toast.error('No questionnaire data available for clustering.');
+            toast.error('Tidak ada data kuesioner yang tersedia untuk pengelompokan.');
             return;
         }
 
@@ -29,9 +30,9 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
             const result = performFullClustering(questionnaires);
             setClusters(result.clusters);
             setLabeledClusters(result.labeledClusters);
-            toast.success('Clustering analysis completed successfully!');
+            toast.success('Analisis pengelompokan berhasil diselesaikan!');
         } catch (error) {
-            toast.error('Failed to perform clustering analysis.');
+            toast.error('Gagal melakukan analisis pengelompokan.');
             console.error('Clustering error:', error);
         } finally {
             setIsLoading(false);
@@ -40,6 +41,17 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
 
     const handleSaveResults = async () => {
         await saveClusterResults(labeledClusters, setIsSaving);
+    };
+
+    const handleExportExcel = () => {
+        if (!savedResults || savedResults.length === 0) {
+            toast.error('Tidak ada data cluster yang tersimpan untuk diekspor.');
+            return;
+        }
+
+        // Redirect to export route
+        window.location.href = route('admin.clusters.export-excel');
+        toast.success('Mengunduh file Excel...');
     };
 
     // Data untuk chart
@@ -81,8 +93,18 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
                         )}
                     </div>
                     <div className="flex gap-2">
+
+                            <Button
+                                onClick={handleExportExcel}
+                                variant="secondary"
+                                className="bg-green-600 hover:bg-green-700 text-white"
+                            >
+                                <FileSpreadsheet className="mr-2 h-4 w-4" />
+                                Export Excel
+                            </Button>
+
                         <Button onClick={handleCluster} disabled={isLoading}>
-                            {isLoading ? 'Processing...' : 'Jalankan K-Means'}
+                            {isLoading ? 'Memproses...' : 'Jalankan K-Means'}
                         </Button>
                         {labeledClusters.length > 0 && (
                             <Button
@@ -90,7 +112,7 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
                                 disabled={isSaving}
                                 variant="outline"
                             >
-                                {isSaving ? 'Saving...' : 'Save to Database'}
+                                {isSaving ? 'Menyimpan...' : 'Simpan ke Database'}
                             </Button>
                         )}
                     </div>

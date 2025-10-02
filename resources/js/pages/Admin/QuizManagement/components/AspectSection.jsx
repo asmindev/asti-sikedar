@@ -34,7 +34,7 @@ export default function AspectSection({ aspect, title, questions }) {
                         <div>
                             <CardTitle className="text-lg">{title}</CardTitle>
                             <CardDescription>
-                                {activeQuestions.length} of 7 questions active • {totalQuestions} total questions
+                                {activeQuestions.length} dari 7 pertanyaan aktif • {totalQuestions} total pertanyaan
                             </CardDescription>
                         </div>
                     </div>
@@ -49,8 +49,8 @@ export default function AspectSection({ aspect, title, questions }) {
                 {activeQuestions.length !== 7 && (
                     <div className="mt-2 p-3 bg-orange-50 dark:bg-orange-950 border border-orange-200 dark:border-orange-800 rounded-lg">
                         <p className="text-sm text-orange-800 dark:text-orange-200">
-                            ⚠️ This aspect must have exactly 7 active questions.
-                            Currently has {activeQuestions.length} active questions.
+                            ⚠️ Aspek ini harus memiliki tepat 7 pertanyaan aktif.
+                            Saat ini memiliki {activeQuestions.length} pertanyaan aktif.
                         </p>
                     </div>
                 )}
@@ -60,13 +60,13 @@ export default function AspectSection({ aspect, title, questions }) {
                 <Tabs defaultValue="all" className="w-full">
                     <TabsList className="grid w-full grid-cols-3">
                         <TabsTrigger value="all">
-                            All Questions ({totalQuestions})
+                            Semua Pertanyaan ({totalQuestions})
                         </TabsTrigger>
                         <TabsTrigger value="active">
-                            Active ({activeQuestions.length})
+                            Aktif ({activeQuestions.length})
                         </TabsTrigger>
                         <TabsTrigger value="inactive">
-                            Inactive ({totalQuestions - activeQuestions.length})
+                            Tidak Aktif ({totalQuestions - activeQuestions.length})
                         </TabsTrigger>
                     </TabsList>
 
@@ -99,7 +99,7 @@ export default function AspectSection({ aspect, title, questions }) {
                         </div>
                         {activeQuestions.length === 0 && (
                             <div className="text-center py-8 text-muted-foreground">
-                                No active questions found
+                                Tidak ada pertanyaan aktif ditemukan
                             </div>
                         )}
                     </TabsContent>
@@ -119,7 +119,7 @@ export default function AspectSection({ aspect, title, questions }) {
                         </div>
                         {totalQuestions - activeQuestions.length === 0 && (
                             <div className="text-center py-8 text-muted-foreground">
-                                No inactive questions found
+                                Tidak ada pertanyaan tidak aktif ditemukan
                             </div>
                         )}
                     </TabsContent>

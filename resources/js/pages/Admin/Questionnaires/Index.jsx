@@ -26,18 +26,18 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
         setDeleteDialog({ open: false, id: null, name: '' });
     };
 
-    const breadcrumbs = [{ label: 'Dashboard', href: route('admin.dashboard') }, { label: 'Questionnaires' }];
+    const breadcrumbs = [{ label: 'Dashboard', href: route('admin.dashboard') }, { label: 'Kuesioner' }];
 
     return (
         <AdminLayout breadcrumbs={breadcrumbs}>
-            <Head title="Questionnaires" />
+            <Head title="Kuesioner" />
 
             <div className="space-y-6 p-6">
                 {/* Header */}
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div>
-                        <h1 className="text-2xl font-bold text-foreground">Questionnaires</h1>
-                        <p className="text-muted-foreground">Manage employee questionnaire responses</p>
+                        <h1 className="text-2xl font-bold text-foreground">Kuesioner</h1>
+                        <p className="text-muted-foreground">Kelola respons kuesioner karyawan</p>
                     </div>
                 </div>
 
@@ -45,7 +45,7 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                 <div className="grid gap-4 md:grid-cols-3">
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Total Employees</CardTitle>
+                            <CardTitle className="text-sm font-medium">Total Karyawan</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">{totalEmployees}</div>
@@ -53,7 +53,7 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                     </Card>
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Completed</CardTitle>
+                            <CardTitle className="text-sm font-medium">Selesai</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">{completedQuestionnaires}</div>
@@ -61,7 +61,7 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                     </Card>
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-medium">Completion Rate</CardTitle>
+                            <CardTitle className="text-sm font-medium">Tingkat Penyelesaian</CardTitle>
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">
@@ -74,21 +74,21 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                 {/* Questionnaires Table */}
                 <Card>
                     <CardHeader>
-                        <CardTitle>Questionnaire Responses</CardTitle>
-                        <CardDescription>List of all questionnaire responses from employees</CardDescription>
+                        <CardTitle>Respons Kuesioner</CardTitle>
+                        <CardDescription>Daftar semua respons kuesioner dari karyawan</CardDescription>
                     </CardHeader>
                     <CardContent>
                         {questionnaires.data.length > 0 ? (
                             <Table>
                                 <TableHeader>
                                     <TableRow>
-                                        <TableHead>Employee</TableHead>
+                                        <TableHead>Karyawan</TableHead>
                                         <TableHead>NIP</TableHead>
-                                        <TableHead>K-Score</TableHead>
-                                        <TableHead>A-Score</TableHead>
-                                        <TableHead>B-Score</TableHead>
-                                        <TableHead>Created</TableHead>
-                                        <TableHead>Actions</TableHead>
+                                        <TableHead>Skor-K</TableHead>
+                                        <TableHead>Skor-A</TableHead>
+                                        <TableHead>Skor-B</TableHead>
+                                        <TableHead>Dibuat</TableHead>
+                                        <TableHead>Aksi</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -159,7 +159,7 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                             </Table>
                         ) : (
                             <div className="py-8 text-center">
-                                <p className="text-muted-foreground">No questionnaires found</p>
+                                <p className="text-muted-foreground">Tidak ada kuesioner ditemukan</p>
                             </div>
                         )}
                     </CardContent>
@@ -169,18 +169,17 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                 <Dialog open={deleteDialog.open} onOpenChange={(open) => !open && handleDeleteCancel()}>
                     <DialogContent>
                         <DialogHeader>
-                            <DialogTitle>Delete Questionnaire</DialogTitle>
+                            <DialogTitle>Hapus Kuesioner</DialogTitle>
                             <DialogDescription>
-                                Are you sure you want to delete the questionnaire for <strong>{deleteDialog.name}</strong>? This action cannot be
-                                undone.
+                                Apakah Anda yakin ingin menghapus kuesioner untuk <strong>{deleteDialog.name}</strong>? Tindakan ini tidak dapat dibatalkan.
                             </DialogDescription>
                         </DialogHeader>
                         <DialogFooter>
                             <Button variant="outline" onClick={handleDeleteCancel}>
-                                Cancel
+                                Batal
                             </Button>
                             <Button variant="destructive" onClick={handleDeleteConfirm}>
-                                Delete
+                                Hapus
                             </Button>
                         </DialogFooter>
                     </DialogContent>
