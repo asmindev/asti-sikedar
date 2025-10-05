@@ -19,7 +19,6 @@ class Employee extends Model
         'name',
         'position',
         'gender',
-        'phone',
         'address',
         'birth_date'
     ];

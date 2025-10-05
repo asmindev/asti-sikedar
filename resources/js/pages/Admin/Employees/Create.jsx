@@ -24,7 +24,6 @@ export default function EmployeeCreate() {
         name: '',
         position: '',
         gender: '',
-        phone: '',
         address: '',
         create_user_account: false,
         email: null,
@@ -177,22 +176,6 @@ export default function EmployeeCreate() {
                                             className={errors.position ? 'border-red-500' : ''}
                                         />
                                         {errors.position && <p className="text-sm text-red-500">{errors.position}</p>}
-                                    </div>
-
-
-
-                                    {/* Phone */}
-                                    <div className="space-y-2">
-                                        <Label htmlFor="phone">Nomor Telepon</Label>
-                                        <Input
-                                            id="phone"
-                                            type="tel"
-                                            value={data.phone}
-                                            onChange={(e) => setData('phone', e.target.value)}
-                                            placeholder="contoh: +62 812 3456 7890"
-                                            className={errors.phone ? 'border-red-500' : ''}
-                                        />
-                                        {errors.phone && <p className="text-sm text-red-500">{errors.phone}</p>}
                                     </div>
                                 </div>
 

@@ -40,11 +40,6 @@ class StoreEmployeeRequest extends FormRequest
                 'string',
                 Rule::in(['Laki-laki', 'Perempuan'])
             ],
-            'phone' => [
-                'nullable',
-                'string',
-                'max:20'
-            ],
             'address' => [
                 'nullable',
                 'string',

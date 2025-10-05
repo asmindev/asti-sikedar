@@ -31,7 +31,6 @@ class UserEmployeeSeeder extends Seeder
                 'name' => 'Budi Santoso',
                 'position' => 'Software Engineer',
                 'gender' => 'Laki-laki',
-                'phone' => '+62 812 3456 7890',
                 'address' => 'Jl. Sudirman No. 123, Jakarta Pusat',
                 'email' => 'user@kejati.go.id',
                 'birth_date' => '1990-01-15'

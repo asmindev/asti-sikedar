@@ -17,7 +17,6 @@ class EmployeeSeeder extends Seeder
                 'name' => 'John Doe',
                 'position' => 'Software Engineer',
                 'gender' => 'Laki-laki',
-                'phone' => '+62 812 3456 7890',
                 'address' => 'Jl. Sudirman No. 123, Jakarta Pusat',
                 'birth_date' => '1990-01-15'
             ],
@@ -25,7 +24,6 @@ class EmployeeSeeder extends Seeder
                 'name' => 'Jane Smith',
                 'position' => 'HR Manager',
                 'gender' => 'Perempuan',
-                'phone' => '+62 821 9876 5432',
                 'address' => 'Jl. Thamrin No. 456, Jakarta Pusat',
                 'birth_date' => '1985-07-20'
             ],
@@ -33,7 +31,6 @@ class EmployeeSeeder extends Seeder
                 'name' => 'Bob Wilson',
                 'position' => 'Financial Analyst',
                 'gender' => 'Laki-laki',
-                'phone' => '+62 813 1122 3344',
                 'address' => 'Jl. Gatot Subroto No. 789, Jakarta Selatan',
                 'birth_date' => '1988-03-10'
             ],
@@ -41,7 +38,6 @@ class EmployeeSeeder extends Seeder
                 'name' => 'Alice Johnson',
                 'position' => 'Marketing Specialist',
                 'gender' => 'Perempuan',
-                'phone' => '+62 822 5566 7788',
                 'address' => 'Jl. Kuningan No. 101, Jakarta Selatan',
                 'birth_date' => '1992-11-25'
             ],
@@ -49,7 +45,6 @@ class EmployeeSeeder extends Seeder
                 'name' => 'Charlie Brown',
                 'position' => 'Operations Manager',
                 'gender' => 'Laki-laki',
-                'phone' => '+62 815 9988 7766',
                 'address' => 'Jl. Kemang No. 202, Jakarta Selatan',
                 'birth_date' => '1979-05-30'
             ],
@@ -57,7 +52,6 @@ class EmployeeSeeder extends Seeder
                 'name' => 'Diana Prince',
                 'position' => 'Legal Counsel',
                 'gender' => 'Perempuan',
-                'phone' => '+62 814 3344 5566',
                 'address' => 'Jl. Senayan No. 303, Jakarta Pusat',
                 'birth_date' => '1983-12-12'
             ],
@@ -65,7 +59,6 @@ class EmployeeSeeder extends Seeder
                 'name' => 'Edward Clark',
                 'position' => 'System Administrator',
                 'gender' => 'Laki-laki',
-                'phone' => '+62 823 7788 9900',
                 'address' => 'Jl. Menteng No. 404, Jakarta Pusat',
                 'birth_date' => '1980-08-08'
             ],
@@ -73,7 +66,6 @@ class EmployeeSeeder extends Seeder
                 'name' => 'Fiona Lee',
                 'position' => 'Accountant',
                 'gender' => 'Perempuan',
-                'phone' => '+62 811 2233 4455',
                 'address' => 'Jl. Blok M No. 505, Jakarta Selatan',
             ],
         ];

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('position')->comment('Position/Jabatan');
             $table->enum('gender', ['Laki-laki', 'Perempuan'])->comment('Gender/Jenis Kelamin');
-            $table->string('phone')->nullable();
             $table->text('address')->nullable();
             $table->date('birth_date')->nullable();
             $table->timestamps();

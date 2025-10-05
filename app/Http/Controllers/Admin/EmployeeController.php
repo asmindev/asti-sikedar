@@ -67,10 +67,8 @@ class EmployeeController extends Controller
             // Create the employee
             $employee = Employee::create($request->only([
                 'name',
-                'department',
                 'position',
                 'gender',
-                'phone',
                 'address',
                 'birth_date'
             ]));
@@ -148,7 +146,6 @@ class EmployeeController extends Controller
                 'name',
                 'position',
                 'gender',
-                'phone',
                 'address',
                 'birth_date'
             ]));

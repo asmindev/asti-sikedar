@@ -20,7 +20,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Andi Wijaya',
                     'position' => 'Senior Software Engineer',
                     'gender' => 'Laki-laki',
-                    'phone' => '+62 812 1111 1111',
                     'address' => 'Jl. Gatot Subroto No. 45, Jakarta Selatan',
                     'birth_date' => '1990-05-15'
                 ],
@@ -53,7 +52,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Siti Nurhaliza',
                     'position' => 'HR Manager',
                     'gender' => 'Perempuan',
-                    'phone' => '+62 812 2222 2222',
                     'address' => 'Jl. Sudirman No. 88, Jakarta Pusat',
                     'birth_date' => '1990-05-15'
                 ],
@@ -86,7 +84,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Budi Santoso',
                     'position' => 'Financial Analyst',
                     'gender' => 'Laki-laki',
-                    'phone' => '+62 812 3333 3333',
                     'address' => 'Jl. Thamrin No. 12, Jakarta Pusat',
                     'birth_date' => '1988-11-20'
                 ],
@@ -119,7 +116,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Dewi Lestari',
                     'position' => 'Marketing Specialist',
                     'gender' => 'Perempuan',
-                    'phone' => '+62 812 4444 4444',
                     'address' => 'Jl. Kuningan No. 77, Jakarta Selatan',
                     'birth_date' => '1992-07-30'
                 ],
@@ -152,7 +148,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Rudi Hartono',
                     'position' => 'Operations Manager',
                     'gender' => 'Laki-laki',
-                    'phone' => '+62 812 5555 5555',
                     'address' => 'Jl. Kemang No. 22, Jakarta Selatan',
                     'birth_date' => '1985-03-10'
                 ],
@@ -185,7 +180,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Linda Kusuma',
                     'position' => 'Legal Counsel',
                     'gender' => 'Perempuan',
-                    'phone' => '+62 812 6666 6666',
                     'address' => 'Jl. Senayan No. 99, Jakarta Pusat',
                     'birth_date' => '1991-09-25'
                 ],
@@ -218,7 +212,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Ahmad Fauzi',
                     'position' => 'System Administrator',
                     'gender' => 'Laki-laki',
-                    'phone' => '+62 812 7777 7777',
                     'address' => 'Jl. Menteng No. 33, Jakarta Pusat',
                     'birth_date' => '1987-12-05'
                 ],
@@ -251,7 +244,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Maya Sari',
                     'position' => 'Accountant',
                     'gender' => 'Perempuan',
-                    'phone' => '+62 812 8888 8888',
                     'address' => 'Jl. Blok M No. 44, Jakarta Selatan',
                     'birth_date' => '1993-04-18'
                 ],
@@ -284,7 +276,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Hendra Gunawan',
                     'position' => 'Sales Manager',
                     'gender' => 'Laki-laki',
-                    'phone' => '+62 812 9999 9999',
                     'address' => 'Jl. Rasuna Said No. 55, Jakarta Selatan',
                     'birth_date' => '1986-08-12'
                 ],
@@ -317,7 +308,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Ratna Dewi',
                     'position' => 'HR Officer',
                     'gender' => 'Perempuan',
-                    'phone' => '+62 812 1010 1010',
                     'address' => 'Jl. Cikini No. 66, Jakarta Pusat',
                     'birth_date' => '1994-02-28'
                 ],
