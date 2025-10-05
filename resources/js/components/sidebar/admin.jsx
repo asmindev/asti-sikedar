@@ -25,31 +25,31 @@ import { useEffect, useState } from 'react';
 // Menu items for admin
 const menuItems = [
     {
-        title: 'Dashboard',
+        title: 'Dasbor',
         url: route('admin.dashboard'),
         icon: LayoutDashboard,
         urlPattern: '/admin/dashboard',
     },
     {
-        title: 'Employee Management',
+        title: 'Manajemen Karyawan',
         url: route('admin.employees.index'),
         icon: Users,
         urlPattern: '/admin/employees',
     },
     {
-        title: 'Quiz Management',
+        title: 'Manajemen Kuis',
         url: route('admin.quiz-management.index'),
         icon: Brain,
         urlPattern: '/admin/quiz-management',
     },
     {
-        title: 'Questionnaires',
+        title: 'Kuesioner',
         url: route('admin.questionnaires.index'),
         icon: Upload,
         urlPattern: '/admin/questionnaires',
     },
     {
-        title: 'Cluster Analysis',
+        title: 'Analisis Kluster',
         url: route('admin.clusters.analysis'),
         icon: BarChart3,
         urlPattern: '/admin/clusters',
@@ -58,12 +58,12 @@ const menuItems = [
 
 const systemItems = [
     {
-        title: 'Settings',
+        title: 'Pengaturan',
         icon: Settings,
         urlPattern: '/admin/settings',
         children: [
             {
-                title: 'Theme',
+                title: 'Tema',
                 icon: Palette,
                 urlPattern: '/admin/settings/theme',
                 href: route('admin.settings.theme'),
@@ -113,15 +113,15 @@ export function AdminSidebar() {
                         <Shield className="size-8 text-white" />
                     </div>
                     <div>
-                        <h2 className="text-sm font-semibold">Admin Panel</h2>
-                        <p className="text-xs text-muted-foreground">Management System</p>
+                        <h2 className="text-sm font-semibold">Panel Admin</h2>
+                        <p className="text-xs text-muted-foreground">Sistem Manajemen</p>
                     </div>
                 </div>
             </SidebarHeader>
 
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
+                    <SidebarGroupLabel>Menu Utama</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {menuItems.map((item) => {
@@ -149,7 +149,7 @@ export function AdminSidebar() {
                 </SidebarGroup>
 
                 <SidebarGroup>
-                    <SidebarGroupLabel>System</SidebarGroupLabel>
+                    <SidebarGroupLabel>Sistem</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {systemItems.map((item) => (
@@ -215,13 +215,13 @@ export function AdminSidebar() {
                 <div className="space-y-2">
                     <Button onClick={toggleDarkMode} variant="outline" size="sm" className="w-full" title="Toggle dark mode">
                         {getDarkModeIcon()}
-                        <span className="ml-2 text-xs">{darkMode === 'system' ? 'Auto' : darkMode === 'dark' ? 'Dark' : 'Light'}</span>
+                        <span className="ml-2 text-xs">{darkMode === 'system' ? 'Otomatis' : darkMode === 'dark' ? 'Gelap' : 'Terang'}</span>
                     </Button>
 
                     <Button asChild size="sm" variant="outline" className="w-full">
                         <Link href={route('logout')} method="post">
                             <LogOut className="mr-2 h-4 w-4" />
-                            Logout
+                            Keluar
                         </Link>
                     </Button>
                 </div>

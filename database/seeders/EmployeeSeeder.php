@@ -14,72 +14,63 @@ class EmployeeSeeder extends Seeder
         // Create sample employees with new structure
         $employees = [
             [
-                'employee_code' => 'EMP001',
                 'name' => 'John Doe',
-                'department' => 'Information Technology',
                 'position' => 'Software Engineer',
                 'gender' => 'Laki-laki',
                 'phone' => '+62 812 3456 7890',
                 'address' => 'Jl. Sudirman No. 123, Jakarta Pusat',
+                'birth_date' => '1990-01-15'
             ],
             [
-                'employee_code' => 'EMP002',
                 'name' => 'Jane Smith',
-                'department' => 'Human Resources',
                 'position' => 'HR Manager',
                 'gender' => 'Perempuan',
                 'phone' => '+62 821 9876 5432',
                 'address' => 'Jl. Thamrin No. 456, Jakarta Pusat',
+                'birth_date' => '1985-07-20'
             ],
             [
-                'employee_code' => 'EMP003',
                 'name' => 'Bob Wilson',
-                'department' => 'Finance',
                 'position' => 'Financial Analyst',
                 'gender' => 'Laki-laki',
                 'phone' => '+62 813 1122 3344',
                 'address' => 'Jl. Gatot Subroto No. 789, Jakarta Selatan',
+                'birth_date' => '1988-03-10'
             ],
             [
-                'employee_code' => 'EMP004',
                 'name' => 'Alice Johnson',
-                'department' => 'Marketing',
                 'position' => 'Marketing Specialist',
                 'gender' => 'Perempuan',
                 'phone' => '+62 822 5566 7788',
                 'address' => 'Jl. Kuningan No. 101, Jakarta Selatan',
+                'birth_date' => '1992-11-25'
             ],
             [
-                'employee_code' => 'EMP005',
                 'name' => 'Charlie Brown',
-                'department' => 'Operations',
                 'position' => 'Operations Manager',
                 'gender' => 'Laki-laki',
                 'phone' => '+62 815 9988 7766',
                 'address' => 'Jl. Kemang No. 202, Jakarta Selatan',
+                'birth_date' => '1979-05-30'
             ],
             [
-                'employee_code' => 'EMP006',
                 'name' => 'Diana Prince',
-                'department' => 'Legal',
                 'position' => 'Legal Counsel',
                 'gender' => 'Perempuan',
                 'phone' => '+62 814 3344 5566',
                 'address' => 'Jl. Senayan No. 303, Jakarta Pusat',
+                'birth_date' => '1983-12-12'
             ],
             [
-                'employee_code' => 'EMP007',
                 'name' => 'Edward Clark',
-                'department' => 'Information Technology',
                 'position' => 'System Administrator',
                 'gender' => 'Laki-laki',
                 'phone' => '+62 823 7788 9900',
                 'address' => 'Jl. Menteng No. 404, Jakarta Pusat',
+                'birth_date' => '1980-08-08'
             ],
             [
-                'employee_code' => 'EMP008',
                 'name' => 'Fiona Lee',
-                'department' => 'Finance',
                 'position' => 'Accountant',
                 'gender' => 'Perempuan',
                 'phone' => '+62 811 2233 4455',

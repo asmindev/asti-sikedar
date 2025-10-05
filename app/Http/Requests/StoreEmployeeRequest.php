@@ -24,22 +24,12 @@ class StoreEmployeeRequest extends FormRequest
     {
         return [
             // Employee validation rules
-            'employee_code' => [
-                'required',
-                'string',
-                'max:50',
-                'unique:employees,employee_code'
-            ],
             'name' => [
                 'required',
                 'string',
                 'max:255'
             ],
-            'department' => [
-                'required',
-                'string',
-                'max:100'
-            ],
+
             'position' => [
                 'required',
                 'string',
@@ -82,6 +72,12 @@ class StoreEmployeeRequest extends FormRequest
             'role' => [
                 'required_if:create_user_account,true',
                 Rule::in(['admin', 'user'])
+            ],
+
+            "birth_date" => [
+                "required",
+                "date",
+                "before:today"
             ]
         ];
     }
@@ -94,10 +90,7 @@ class StoreEmployeeRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'employee_code.required' => 'The employee code is required.',
-            'employee_code.unique' => 'This employee code is already taken.',
             'name.required' => 'The employee name is required.',
-            'department.required' => 'The department is required.',
             'position.required' => 'The position is required.',
             'gender.required' => 'The gender is required.',
             'gender.in' => 'Gender must be either Laki-laki or Perempuan.',
@@ -108,6 +101,8 @@ class StoreEmployeeRequest extends FormRequest
             'password.confirmed' => 'Password confirmation does not match.',
             'role.required_if' => 'Role is required when creating a user account.',
             'role.in' => 'Role must be either admin or user.',
+            'birth_date.before' => 'Birth date must be a date before today.',
+            'birth_date.required' => 'Birth date is required to calculate age.',
         ];
     }
 
@@ -119,7 +114,6 @@ class StoreEmployeeRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'employee_code' => 'employee code',
             'gender' => 'gender',
         ];
     }

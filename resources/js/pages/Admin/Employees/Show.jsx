@@ -8,7 +8,7 @@ import { ArrowLeft, BarChart3, Calendar, Edit, FileText, Mail, MapPin, Phone, Us
 
 export default function EmployeeShow({ employee }) {
     const breadcrumbs = [
-        { label: 'Dashboard', href: route('admin.dashboard') },
+        { label: 'Dasbor', href: route('admin.dashboard') },
         { label: 'Manajemen Karyawan', href: route('admin.employees.index') },
         { label: employee.name },
     ];
@@ -50,22 +50,27 @@ export default function EmployeeShow({ employee }) {
                         </CardHeader>
                         <CardContent className="space-y-4">
                             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                                <div>
-                                    <p className="text-sm font-medium text-muted-foreground">Kode Karyawan</p>
-                                    <p className="font-mono text-lg">{employee.employee_code}</p>
-                                </div>
+
                                 <div>
                                     <p className="text-sm font-medium text-muted-foreground">Nama Lengkap</p>
                                     <p className="text-lg font-medium">{employee.name}</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium text-muted-foreground">Departemen</p>
-                                    <p className="text-lg">{employee.department}</p>
-                                </div>
-                                <div>
                                     <p className="text-sm font-medium text-muted-foreground">Posisi</p>
                                     <p className="text-lg">{employee.position}</p>
                                 </div>
+                                <div>
+                                    <p className="text-sm font-medium text-muted-foreground">Umur</p>
+                                    <p className="text-lg">{employee.age}</p>
+                                </div>
+                                <div>
+                                    <p className="text-sm font-medium text-muted-foreground">Email</p>
+                                    <div className="flex items-center gap-2">
+                                        <Mail className="h-4 w-4 text-muted-foreground" />
+                                        <p className="text-lg">{employee.user?.email}</p>
+                                    </div>
+                                </div>
+
                                 <div>
                                     <p className="text-sm font-medium text-muted-foreground">Jenis Kelamin</p>
                                     <p className="text-lg">{employee.gender}</p>

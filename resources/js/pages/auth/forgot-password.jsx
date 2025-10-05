@@ -18,15 +18,15 @@ export default function ForgotPassword({ status }) {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-purple-50 to-pink-100 px-4">
-            <Head title="Forgot Password" />
+            <Head title="Lupa Kata Sandi" />
 
             <Card className="w-full max-w-md">
                 <CardHeader className="text-center">
                     <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-600">
                         <Mail className="h-6 w-6 text-white" />
                     </div>
-                    <CardTitle className="text-2xl font-bold">Forgot Password</CardTitle>
-                    <CardDescription>Enter your email to receive a password reset link</CardDescription>
+                    <CardTitle className="text-2xl font-bold">Lupa Kata Sandi</CardTitle>
+                    <CardDescription>Masukkan email Anda untuk menerima tautan reset kata sandi</CardDescription>
                 </CardHeader>
 
                 <CardContent>
@@ -39,7 +39,7 @@ export default function ForgotPassword({ status }) {
 
                     <form onSubmit={submit} className="space-y-4">
                         <div>
-                            <Label htmlFor="email">Email Address</Label>
+                            <Label htmlFor="email">Alamat Email</Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -47,7 +47,7 @@ export default function ForgotPassword({ status }) {
                                 value={data.email}
                                 className="mt-2"
                                 autoComplete="username"
-                                placeholder="Enter your email address"
+                                placeholder="Masukkan alamat email Anda"
                                 onChange={(e) => setData('email', e.target.value)}
                                 required
                             />
@@ -55,22 +55,22 @@ export default function ForgotPassword({ status }) {
                         </div>
 
                         <Button type="submit" className="w-full" disabled={processing}>
-                            {processing ? 'Sending...' : 'Send Reset Link'}
+                            {processing ? 'Mengirim...' : 'Kirim Tautan Reset'}
                         </Button>
                     </form>
 
                     <div className="mt-6 text-center">
                         <Link href={route('login')} className="inline-flex items-center text-sm font-medium text-purple-600 hover:text-purple-500">
                             <ArrowLeft className="mr-1 h-4 w-4" />
-                            Back to Login
+                            Kembali ke Masuk
                         </Link>
                     </div>
 
                     <div className="mt-6 border-t pt-4">
                         <div className="rounded-lg bg-blue-50 p-3">
-                            <h4 className="mb-1 text-sm font-medium text-blue-900">Need Help?</h4>
+                            <h4 className="mb-1 text-sm font-medium text-blue-900">Butuh Bantuan?</h4>
                             <p className="text-xs text-blue-700">
-                                If you don't receive the email within a few minutes, please check your spam folder or contact the administrator.
+                                Jika Anda tidak menerima email dalam beberapa menit, silakan periksa folder spam atau hubungi administrator.
                             </p>
                         </div>
                     </div>

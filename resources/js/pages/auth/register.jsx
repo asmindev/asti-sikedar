@@ -27,26 +27,26 @@ export default function Register() {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 px-4">
-            <Head title="Register" />
+            <Head title="Daftar" />
 
             <Card className="w-full max-w-md">
                 <CardHeader className="text-center">
                     <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-600">
                         <UserPlus className="h-6 w-6 text-white" />
                     </div>
-                    <CardTitle className="text-2xl font-bold">Create Account</CardTitle>
-                    <CardDescription>Register to get started with the system</CardDescription>
+                    <CardTitle className="text-2xl font-bold">Buat Akun</CardTitle>
+                    <CardDescription>Daftar untuk memulai menggunakan sistem</CardDescription>
                 </CardHeader>
 
                 <CardContent>
                     <Alert className="mb-4">
                         <AlertCircle className="h-4 w-4" />
-                        <AlertDescription>New accounts are created with "User" role by default</AlertDescription>
+                        <AlertDescription>Akun baru dibuat dengan peran "Pengguna" secara default</AlertDescription>
                     </Alert>
 
                     <form onSubmit={submit} className="space-y-4">
                         <div>
-                            <Label htmlFor="name">Full Name</Label>
+                            <Label htmlFor="name">Nama Lengkap</Label>
                             <Input
                                 id="name"
                                 type="text"
@@ -61,7 +61,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <Label htmlFor="email">Email Address</Label>
+                            <Label htmlFor="email">Alamat Email</Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -76,7 +76,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password">Kata Sandi</Label>
                             <div className="relative mt-2">
                                 <Input
                                     id="password"
@@ -102,7 +102,7 @@ export default function Register() {
                         </div>
 
                         <div>
-                            <Label htmlFor="password_confirmation">Confirm Password</Label>
+                            <Label htmlFor="password_confirmation">Konfirmasi Kata Sandi</Label>
                             <div className="relative mt-2">
                                 <Input
                                     id="password_confirmation"
@@ -128,15 +128,15 @@ export default function Register() {
                         </div>
 
                         <Button type="submit" className="w-full" disabled={processing}>
-                            {processing ? 'Creating account...' : 'Create Account'}
+                            {processing ? 'Membuat akun...' : 'Buat Akun'}
                         </Button>
                     </form>
 
                     <div className="mt-6 text-center">
                         <p className="text-sm text-muted-foreground">
-                            Already have an account?{' '}
+                            Sudah punya akun?{' '}
                             <Link href={route('login')} className="font-medium text-green-600 hover:text-green-500">
-                                Sign in
+                                Masuk
                             </Link>
                         </p>
                     </div>
@@ -144,13 +144,13 @@ export default function Register() {
                     {/* Role Information */}
                     <div className="mt-6 border-t pt-4">
                         <div className="rounded-lg bg-blue-50 p-3">
-                            <h4 className="text-sm font-medium text-blue-900">Account Types:</h4>
+                            <h4 className="text-sm font-medium text-blue-900">Tipe Akun:</h4>
                             <div className="mt-2 space-y-1 text-xs text-blue-700">
                                 <p>
-                                    • <strong>User:</strong> Access to dashboard, profile, and view results
+                                    • <strong>Pengguna:</strong> Akses ke dasbor, profil, dan lihat hasil
                                 </p>
                                 <p>
-                                    • <strong>Admin:</strong> Full system access (contact admin for upgrade)
+                                    • <strong>Admin:</strong> Akses sistem penuh (hubungi admin untuk upgrade)
                                 </p>
                             </div>
                         </div>

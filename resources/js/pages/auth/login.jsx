@@ -32,15 +32,15 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-blue-900 px-4">
-            <Head title="Login" />
+            <Head title="Masuk" />
 
             <Card className="w-full max-w-md">
                 <CardHeader className="text-center">
                     <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 dark:bg-blue-500">
                         <LogIn className="h-6 w-6 text-white" />
                     </div>
-                    <CardTitle className="text-2xl font-bold">Welcome Back</CardTitle>
-                    <CardDescription>Sign in to your account to continue</CardDescription>
+                    <CardTitle className="text-2xl font-bold">Selamat Datang Kembali</CardTitle>
+                    <CardDescription>Masuk ke akun Anda untuk melanjutkan</CardDescription>
                 </CardHeader>
 
                 <CardContent>
@@ -53,7 +53,7 @@ export default function Login({ status, canResetPassword }) {
 
                     <form onSubmit={submit} className="space-y-4">
                         <div>
-                            <Label htmlFor="email">Email Address</Label>
+                            <Label htmlFor="email">Alamat Email</Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -68,7 +68,7 @@ export default function Login({ status, canResetPassword }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="password">Password</Label>
+                            <Label htmlFor="password">Kata Sandi</Label>
                             <div className="relative mt-2">
                                 <Input
                                     id="password"
@@ -101,34 +101,34 @@ export default function Login({ status, canResetPassword }) {
                                     onCheckedChange={(checked) => setData('remember', checked)}
                                 />
                                 <Label htmlFor="remember" className="text-sm">
-                                    Remember me
+                                    Ingat saya
                                 </Label>
                             </div>
 
                             {canResetPassword && (
                                 <Link href={route('password.request')} className="text-sm font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
-                                    Forgot password?
+                                    Lupa kata sandi?
                                 </Link>
                             )}
                         </div>
 
                         <Button type="submit" className="w-full" disabled={processing}>
-                            {processing ? 'Signing in...' : 'Sign in'}
+                            {processing ? 'Sedang masuk...' : 'Masuk'}
                         </Button>
                     </form>
 
-                    <div className="mt-6 text-center">
+                    {/* <div className="mt-6 text-center">
                         <p className="text-sm text-muted-foreground">
-                            Don't have an account?{' '}
+                            Belum punya akun?{' '}
                             <Link href={route('register')} className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
-                                Sign up
+                                Daftar
                             </Link>
                         </p>
-                    </div>
+                    </div> */}
 
                     {/* Demo Credentials */}
                     <div className="mt-6 border-t pt-4">
-                        <p className="mb-2 text-center text-xs text-muted-foreground">Demo Credentials:</p>
+                        <p className="mb-2 text-center text-xs text-muted-foreground">Kredensial Demo:</p>
                         <div className="grid grid-cols-2 gap-2 text-xs">
                             <div className="rounded bg-blue-50 dark:bg-blue-900/30 p-2">
                                 <p className="font-medium">Admin:</p>
@@ -136,7 +136,7 @@ export default function Login({ status, canResetPassword }) {
                                 <p>admin123</p>
                             </div>
                             <div className="rounded bg-green-50 dark:bg-green-900/30 p-2">
-                                <p className="font-medium">User:</p>
+                                <p className="font-medium">Pengguna:</p>
                                 <p>user@kejati.go.id</p>
                                 <p>user123</p>
                             </div>

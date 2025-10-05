@@ -25,12 +25,7 @@ class EmployeeController extends Controller
         $query = Employee::with(['user'])
             ->when($request->search, function ($query, $search) {
                 return $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('employee_code', 'like', "%{$search}%")
-                    ->orWhere('department', 'like', "%{$search}%")
                     ->orWhere('position', 'like', "%{$search}%");
-            })
-            ->when($request->department, function ($query, $department) {
-                return $query->where('department', $department);
             })
             ->when($request->sortBy, function ($query, $sortBy) use ($request) {
                 $direction = $request->sortDirection === 'desc' ? 'desc' : 'asc';
@@ -41,18 +36,12 @@ class EmployeeController extends Controller
 
         $employees = $query->paginate(10)->withQueryString();
 
-        // Get unique departments for filter dropdown
-        $departments = Employee::select('department')
-            ->distinct()
-            ->orderBy('department')
-            ->pluck('department');
+
 
         return Inertia::render('Admin/Employees/Index', [
             'employees' => $employees,
-            'departments' => $departments,
             'filters' => [
                 'search' => $request->search,
-                'department' => $request->department,
                 'sortBy' => $request->sortBy,
                 'sortDirection' => $request->sortDirection,
             ]
@@ -77,13 +66,13 @@ class EmployeeController extends Controller
 
             // Create the employee
             $employee = Employee::create($request->only([
-                'employee_code',
                 'name',
                 'department',
                 'position',
                 'gender',
                 'phone',
-                'address'
+                'address',
+                'birth_date'
             ]));
 
             // Create user account if requested
@@ -156,13 +145,12 @@ class EmployeeController extends Controller
 
             // Update employee data
             $employee->update($request->only([
-                'employee_code',
                 'name',
-                'department',
                 'position',
                 'gender',
                 'phone',
-                'address'
+                'address',
+                'birth_date'
             ]));
 
             // Log after update

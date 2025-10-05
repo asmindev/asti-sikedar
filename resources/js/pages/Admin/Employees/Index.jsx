@@ -132,26 +132,14 @@ export default function Employee({ employees, departments, filters }) {
                                     <Search className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 transform text-gray-400" />
                                     <Input
                                         type="text"
-                                        placeholder="Cari berdasarkan nama, kode, departemen, atau posisi..."
+                                        placeholder="Cari berdasarkan nama atau posisi..."
                                         value={search}
                                         onChange={(e) => setSearch(e.target.value)}
                                         className="pl-10"
                                     />
                                 </div>
                             </div>
-                            <Select value={department} onValueChange={setDepartment}>
-                                <SelectTrigger className="w-48">
-                                    <SelectValue placeholder="Semua Departemen" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="all">Semua Departemen</SelectItem>
-                                    {departments?.map((dept) => (
-                                        <SelectItem key={dept} value={dept}>
-                                            {dept}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+
                             <Button type="submit">Filter</Button>
                         </form>
                     </CardContent>
@@ -173,11 +161,10 @@ export default function Employee({ employees, departments, filters }) {
                                 <Table>
                                     <TableHeader>
                                         <TableRow>
-                                            <TableHead>Kode Karyawan</TableHead>
                                             <TableHead>Nama</TableHead>
-                                            <TableHead>Departemen</TableHead>
-                                            <TableHead>Posisi</TableHead>
+                                            <TableHead>Umur</TableHead>
                                             <TableHead>Jenis Kelamin</TableHead>
+                                            <TableHead>Posisi</TableHead>
                                             <TableHead>Akun Pengguna</TableHead>
                                             <TableHead className="text-right">Aksi</TableHead>
                                         </TableRow>
@@ -185,11 +172,10 @@ export default function Employee({ employees, departments, filters }) {
                                     <TableBody>
                                         {employees.data.map((employee) => (
                                             <TableRow key={employee.id}>
-                                                <TableCell className="font-mono text-sm">{employee.employee_code}</TableCell>
                                                 <TableCell className="font-medium">{employee.name}</TableCell>
-                                                <TableCell>{employee.department}</TableCell>
-                                                <TableCell>{employee.position}</TableCell>
+                                                <TableCell>{employee.age}</TableCell>
                                                 <TableCell>{employee.gender}</TableCell>
+                                                <TableCell>{employee.position}</TableCell>
                                                 <TableCell>
                                                     {employee.user ? (
                                                         <div className="flex items-center gap-2">

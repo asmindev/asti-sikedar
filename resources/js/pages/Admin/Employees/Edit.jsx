@@ -13,7 +13,7 @@ import { useState } from 'react';
 export default function EmployeeEdit({ employee }) {
     const { flash } = usePage().props;
     const breadcrumbs = [
-        { label: 'Dashboard', href: route('admin.dashboard') },
+        { label: 'Dasbor', href: route('admin.dashboard') },
         { label: 'Manajemen Karyawan', href: route('admin.employees.index') },
         { label: `Edit ${employee.name}` },
     ];
@@ -21,26 +21,34 @@ export default function EmployeeEdit({ employee }) {
     const [createUserAccount, setCreateUserAccount] = useState(!!employee.user);
 
     const { data, setData, put, processing, errors } = useForm({
-        employee_code: employee.employee_code || '',
         name: employee.name || '',
-        department: employee.department || '',
         position: employee.position || '',
         gender: employee.gender || '',
         phone: employee.phone || '',
         address: employee.address || '',
         create_user_account: !!employee.user,
-        email: employee.user?.email || '',
-        password: '',
-        password_confirmation: '',
+        email: employee.user?.email || null,
+        password: null,
+        password_confirmation: null,
         role: employee.user?.role || 'user',
+        birth_date: employee.birth_date || null,
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form submitted with data:', data);
-        console.log('Email value:', data.email);
-        console.log('Create user account:', data.create_user_account);
+
+        // Prepare data, exclude empty user account fields if not creating user account
+        const submitData = { ...data };
+        if (!data.create_user_account) {
+            delete submitData.email;
+            delete submitData.password;
+            delete submitData.password_confirmation;
+            delete submitData.role;
+        }
+
+        console.log('Update form submitted with data:', submitData);
         put(route('admin.employees.update', employee.id), {
+            data: submitData,
             onSuccess: () => {
                 console.log('Update successful');
             },
@@ -55,19 +63,13 @@ export default function EmployeeEdit({ employee }) {
         setData((prevData) => ({
             ...prevData,
             create_user_account: checked,
-            // Reset user fields if unchecked and no existing user
-            ...(!checked &&
-                !employee.user && {
-                    email: '',
-                    password: '',
-                    password_confirmation: '',
-                    role: 'user',
-                }),
-            // Keep existing email if user exists and checkbox is unchecked
-            ...(!checked &&
-                employee.user && {
-                    email: employee.user.email,
-                }),
+            // Reset user fields if unchecked
+            ...(!checked && {
+                email: null,
+                password: null,
+                password_confirmation: null,
+                role: 'user',
+            }),
         }));
     };
 
@@ -106,27 +108,14 @@ export default function EmployeeEdit({ employee }) {
                         {/* Employee Information */}
                         <Card>
                             <CardHeader>
-                                <CardTitle>Informasi Karyawan</CardTitle>
+                                <CardTitle className="flex items-center">
+                                    <UserCheck className="mr-2 h-5 w-5" />
+                                    Informasi Karyawan
+                                </CardTitle>
                                 <CardDescription>Perbarui detail pribadi dan profesional karyawan</CardDescription>
                             </CardHeader>
                             <CardContent>
                                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                                    {/* Employee Code */}
-                                    <div className="space-y-2">
-                                        <Label htmlFor="employee_code">
-                                            Kode Karyawan <span className="text-red-500">*</span>
-                                        </Label>
-                                        <Input
-                                            id="employee_code"
-                                            type="text"
-                                            value={data.employee_code}
-                                            onChange={(e) => setData('employee_code', e.target.value)}
-                                            placeholder="contoh: EMP001"
-                                            className={errors.employee_code ? 'border-red-500' : ''}
-                                        />
-                                        {errors.employee_code && <p className="text-sm text-red-500">{errors.employee_code}</p>}
-                                    </div>
-
                                     {/* Name */}
                                     <div className="space-y-2">
                                         <Label htmlFor="name">
@@ -141,38 +130,6 @@ export default function EmployeeEdit({ employee }) {
                                             className={errors.name ? 'border-red-500' : ''}
                                         />
                                         {errors.name && <p className="text-sm text-red-500">{errors.name}</p>}
-                                    </div>
-
-                                    {/* Department */}
-                                    <div className="space-y-2">
-                                        <Label htmlFor="department">
-                                            Departemen <span className="text-red-500">*</span>
-                                        </Label>
-                                        <Input
-                                            id="department"
-                                            type="text"
-                                            value={data.department}
-                                            onChange={(e) => setData('department', e.target.value)}
-                                            placeholder="contoh: Sumber Daya Manusia"
-                                            className={errors.department ? 'border-red-500' : ''}
-                                        />
-                                        {errors.department && <p className="text-sm text-red-500">{errors.department}</p>}
-                                    </div>
-
-                                    {/* Position */}
-                                    <div className="space-y-2">
-                                        <Label htmlFor="position">
-                                            Posisi <span className="text-red-500">*</span>
-                                        </Label>
-                                        <Input
-                                            id="position"
-                                            type="text"
-                                            value={data.position}
-                                            onChange={(e) => setData('position', e.target.value)}
-                                            placeholder="contoh: Manajer HR"
-                                            className={errors.position ? 'border-red-500' : ''}
-                                        />
-                                        {errors.position && <p className="text-sm text-red-500">{errors.position}</p>}
                                     </div>
 
                                     {/* Gender */}
@@ -192,6 +149,37 @@ export default function EmployeeEdit({ employee }) {
                                         {errors.gender && <p className="text-sm text-red-500">{errors.gender}</p>}
                                     </div>
 
+                                    {/* Birth Date */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="birth_date">
+                                            Tanggal Lahir
+                                        </Label>
+                                        <Input
+                                            id="birth_date"
+                                            type="date"
+                                            value={data.birth_date}
+                                            onChange={(e) => setData('birth_date', e.target.value)}
+                                            className={errors.birth_date ? 'border-red-500' : ''}
+                                        />
+                                        {errors.birth_date && <p className="text-sm text-red-500">{errors.birth_date}</p>}
+                                    </div>
+
+                                    {/* Position */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="position">
+                                            Posisi <span className="text-red-500">*</span>
+                                        </Label>
+                                        <Input
+                                            id="position"
+                                            type="text"
+                                            value={data.position}
+                                            onChange={(e) => setData('position', e.target.value)}
+                                            placeholder="contoh: Manajer HR"
+                                            className={errors.position ? 'border-red-500' : ''}
+                                        />
+                                        {errors.position && <p className="text-sm text-red-500">{errors.position}</p>}
+                                    </div>
+
                                     {/* Phone */}
                                     <div className="space-y-2">
                                         <Label htmlFor="phone">Nomor Telepon</Label>
@@ -207,9 +195,9 @@ export default function EmployeeEdit({ employee }) {
                                     </div>
                                 </div>
 
-                                {/* Address */}
-                                <div className="mt-6 space-y-2">
-                                    <Label htmlFor="address">Alamat</Label>
+                                {/* Address - Full width outside grid */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="address mt-2">Alamat</Label>
                                     <Textarea
                                         id="address"
                                         rows={3}
@@ -252,9 +240,9 @@ export default function EmployeeEdit({ employee }) {
                                             <Input
                                                 id="email"
                                                 type="email"
-                                                value={data.email}
+                                                value={data.email || ''}
                                                 onChange={(e) => setData('email', e.target.value)}
-                                                placeholder="user@contoh.com"
+                                                placeholder="pengguna@contoh.com"
                                                 className={errors.email ? 'border-red-500' : ''}
                                             />
                                             {errors.email && <p className="text-sm text-red-500">{errors.email}</p>}
@@ -281,16 +269,13 @@ export default function EmployeeEdit({ employee }) {
                                         <div className="space-y-2">
                                             <Label htmlFor="password">
                                                 Kata Sandi {!employee.user && <span className="text-red-500">*</span>}
-                                                {employee.user && (
-                                                    <span className="text-sm text-muted-foreground">(biarkan kosong untuk mempertahankan yang sekarang)</span>
-                                                )}
                                             </Label>
                                             <Input
                                                 id="password"
                                                 type="password"
-                                                value={data.password}
+                                                value={data.password || ''}
                                                 onChange={(e) => setData('password', e.target.value)}
-                                                placeholder={employee.user ? 'Masukkan kata sandi baru (opsional)' : 'Minimal 8 karakter'}
+                                                placeholder={employee.user ? 'Biarkan kosong jika tidak ingin mengubah' : 'Minimal 8 karakter'}
                                                 className={errors.password ? 'border-red-500' : ''}
                                             />
                                             {errors.password && <p className="text-sm text-red-500">{errors.password}</p>}
@@ -304,7 +289,7 @@ export default function EmployeeEdit({ employee }) {
                                             <Input
                                                 id="password_confirmation"
                                                 type="password"
-                                                value={data.password_confirmation}
+                                                value={data.password_confirmation || ''}
                                                 onChange={(e) => setData('password_confirmation', e.target.value)}
                                                 placeholder="Ulangi kata sandi"
                                                 className={errors.password_confirmation ? 'border-red-500' : ''}

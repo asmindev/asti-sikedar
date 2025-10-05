@@ -26,7 +26,7 @@ export function UserSidebar() {
 
     const menuItems = [
         {
-            title: 'Dashboard',
+            title: 'Dasbor',
             icon: Home,
             urlPattern: '/dashboard',
             href: '/dashboard',
@@ -57,7 +57,7 @@ export function UserSidebar() {
 
     const systemItems = [
         {
-            title: 'Profile',
+            title: 'Profil',
             icon: User,
             urlPattern: '/user/profile',
             href: '/user/profile',
@@ -78,15 +78,15 @@ export function UserSidebar() {
                         <UserCircle className="h-4 w-4 text-white" />
                     </div>
                     <div>
-                        <h2 className="text-sm font-semibold">User Panel</h2>
-                        <p className="text-xs text-muted-foreground">Personal Dashboard</p>
+                        <h2 className="text-sm font-semibold">Panel Pengguna</h2>
+                        <p className="text-xs text-muted-foreground">Dasbor Pribadi</p>
                     </div>
                 </div>
             </SidebarHeader>
 
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel>Main Menu</SidebarGroupLabel>
+                    <SidebarGroupLabel>Menu Utama</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {menuItems.map((item) => (
@@ -136,7 +136,7 @@ export function UserSidebar() {
                 </SidebarGroup>
 
                 <SidebarGroup>
-                    <SidebarGroupLabel>System</SidebarGroupLabel>
+                    <SidebarGroupLabel>Sistem</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {systemItems.map((item) => (
@@ -170,7 +170,7 @@ export function UserSidebar() {
                 <Button asChild size="sm" variant="outline" className="w-full">
                     <Link href={route('logout')} method="post">
                         <LogOut className="mr-2 h-4 w-4" />
-                        Logout
+                        Keluar
                     </Link>
                 </Button>
             </SidebarFooter>

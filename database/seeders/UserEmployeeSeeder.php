@@ -28,14 +28,13 @@ class UserEmployeeSeeder extends Seeder
         // Create Indonesian employees with corresponding users
         $employees = [
             [
-                'employee_code' => 'EMP001',
                 'name' => 'Budi Santoso',
-                'department' => 'Teknologi Informasi',
                 'position' => 'Software Engineer',
                 'gender' => 'Laki-laki',
                 'phone' => '+62 812 3456 7890',
                 'address' => 'Jl. Sudirman No. 123, Jakarta Pusat',
                 'email' => 'user@kejati.go.id',
+                'birth_date' => '1990-01-15'
             ]
         ];
 

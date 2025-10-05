@@ -30,21 +30,21 @@ export default function ResetPassword({ token, email }) {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-amber-50 to-orange-100 px-4">
-            <Head title="Reset Password" />
+            <Head title="Reset Kata Sandi" />
 
             <Card className="w-full max-w-md">
                 <CardHeader className="text-center">
                     <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-amber-600">
                         <Key className="h-6 w-6 text-white" />
                     </div>
-                    <CardTitle className="text-2xl font-bold">Reset Password</CardTitle>
-                    <CardDescription>Enter your new password below</CardDescription>
+                    <CardTitle className="text-2xl font-bold">Reset Kata Sandi</CardTitle>
+                    <CardDescription>Masukkan kata sandi baru Anda di bawah</CardDescription>
                 </CardHeader>
 
                 <CardContent>
                     <form onSubmit={submit} className="space-y-4">
                         <div>
-                            <Label htmlFor="email">Email Address</Label>
+                            <Label htmlFor="email">Alamat Email</Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -60,7 +60,7 @@ export default function ResetPassword({ token, email }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="password">New Password</Label>
+                            <Label htmlFor="password">Kata Sandi Baru</Label>
                             <div className="relative mt-2">
                                 <Input
                                     id="password"
@@ -86,7 +86,7 @@ export default function ResetPassword({ token, email }) {
                         </div>
 
                         <div>
-                            <Label htmlFor="password_confirmation">Confirm New Password</Label>
+                            <Label htmlFor="password_confirmation">Konfirmasi Kata Sandi Baru</Label>
                             <div className="relative mt-2">
                                 <Input
                                     id="password_confirmation"
@@ -112,17 +112,17 @@ export default function ResetPassword({ token, email }) {
                         </div>
 
                         <Button type="submit" className="w-full" disabled={processing}>
-                            {processing ? 'Resetting Password...' : 'Reset Password'}
+                            {processing ? 'Mereset Kata Sandi...' : 'Reset Kata Sandi'}
                         </Button>
                     </form>
 
                     <div className="mt-6 border-t pt-4">
                         <div className="rounded-lg bg-green-50 p-3">
-                            <h4 className="mb-1 text-sm font-medium text-green-900">Password Requirements:</h4>
+                            <h4 className="mb-1 text-sm font-medium text-green-900">Persyaratan Kata Sandi:</h4>
                             <ul className="space-y-1 text-xs text-green-700">
-                                <li>• Minimum 8 characters</li>
-                                <li>• Must be confirmed</li>
-                                <li>• Choose a strong, unique password</li>
+                                <li>• Minimal 8 karakter</li>
+                                <li>• Harus dikonfirmasi</li>
+                                <li>• Pilih kata sandi yang kuat dan unik</li>
                             </ul>
                         </div>
                     </div>

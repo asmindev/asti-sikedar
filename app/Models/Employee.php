@@ -16,13 +16,12 @@ class Employee extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'employee_code',
         'name',
-        'department',
         'position',
         'gender',
         'phone',
         'address',
+        'birth_date'
     ];
 
     /**
@@ -33,6 +32,24 @@ class Employee extends Model
     protected $casts = [
         // No casts needed for gender
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array<int, string>
+     */
+    protected $appends = [
+        'age'
+    ];
+
+    // calculate age
+    public function getAgeAttribute()
+    {
+        if (!$this->birth_date) {
+            return null;
+        }
+        return \Carbon\Carbon::parse($this->birth_date)->age;
+    }
 
     /**
      * Get the user associated with the employee.

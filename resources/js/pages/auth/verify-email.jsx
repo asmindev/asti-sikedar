@@ -14,15 +14,15 @@ export default function VerifyEmail({ status }) {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-cyan-50 to-teal-100 px-4">
-            <Head title="Email Verification" />
+            <Head title="Verifikasi Email" />
 
             <Card className="w-full max-w-md">
                 <CardHeader className="text-center">
                     <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-cyan-600">
                         <Mail className="h-6 w-6 text-white" />
                     </div>
-                    <CardTitle className="text-2xl font-bold">Verify Your Email</CardTitle>
-                    <CardDescription>We've sent a verification link to your email address</CardDescription>
+                    <CardTitle className="text-2xl font-bold">Verifikasi Email Anda</CardTitle>
+                    <CardDescription>Kami telah mengirim tautan verifikasi ke alamat email Anda</CardDescription>
                 </CardHeader>
 
                 <CardContent>
@@ -30,15 +30,14 @@ export default function VerifyEmail({ status }) {
                         <Alert className="mb-4">
                             <CheckCircle className="h-4 w-4" />
                             <AlertDescription className="text-green-700">
-                                A new verification link has been sent to your email address.
+                                Tautan verifikasi baru telah dikirim ke alamat email Anda.
                             </AlertDescription>
                         </Alert>
                     )}
 
                     <div className="mb-6 text-sm text-muted-foreground">
                         <p>
-                            Before continuing, please check your email for a verification link. If you didn't receive the email, click the button
-                            below to request another.
+                            Sebelum melanjutkan, silakan periksa email Anda untuk tautan verifikasi. Jika Anda tidak menerima email, klik tombol di bawah untuk meminta yang lain.
                         </p>
                     </div>
 
@@ -48,12 +47,12 @@ export default function VerifyEmail({ status }) {
                                 {processing ? (
                                     <>
                                         <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                                        Sending...
+                                        Mengirim...
                                     </>
                                 ) : (
                                     <>
                                         <Mail className="mr-2 h-4 w-4" />
-                                        Resend Verification Email
+                                        Kirim Ulang Email Verifikasi
                                     </>
                                 )}
                             </Button>
@@ -61,19 +60,19 @@ export default function VerifyEmail({ status }) {
 
                         <Button asChild variant="ghost" className="w-full">
                             <Link href={route('logout')} method="post">
-                                Logout
+                                Keluar
                             </Link>
                         </Button>
                     </div>
 
                     <div className="mt-6 border-t pt-4">
                         <div className="rounded-lg bg-blue-50 p-3">
-                            <h4 className="mb-1 text-sm font-medium text-blue-900">Didn't receive the email?</h4>
+                            <h4 className="mb-1 text-sm font-medium text-blue-900">Tidak menerima email?</h4>
                             <ul className="space-y-1 text-xs text-blue-700">
-                                <li>• Check your spam/junk folder</li>
-                                <li>• Make sure the email address is correct</li>
-                                <li>• Wait a few minutes before requesting another</li>
-                                <li>• Contact support if issues persist</li>
+                                <li>• Periksa folder spam/junk</li>
+                                <li>• Pastikan alamat email sudah benar</li>
+                                <li>• Tunggu beberapa menit sebelum meminta yang lain</li>
+                                <li>• Hubungi dukungan jika masalah berlanjut</li>
                             </ul>
                         </div>
                     </div>
