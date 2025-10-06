@@ -83,7 +83,6 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                                 <TableHeader>
                                     <TableRow>
                                         <TableHead>Karyawan</TableHead>
-                                        <TableHead>NIP</TableHead>
                                         <TableHead>Skor-K</TableHead>
                                         <TableHead>Skor-A</TableHead>
                                         <TableHead>Skor-B</TableHead>
@@ -124,9 +123,6 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                                         return (
                                             <TableRow key={questionnaire.id}>
                                                 <TableCell className="font-medium">{questionnaire.employee.name}</TableCell>
-                                                <TableCell>
-                                                    <Badge variant="outline">{questionnaire.employee.nip}</Badge>
-                                                </TableCell>
                                                 <TableCell>{kScore.toFixed(2)}</TableCell>
                                                 <TableCell>{aScore.toFixed(2)}</TableCell>
                                                 <TableCell>{bScore.toFixed(2)}</TableCell>

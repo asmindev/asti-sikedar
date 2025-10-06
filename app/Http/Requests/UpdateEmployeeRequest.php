@@ -42,11 +42,6 @@ class UpdateEmployeeRequest extends FormRequest
                 'string',
                 Rule::in(['Laki-laki', 'Perempuan'])
             ],
-            'address' => [
-                'nullable',
-                'string',
-                'max:500'
-            ],
 
             // User account creation/update fields (conditional)
             'create_user_account' => [

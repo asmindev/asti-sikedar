@@ -4,7 +4,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
 import AdminLayout from '@/layouts/AdminLayout';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { ArrowLeft, Save, UserPlus } from 'lucide-react';
@@ -24,7 +23,6 @@ export default function EmployeeCreate() {
         name: '',
         position: '',
         gender: '',
-        address: '',
         create_user_account: false,
         email: null,
         password: null,
@@ -177,20 +175,6 @@ export default function EmployeeCreate() {
                                         />
                                         {errors.position && <p className="text-sm text-red-500">{errors.position}</p>}
                                     </div>
-                                </div>
-
-                                {/* Address - Full width outside grid */}
-                                <div className="space-y-2">
-                                    <Label htmlFor="address mt-2">Alamat</Label>
-                                    <Textarea
-                                        id="address"
-                                        rows={3}
-                                        value={data.address}
-                                        onChange={(e) => setData('address', e.target.value)}
-                                        placeholder="Alamat karyawan"
-                                        className={errors.address ? 'border-red-500' : ''}
-                                    />
-                                    {errors.address && <p className="text-sm text-red-500">{errors.address}</p>}
                                 </div>
                             </CardContent>
                         </Card>

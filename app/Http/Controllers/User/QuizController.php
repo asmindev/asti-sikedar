@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\Questionnaire;
+use App\Models\QuizQuestion;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -32,8 +33,31 @@ class QuizController extends Controller
                 ->with('info', 'You have already completed the questionnaire. View your results below.');
         }
 
+        // Get questions from database grouped by aspect
+        $questions = [
+            'knowledge' => QuizQuestion::active()
+                ->forAspect('knowledge')
+                ->ordered()
+                ->get(['id', 'question', 'order'])
+                ->values()
+                ->toArray(),
+            'attitude' => QuizQuestion::active()
+                ->forAspect('attitude')
+                ->ordered()
+                ->get(['id', 'question', 'order'])
+                ->values()
+                ->toArray(),
+            'behavior' => QuizQuestion::active()
+                ->forAspect('behavior')
+                ->ordered()
+                ->get(['id', 'question', 'order'])
+                ->values()
+                ->toArray(),
+        ];
+
         return Inertia::render('quiz/Quiz', [
-            'employee' => $employee
+            'employee' => $employee,
+            'quizQuestions' => $questions
         ]);
     }
 
@@ -129,9 +153,47 @@ class QuizController extends Controller
                 ->with('info', 'You have not completed the questionnaire yet. Please complete it first.');
         }
 
+        // Get questions from database grouped by aspect
+        $questions = [
+            'knowledge' => QuizQuestion::active()
+                ->forAspect('knowledge')
+                ->ordered()
+                ->get(['id', 'question', 'order'])
+                ->map(function ($q, $index) {
+                    return [
+                        'key' => 'k' . ($index + 1),
+                        'text' => $q->question
+                    ];
+                })
+                ->toArray(),
+            'attitude' => QuizQuestion::active()
+                ->forAspect('attitude')
+                ->ordered()
+                ->get(['id', 'question', 'order'])
+                ->map(function ($q, $index) {
+                    return [
+                        'key' => 'a' . ($index + 1),
+                        'text' => $q->question
+                    ];
+                })
+                ->toArray(),
+            'behavior' => QuizQuestion::active()
+                ->forAspect('behavior')
+                ->ordered()
+                ->get(['id', 'question', 'order'])
+                ->map(function ($q, $index) {
+                    return [
+                        'key' => 'b' . ($index + 1),
+                        'text' => $q->question
+                    ];
+                })
+                ->toArray(),
+        ];
+
         return Inertia::render('User/Quiz/Result', [
             'employee' => $employee,
-            'questionnaire' => $questionnaire
+            'questionnaire' => $questionnaire,
+            'questions' => $questions
         ]);
     }
 }

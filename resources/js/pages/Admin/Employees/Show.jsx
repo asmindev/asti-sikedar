@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Separator } from '@/components/ui/separator';
 import AdminLayout from '@/layouts/AdminLayout';
 import { Head } from '@inertiajs/react';
-import { ArrowLeft, BarChart3, Calendar, Edit, FileText, Mail, MapPin, User, UserCheck } from 'lucide-react';
+import { ArrowLeft, BarChart3, Calendar, Edit, FileText, Mail, User, UserCheck } from 'lucide-react';
 
 export default function EmployeeShow({ employee }) {
     const breadcrumbs = [
@@ -76,16 +76,6 @@ export default function EmployeeShow({ employee }) {
                                     <p className="text-lg">{employee.gender}</p>
                                 </div>
                             </div>
-
-                            {employee.address && (
-                                <div className="mt-4">
-                                    <p className="text-sm font-medium text-muted-foreground">Alamat</p>
-                                    <div className="mt-1 flex items-start gap-2">
-                                        <MapPin className="mt-1 h-4 w-4 text-muted-foreground" />
-                                        <p className="text-lg">{employee.address}</p>
-                                    </div>
-                                </div>
-                            )}
 
                             <Separator />
 

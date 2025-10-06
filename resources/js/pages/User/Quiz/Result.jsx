@@ -14,7 +14,7 @@ import {
     Activity
 } from 'lucide-react';
 
-export default function QuizResult({ employee, questionnaire }) {
+export default function QuizResult({ employee, questionnaire, questions }) {
     const breadcrumbs = [
         { label: 'Dashboard', href: route('user.dashboard') },
         { label: 'Kuesioner', href: route('user.quiz') },
@@ -55,37 +55,6 @@ export default function QuizResult({ employee, questionnaire }) {
         if (score >= 80) return { text: 'Excellent', color: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' };
         if (score >= 60) return { text: 'Good', color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' };
         return { text: 'Needs Improvement', color: 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' };
-    };
-
-    // Question mapping
-    const questions = {
-        knowledge: [
-            { key: 'k1', text: 'Saya memahami pentingnya keamanan informasi di tempat kerja' },
-            { key: 'k2', text: 'Saya tahu cara mengidentifikasi email phishing' },
-            { key: 'k3', text: 'Saya memahami risiko menggunakan password yang lemah' },
-            { key: 'k4', text: 'Saya tahu pentingnya backup data secara berkala' },
-            { key: 'k5', text: 'Saya memahami risiko mengakses internet menggunakan WiFi publik' },
-            { key: 'k6', text: 'Saya tahu cara mengamankan perangkat mobile' },
-            { key: 'k7', text: 'Saya memahami kebijakan keamanan informasi organisasi' },
-        ],
-        attitude: [
-            { key: 'a1', text: 'Saya merasa bertanggung jawab untuk menjaga keamanan informasi' },
-            { key: 'a2', text: 'Saya peduli dengan privasi data pribadi dan organisasi' },
-            { key: 'a3', text: 'Saya yakin keamanan informasi adalah prioritas penting' },
-            { key: 'a4', text: 'Saya bersedia mengikuti pelatihan keamanan informasi' },
-            { key: 'a5', text: 'Saya percaya setiap karyawan berperan dalam keamanan informasi' },
-            { key: 'a6', text: 'Saya menganggap serius ancaman cyber security' },
-            { key: 'a7', text: 'Saya mendukung implementasi kebijakan keamanan yang ketat' },
-        ],
-        behavior: [
-            { key: 'b1', text: 'Saya selalu menggunakan password yang kuat dan unik' },
-            { key: 'b2', text: 'Saya rutin memperbarui software dan sistem operasi' },
-            { key: 'b3', text: 'Saya selalu logout setelah menggunakan aplikasi/sistem' },
-            { key: 'b4', text: 'Saya berhati-hati saat membuka email dari pengirim tidak dikenal' },
-            { key: 'b5', text: 'Saya melakukan backup data secara teratur' },
-            { key: 'b6', text: 'Saya melaporkan insiden keamanan yang mencurigakan' },
-            { key: 'b7', text: 'Saya mengikuti prosedur keamanan yang telah ditetapkan' },
-        ]
     };
 
     const getLikertText = (value) => {
@@ -135,11 +104,6 @@ export default function QuizResult({ employee, questionnaire }) {
                                     <User className="h-4 w-4 text-gray-500" />
                                     <span className="text-sm font-medium">Nama:</span>
                                     <span className="text-sm">{employee.name}</span>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <FileText className="h-4 w-4 text-gray-500" />
-                                    <span className="text-sm font-medium">NIP:</span>
-                                    <span className="text-sm">{employee.nip}</span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <Calendar className="h-4 w-4 text-gray-500" />

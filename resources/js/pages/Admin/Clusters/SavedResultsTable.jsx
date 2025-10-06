@@ -15,7 +15,6 @@ export default function SavedResultsTable({ savedResults }) {
                         <TableRow>
                             <TableHead>No</TableHead>
                             <TableHead>Karyawan</TableHead>
-                            <TableHead>NIP</TableHead>
                             <TableHead>Kluster</TableHead>
                             <TableHead>Kategori</TableHead>
                             <TableHead>Skor KAB</TableHead>
@@ -27,7 +26,6 @@ export default function SavedResultsTable({ savedResults }) {
                             <TableRow key={result.id}>
                                 <TableCell>{index + 1}</TableCell>
                                 <TableCell className="font-medium">{result.employee?.name || 'N/A'}</TableCell>
-                                <TableCell className="text-sm text-gray-600">{result.employee?.nip || 'N/A'}</TableCell>
                                 <TableCell>
                                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                                         result.cluster === 0 ? 'bg-red-100 text-red-800 dark:bg-red-700 dark:text-red-300' :

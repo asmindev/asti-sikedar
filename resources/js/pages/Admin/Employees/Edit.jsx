@@ -4,7 +4,6 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
 import AdminLayout from '@/layouts/AdminLayout';
 import { Head, useForm, usePage } from '@inertiajs/react';
 import { ArrowLeft, Save, UserCheck } from 'lucide-react';
@@ -24,7 +23,6 @@ export default function EmployeeEdit({ employee }) {
         name: employee.name || '',
         position: employee.position || '',
         gender: employee.gender || '',
-        address: employee.address || '',
         create_user_account: !!employee.user,
         email: employee.user?.email || null,
         password: null,
@@ -178,20 +176,6 @@ export default function EmployeeEdit({ employee }) {
                                         />
                                         {errors.position && <p className="text-sm text-red-500">{errors.position}</p>}
                                     </div>
-                                </div>
-
-                                {/* Address - Full width outside grid */}
-                                <div className="space-y-2">
-                                    <Label htmlFor="address mt-2">Alamat</Label>
-                                    <Textarea
-                                        id="address"
-                                        rows={3}
-                                        value={data.address}
-                                        onChange={(e) => setData('address', e.target.value)}
-                                        placeholder="Alamat karyawan"
-                                        className={errors.address ? 'border-red-500' : ''}
-                                    />
-                                    {errors.address && <p className="text-sm text-red-500">{errors.address}</p>}
                                 </div>
                             </CardContent>
                         </Card>

@@ -20,7 +20,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Andi Wijaya',
                     'position' => 'Senior Software Engineer',
                     'gender' => 'Laki-laki',
-                    'address' => 'Jl. Gatot Subroto No. 45, Jakarta Selatan',
                     'birth_date' => '1990-05-15'
                 ],
                 'questionnaire' => [
@@ -52,7 +51,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Siti Nurhaliza',
                     'position' => 'HR Manager',
                     'gender' => 'Perempuan',
-                    'address' => 'Jl. Sudirman No. 88, Jakarta Pusat',
                     'birth_date' => '1990-05-15'
                 ],
                 'questionnaire' => [
@@ -84,7 +82,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Budi Santoso',
                     'position' => 'Financial Analyst',
                     'gender' => 'Laki-laki',
-                    'address' => 'Jl. Thamrin No. 12, Jakarta Pusat',
                     'birth_date' => '1988-11-20'
                 ],
                 'questionnaire' => [
@@ -116,7 +113,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Dewi Lestari',
                     'position' => 'Marketing Specialist',
                     'gender' => 'Perempuan',
-                    'address' => 'Jl. Kuningan No. 77, Jakarta Selatan',
                     'birth_date' => '1992-07-30'
                 ],
                 'questionnaire' => [
@@ -148,7 +144,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Rudi Hartono',
                     'position' => 'Operations Manager',
                     'gender' => 'Laki-laki',
-                    'address' => 'Jl. Kemang No. 22, Jakarta Selatan',
                     'birth_date' => '1985-03-10'
                 ],
                 'questionnaire' => [
@@ -180,7 +175,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Linda Kusuma',
                     'position' => 'Legal Counsel',
                     'gender' => 'Perempuan',
-                    'address' => 'Jl. Senayan No. 99, Jakarta Pusat',
                     'birth_date' => '1991-09-25'
                 ],
                 'questionnaire' => [
@@ -212,7 +206,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Ahmad Fauzi',
                     'position' => 'System Administrator',
                     'gender' => 'Laki-laki',
-                    'address' => 'Jl. Menteng No. 33, Jakarta Pusat',
                     'birth_date' => '1987-12-05'
                 ],
                 'questionnaire' => [
@@ -244,7 +237,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Maya Sari',
                     'position' => 'Accountant',
                     'gender' => 'Perempuan',
-                    'address' => 'Jl. Blok M No. 44, Jakarta Selatan',
                     'birth_date' => '1993-04-18'
                 ],
                 'questionnaire' => [
@@ -276,7 +268,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Hendra Gunawan',
                     'position' => 'Sales Manager',
                     'gender' => 'Laki-laki',
-                    'address' => 'Jl. Rasuna Said No. 55, Jakarta Selatan',
                     'birth_date' => '1986-08-12'
                 ],
                 'questionnaire' => [
@@ -308,7 +299,6 @@ class CompleteEmployeeQuestionnaireSeeder extends Seeder
                     'name' => 'Ratna Dewi',
                     'position' => 'HR Officer',
                     'gender' => 'Perempuan',
-                    'address' => 'Jl. Cikini No. 66, Jakarta Pusat',
                     'birth_date' => '1994-02-28'
                 ],
                 'questionnaire' => [

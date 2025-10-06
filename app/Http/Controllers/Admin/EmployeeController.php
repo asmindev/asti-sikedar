@@ -69,7 +69,6 @@ class EmployeeController extends Controller
                 'name',
                 'position',
                 'gender',
-                'address',
                 'birth_date'
             ]));
 
@@ -146,7 +145,6 @@ class EmployeeController extends Controller
                 'name',
                 'position',
                 'gender',
-                'address',
                 'birth_date'
             ]));
 

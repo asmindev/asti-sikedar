@@ -40,11 +40,6 @@ class StoreEmployeeRequest extends FormRequest
                 'string',
                 Rule::in(['Laki-laki', 'Perempuan'])
             ],
-            'address' => [
-                'nullable',
-                'string',
-                'max:500'
-            ],
 
             // User account creation fields (conditional)
             'create_user_account' => [

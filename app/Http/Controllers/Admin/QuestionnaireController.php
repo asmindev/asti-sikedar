@@ -34,7 +34,7 @@ class QuestionnaireController extends Controller
      */
     public function create(): Response
     {
-        $employees = Employee::whereDoesntHave('questionnaire')->get(['id', 'nip', 'name']);
+        $employees = Employee::whereDoesntHave('questionnaire')->get(['id', 'name']);
 
         return Inertia::render('Admin/Questionnaires/Create', [
             'employees' => $employees,
@@ -172,18 +172,18 @@ class QuestionnaireController extends Controller
                 $lineNumber = $index + 2; // +2 because we removed header and want 1-based indexing
 
                 try {
-                    // Expected CSV format: nip, k1-k7, a1-a7, b1-b7 (22 columns total)
+                    // Expected CSV format: employee_id, k1-k7, a1-a7, b1-b7 (22 columns total)
                     if (count($row) < 22) {
                         throw new \Exception("Insufficient columns. Expected 22, got " . count($row));
                     }
 
-                    $nip = trim($row[0]);
+                    $employeeId = trim($row[0]);
 
-                    // Find employee by NIP
-                    $employee = Employee::where('nip', $nip)->first();
+                    // Find employee by ID
+                    $employee = Employee::find($employeeId);
 
                     if (!$employee) {
-                        throw new \Exception("Employee with NIP '{$nip}' not found");
+                        throw new \Exception("Employee with ID '{$employeeId}' not found");
                     }
 
                     // Validate all scores are between 1-5
@@ -258,8 +258,8 @@ class QuestionnaireController extends Controller
             'Content-Disposition' => 'attachment; filename="questionnaire_template.csv"',
         ];
 
-        $csvHeaders = ['nip', 'k1', 'k2', 'k3', 'k4', 'k5', 'k6', 'k7', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7'];
-        $sampleData = ['EMP001', 4, 3, 5, 2, 4, 3, 5, 3, 4, 2, 5, 3, 4, 3, 2, 4, 3, 5, 2, 4, 3];
+        $csvHeaders = ['employee_id', 'k1', 'k2', 'k3', 'k4', 'k5', 'k6', 'k7', 'a1', 'a2', 'a3', 'a4', 'a5', 'a6', 'a7', 'b1', 'b2', 'b3', 'b4', 'b5', 'b6', 'b7'];
+        $sampleData = ['1', 4, 3, 5, 2, 4, 3, 5, 3, 4, 2, 5, 3, 4, 3, 2, 4, 3, 5, 2, 4, 3];
 
         $callback = function () use ($csvHeaders, $sampleData) {
             $file = fopen('php://output', 'w');
