@@ -22,6 +22,9 @@ class ClusterResult extends Model
         'score_k',
         'score_a',
         'score_b',
+        'distance_to_low',
+        'distance_to_medium',
+        'distance_to_high',
     ];
 
     /**
@@ -35,6 +38,9 @@ class ClusterResult extends Model
         'score_k' => 'decimal:4',
         'score_a' => 'decimal:4',
         'score_b' => 'decimal:4',
+        'distance_to_low' => 'decimal:4',
+        'distance_to_medium' => 'decimal:4',
+        'distance_to_high' => 'decimal:4',
     ];
 
     /**

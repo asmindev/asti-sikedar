@@ -7,6 +7,7 @@ use App\Models\Questionnaire;
 use App\Models\ClusterResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
@@ -69,6 +70,9 @@ class ClusterController extends Controller
                     'score_k' => $result->score_k,
                     'score_a' => $result->score_a,
                     'score_b' => $result->score_b,
+                    'distance_to_low' => $result->distance_to_low,
+                    'distance_to_medium' => $result->distance_to_medium,
+                    'distance_to_high' => $result->distance_to_high,
                     'updated_at' => $result->updated_at,
                 ];
             });
@@ -98,9 +102,17 @@ class ClusterController extends Controller
             'results.*.score_k' => 'required|numeric',
             'results.*.score_a' => 'required|numeric',
             'results.*.score_b' => 'required|numeric',
+            'results.*.distance_to_low' => 'nullable|numeric',
+            'results.*.distance_to_medium' => 'nullable|numeric',
+            'results.*.distance_to_high' => 'nullable|numeric',
         ]);
 
         try {
+            // Log sample data untuk debugging
+            Log::info('Cluster Results Sample:', [
+                'first_result' => $request->results[0] ?? null,
+            ]);
+
             DB::transaction(function () use ($request) {
                 // Delete existing cluster results for these employees
                 $employeeIds = collect($request->results)->pluck('employee_id');
@@ -115,6 +127,9 @@ class ClusterController extends Controller
                         'score_k' => $result['score_k'],
                         'score_a' => $result['score_a'],
                         'score_b' => $result['score_b'],
+                        'distance_to_low' => $result['distance_to_low'] ?? null,
+                        'distance_to_medium' => $result['distance_to_medium'] ?? null,
+                        'distance_to_high' => $result['distance_to_high'] ?? null,
                     ]);
                 }
             });

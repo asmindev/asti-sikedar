@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AdminLayout from '@/layouts/AdminLayout';
 import { Head, Link, router } from '@inertiajs/react';
-import { Edit, Eye, Search, Trash2 } from 'lucide-react';
+import { Eye, Search, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 export default function QuestionnaireIndex({ questionnaires, totalEmployees, completedQuestionnaires }) {
@@ -204,11 +204,6 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                                                         <Button asChild variant="outline" size="sm">
                                                             <Link href={route('admin.questionnaires.show', questionnaire.id)}>
                                                                 <Eye className="h-4 w-4" />
-                                                            </Link>
-                                                        </Button>
-                                                        <Button asChild variant="outline" size="sm">
-                                                            <Link href={route('admin.questionnaires.edit', questionnaire.id)}>
-                                                                <Edit className="h-4 w-4" />
                                                             </Link>
                                                         </Button>
                                                         <Button
