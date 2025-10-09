@@ -45,20 +45,9 @@ export default function SavedResultsTable({ savedResults }) {
                                     </span>
                                 </TableCell>
                                 <TableCell>
-                                    <div className="text-xs space-y-1">
-                                        <div className="flex justify-between gap-2">
-                                            <span className="text-blue-600 font-medium">K:</span>
-                                            <span>{parseFloat(result.score_k || 0).toFixed(1)}%</span>
-                                        </div>
-                                        <div className="flex justify-between gap-2">
-                                            <span className="text-green-600 font-medium">A:</span>
-                                            <span>{parseFloat(result.score_a || 0).toFixed(1)}%</span>
-                                        </div>
-                                        <div className="flex justify-between gap-2">
-                                            <span className="text-purple-600 font-medium">B:</span>
-                                            <span>{parseFloat(result.score_b || 0).toFixed(1)}%</span>
-                                        </div>
-                                    </div>
+                                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-blue-300">
+                                        KAB: {((parseFloat(result.score_k || 0) + parseFloat(result.score_a || 0) + parseFloat(result.score_b || 0)) / 3).toFixed(1)}%
+                                    </span>
                                 </TableCell>
                                 <TableCell className="text-sm text-gray-500">
                                     {new Date(result.updated_at).toLocaleString('id-ID', {
