@@ -44,20 +44,9 @@ export default function ClusteringResultsTable({ labeledClusters }) {
                                     </span>
                                 </TableCell>
                                 <TableCell>
-                                    <div className="text-xs space-y-1">
-                                        <div className="flex justify-between">
-                                            <span className="text-blue-600 font-medium">Pengetahuan:</span>
-                                            <span>{res.scoreK.toFixed(1)}%</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span className="text-green-600 font-medium">Sikap:</span>
-                                            <span>{res.scoreA.toFixed(1)}%</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span className="text-purple-600 font-medium">Perilaku:</span>
-                                            <span>{res.scoreB.toFixed(1)}%</span>
-                                        </div>
-                                    </div>
+                                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-700 dark:text-blue-300">
+                                        KAB: {((res.scoreK + res.scoreA + res.scoreB) / 3).toFixed(1)}%
+                                    </span>
                                 </TableCell>
                             </TableRow>
                         ))}

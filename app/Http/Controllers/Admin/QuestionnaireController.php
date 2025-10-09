@@ -16,11 +16,19 @@ class QuestionnaireController extends Controller
     /**
      * Display a listing of questionnaires.
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $perPage = $request->get('per_page', 15);
+        $search = $request->get('search', '');
+
         $questionnaires = Questionnaire::with('employee')
+            ->when($search, function ($query) use ($search) {
+                $query->whereHas('employee', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                });
+            })
             ->latest()
-            ->paginate(15);
+            ->paginate($perPage);
 
         return Inertia::render('Admin/Questionnaires/Index', [
             'questionnaires' => $questionnaires,

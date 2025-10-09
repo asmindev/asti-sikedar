@@ -2,14 +2,19 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AdminLayout from '@/layouts/AdminLayout';
 import { Head, Link, router } from '@inertiajs/react';
-import { Edit, Eye, Trash2 } from 'lucide-react';
+import { Edit, Eye, Search, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 export default function QuestionnaireIndex({ questionnaires, totalEmployees, completedQuestionnaires }) {
     const [deleteDialog, setDeleteDialog] = useState({ open: false, id: null, name: '' });
+    const [perPage, setPerPage] = useState(questionnaires.per_page || 15);
+    const [search, setSearch] = useState('');
 
     const handleDeleteClick = (id, employeeName) => {
         setDeleteDialog({ open: true, id, name: employeeName });
@@ -24,6 +29,41 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
 
     const handleDeleteCancel = () => {
         setDeleteDialog({ open: false, id: null, name: '' });
+    };
+
+    const handlePageChange = (page) => {
+        router.get(route('admin.questionnaires.index'), {
+            page,
+            per_page: perPage,
+            search
+        }, {
+            preserveState: true,
+            preserveScroll: true
+        });
+    };
+
+    const handlePerPageChange = (value) => {
+        setPerPage(parseInt(value));
+        router.get(route('admin.questionnaires.index'), {
+            per_page: value,
+            page: 1,
+            search
+        }, {
+            preserveState: true,
+            preserveScroll: true
+        });
+    };
+
+    const handleSearchChange = (value) => {
+        setSearch(value);
+        router.get(route('admin.questionnaires.index'), {
+            search: value,
+            page: 1,
+            per_page: perPage
+        }, {
+            preserveState: true,
+            preserveScroll: true
+        });
     };
 
     const breadcrumbs = [{ label: 'Dashboard', href: route('admin.dashboard') }, { label: 'Kuesioner' }];
@@ -71,6 +111,38 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                     </Card>
                 </div>
 
+                <div className="flex justify-between items-center mt-4">
+
+                {/* Search Bar */}
+                <div className="flex items-center gap-2">
+                    <div className="relative flex-1 max-w-sm">
+                        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        <Input
+                            placeholder="Cari karyawan..."
+                            value={search}
+                            onChange={(e) => handleSearchChange(e.target.value)}
+                            className="pl-9"
+                        />
+                    </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                            <span className="text-sm text-muted-foreground">Tampilkan</span>
+                            <Select value={perPage.toString()} onValueChange={handlePerPageChange}>
+                                <SelectTrigger className="w-20">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="5">5</SelectItem>
+                                    <SelectItem value="10">10</SelectItem>
+                                    <SelectItem value="15">15</SelectItem>
+                                    <SelectItem value="25">25</SelectItem>
+                                    <SelectItem value="50">50</SelectItem>
+                                    <SelectItem value="100">100</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            <span className="text-sm text-muted-foreground">per halaman</span>
+                    </div>
+                </div>
                 {/* Questionnaires Table */}
                 <Card>
                     <CardHeader>
@@ -160,6 +232,72 @@ export default function QuestionnaireIndex({ questionnaires, totalEmployees, com
                         )}
                     </CardContent>
                 </Card>
+
+                {/* Pagination and Row Count */}
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+
+                    {questionnaires.last_page > 1 && (
+                        <Pagination>
+                            <PaginationContent>
+                                <PaginationItem>
+                                    <PaginationPrevious
+                                        href="#"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            if (questionnaires.current_page > 1) {
+                                                handlePageChange(questionnaires.current_page - 1);
+                                            }
+                                        }}
+                                        className={questionnaires.current_page === 1 ? 'pointer-events-none opacity-50' : ''}
+                                    />
+                                </PaginationItem>
+
+                                {Array.from({ length: questionnaires.last_page }, (_, i) => i + 1)
+                                    .filter(page => {
+                                        const current = questionnaires.current_page;
+                                        return page === 1 || page === questionnaires.last_page || (page >= current - 1 && page <= current + 1);
+                                    })
+                                    .map((page, index, array) => {
+                                        if (index > 0 && page - array[index - 1] > 1) {
+                                            return (
+                                                <PaginationItem key={`ellipsis-${page}`}>
+                                                    <PaginationEllipsis />
+                                                </PaginationItem>
+                                            );
+                                        }
+                                        return (
+                                            <PaginationItem key={page}>
+                                                <PaginationLink
+                                                    href="#"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        handlePageChange(page);
+                                                    }}
+                                                    isActive={page === questionnaires.current_page}
+                                                >
+                                                    {page}
+                                                </PaginationLink>
+                                            </PaginationItem>
+                                        );
+                                    })}
+
+                                <PaginationItem>
+                                    <PaginationNext
+                                        href="#"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            if (questionnaires.current_page < questionnaires.last_page) {
+                                                handlePageChange(questionnaires.current_page + 1);
+                                            }
+                                        }}
+                                        className={questionnaires.current_page === questionnaires.last_page ? 'pointer-events-none opacity-50' : ''}
+                                    />
+                                </PaginationItem>
+                            </PaginationContent>
+                        </Pagination>
+                    )}
+                </div>
 
                 {/* Delete Confirmation Dialog */}
                 <Dialog open={deleteDialog.open} onOpenChange={(open) => !open && handleDeleteCancel()}>
