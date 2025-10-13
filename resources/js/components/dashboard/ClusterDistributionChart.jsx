@@ -45,15 +45,17 @@ export default function ClusterDistributionChart({ clusterDistribution, chartTyp
         if (active && payload && payload.length) {
             const data = payload[0].payload;
             return (
-                <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
-                    <p className="font-semibold text-gray-900">{data.name}</p>
-                    <p className="text-sm text-gray-600">
-                        Jumlah: <span className="font-medium">{data.value} pegawai</span>
-                    </p>
-                    <p className="text-sm text-gray-600">
-                        Persentase: <span className="font-medium">{data.percentage}%</span>
-                    </p>
-                </div>
+                <Card className="shadow-lg p-0">
+                    <CardContent className="p-3">
+                        <p className="font-semibold text-gray-900 dark:text-white">{data.name}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                            Jumlah: <span className="font-medium">{data.value} pegawai</span>
+                        </p>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">
+                            Persentase: <span className="font-medium">{data.percentage}%</span>
+                        </p>
+                    </CardContent>
+                </Card>
             );
         }
         return null;
@@ -63,11 +65,11 @@ export default function ClusterDistributionChart({ clusterDistribution, chartTyp
         return (
             <Card>
                 <CardHeader>
-                    <CardTitle>Distribusi Klaster Pegawai</CardTitle>
-                    <CardDescription>Belum ada data klaster yang tersedia</CardDescription>
+                    <CardTitle className="text-gray-900 dark:text-white">Distribusi Klaster Pegawai</CardTitle>
+                    <CardDescription className="text-gray-600 dark:text-gray-300">Belum ada data klaster yang tersedia</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="flex items-center justify-center h-64 text-gray-500">
+                    <div className="flex items-center justify-center h-64 text-gray-500 dark:text-gray-400">
                         Tidak ada data klaster untuk ditampilkan
                     </div>
                 </CardContent>
@@ -78,8 +80,8 @@ export default function ClusterDistributionChart({ clusterDistribution, chartTyp
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Distribusi Klaster Pegawai</CardTitle>
-                <CardDescription>
+                <CardTitle className="text-gray-900 dark:text-white">Distribusi Klaster Pegawai</CardTitle>
+                <CardDescription className="text-gray-600 dark:text-gray-300">
                     Pengelompokan pegawai berdasarkan tingkat keamanan informasi
                 </CardDescription>
             </CardHeader>
@@ -113,16 +115,17 @@ export default function ClusterDistributionChart({ clusterDistribution, chartTyp
                         </PieChart>
                     ) : (
                         <BarChart data={filteredData}>
-                            <CartesianGrid strokeDasharray="3 3" />
+                            <CartesianGrid strokeDasharray="3 3" className="stroke-gray-300 dark:stroke-gray-600" />
                             <XAxis
                                 dataKey="name"
-                                tick={{ fontSize: 12 }}
+                                tick={{ fontSize: 12, fill: 'currentColor' }}
                                 interval={0}
                                 angle={-45}
                                 textAnchor="end"
                                 height={80}
+                                className="text-gray-600 dark:text-gray-300"
                             />
-                            <YAxis />
+                            <YAxis tick={{ fill: 'currentColor' }} className="text-gray-600 dark:text-gray-300" />
                             <ChartTooltip content={<CustomTooltip />} />
                             <Bar dataKey="value" fill="#8884d8">
                                 {filteredData.map((entry, index) => (
@@ -136,16 +139,18 @@ export default function ClusterDistributionChart({ clusterDistribution, chartTyp
                 {/* Summary Statistics */}
                 <div className="mt-6 grid grid-cols-3 gap-4">
                     {data.map((item) => (
-                        <div key={item.label} className="text-center p-3 rounded-lg bg-gray-50">
-                            <div
-                                className="text-2xl font-bold"
-                                style={{ color: item.color }}
-                            >
-                                {item.value}
-                            </div>
-                            <div className="text-sm text-gray-600">{item.name}</div>
-                            <div className="text-xs text-gray-500">{item.percentage}%</div>
-                        </div>
+                        <Card key={item.label} className="text-center p-0">
+                            <CardContent className="p-3">
+                                <div
+                                    className="text-2xl font-bold"
+                                    style={{ color: item.color }}
+                                >
+                                    {item.value}
+                                </div>
+                                <div className="text-sm text-gray-600 dark:text-gray-300">{item.name}</div>
+                                <div className="text-xs text-gray-500 dark:text-gray-400">{item.percentage}%</div>
+                            </CardContent>
+                        </Card>
                     ))}
                 </div>
             </CardContent>

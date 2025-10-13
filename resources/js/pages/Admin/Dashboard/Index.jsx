@@ -17,18 +17,24 @@ export default function AdminDashboard({ user, stats, clusterDistribution }) {
             <Head title="Admin Dashboard" />
 
             <div className="p-6 space-y-6">
-                {/* Header */}
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-                        Dashboard Admin
-                    </h1>
-                    <p className="text-gray-600 mt-1">
-                        Selamat datang kembali, {user.name}! Berikut ringkasan sistem keamanan informasi.
-                    </p>
+                <div className="relative bg-cover bg-center bg-no-repeat bg-[url('/images/kejatii.jpg')] rounded-lg overflow-hidden">
+                    <div className="absolute inset-0 bg-black/40"></div>
+                    <div className="relative z-10 p-6 space-y-4">
+                        {/* Header */}
+                        <div className="mb-8">
+                            <h1 className="text-3xl font-bold tracking-tight text-white">
+                                Dashboard Admin
+                            </h1>
+                            <p className="text-white/90 mt-1">
+                                Selamat datang kembali, {user.name}! Berikut ringkasan sistem keamanan informasi.
+                            </p>
+                        </div>
+
+                        {/* Stats Overview */}
+                        <StatsOverview stats={stats} clusterDistribution={clusterDistribution} />
+                    </div>
                 </div>
 
-                {/* Stats Overview */}
-                <StatsOverview stats={stats} clusterDistribution={clusterDistribution} />
 
                 {/* Main Content Grid */}
                 <div className="grid gap-6 lg:grid-cols-3">
@@ -36,7 +42,7 @@ export default function AdminDashboard({ user, stats, clusterDistribution }) {
                     <div className="lg:col-span-2 space-y-6">
                         {/* Chart Controls */}
                         <div className="flex justify-between items-center">
-                            <h2 className="text-xl font-semibold text-gray-900">
+                            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
                                 Visualisasi Klaster
                             </h2>
                             <div className="flex gap-2">

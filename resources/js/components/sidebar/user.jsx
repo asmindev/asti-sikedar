@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { Home, LogOut, Settings, User, UserCircle, FileText, ClipboardCheck } from 'lucide-react';
+import { Home, LogOut, Settings, User, FileText, ClipboardCheck } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -74,8 +74,8 @@ export function UserSidebar() {
         <Sidebar className="border-r">
             <SidebarHeader className="border-b p-4">
                 <div className="flex items-center gap-3">
-                    <div className="flex h-8 w-8 items-center justify-center rounded bg-green-600">
-                        <UserCircle className="h-4 w-4 text-white" />
+                    <div className="flex h-8 w-8 items-center justify-center rounded">
+                        <img src="/images/logo.png" alt="Logo Kejati" className="h-6 w-6 object-contain" />
                     </div>
                     <div>
                         <h2 className="text-sm font-semibold">Panel Pengguna</h2>

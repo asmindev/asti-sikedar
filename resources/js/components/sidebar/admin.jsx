@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BarChart3, LayoutDashboard, LogOut, Monitor, Moon, Palette, Settings, Shield, Sun, Upload, Users, Brain } from 'lucide-react';
+import { BarChart3, LayoutDashboard, LogOut, Monitor, Moon, Palette, Settings, Sun, Upload, Users, Brain } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -109,8 +109,8 @@ export function AdminSidebar() {
         <Sidebar className="border-r">
             <SidebarHeader className="border-b p-3">
                 <div className="flex items-center gap-x-3">
-                    <div className="flex size-10 items-center justify-center rounded bg-blue-600">
-                        <Shield className="size-8 text-white" />
+                    <div className="flex size-10 items-center justify-center rounded">
+                        <img src="/images/logo.png" alt="Logo Kejati" className="size-8 object-contain" />
                     </div>
                     <div>
                         <h2 className="text-sm font-semibold">Panel Admin</h2>

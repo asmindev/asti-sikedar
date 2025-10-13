@@ -31,13 +31,14 @@ export default function Login({ status, canResetPassword }) {
     };
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-blue-900 px-4">
+        <div className="relative flex min-h-screen items-center justify-center bg-cover bg-center bg-no-repeat px-4 bg-[url('/images/kejati.jpg')]">
+            <div className="absolute inset-0 bg-black/30"></div>
             <Head title="Masuk" />
 
-            <Card className="w-full max-w-md">
+            <Card className="relative z-10 w-full max-w-sm">
                 <CardHeader className="text-center">
-                    <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 dark:bg-blue-500">
-                        <LogIn className="h-6 w-6 text-white" />
+                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center">
+                        <img src="/images/logo.png" alt="Logo Kejati" className="h-12 w-12 object-contain" />
                     </div>
                     <CardTitle className="text-2xl font-bold">Selamat Datang Kembali</CardTitle>
                     <CardDescription>Masuk ke akun Anda untuk melanjutkan</CardDescription>
@@ -127,15 +128,15 @@ export default function Login({ status, canResetPassword }) {
                     </div> */}
 
                     {/* Demo Credentials */}
-                    <div className="mt-6 border-t pt-4">
-                        <p className="mb-2 text-center text-xs text-muted-foreground">Kredensial Demo:</p>
-                        <div className="grid grid-cols-2 gap-2 text-xs">
-                            <div className="rounded bg-blue-50 dark:bg-blue-900/30 p-2">
+                    <div className="mt-4 border-t pt-2">
+                        <p className="mb-1 text-center text-[10px] text-muted-foreground">Kredensial Demo:</p>
+                        <div className="grid grid-cols-2 gap-1.5 text-[10px]">
+                            <div className="rounded bg-blue-50 dark:bg-blue-900/30 p-1.5">
                                 <p className="font-medium">Admin:</p>
                                 <p>admin@kejati.go.id</p>
                                 <p>admin123</p>
                             </div>
-                            <div className="rounded bg-green-50 dark:bg-green-900/30 p-2">
+                            <div className="rounded bg-green-50 dark:bg-green-900/30 p-1.5">
                                 <p className="font-medium">Pengguna:</p>
                                 <p>user@kejati.go.id</p>
                                 <p>user123</p>
