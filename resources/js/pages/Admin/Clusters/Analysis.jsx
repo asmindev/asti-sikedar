@@ -26,7 +26,7 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
     });
     const breadcrumbs = [{ label: 'Dashboard', href: route('admin.dashboard') }, { label: 'Analisis Cluster' }];
 
-    // Hitung rata-rata KAB untuk setiap responden
+    // Hitung rata-rata KAB untuk setiap responden (skala 1-5)
     const respondentsWithAvg = useMemo(() => {
         if (!questionnaires || questionnaires.length === 0) return [];
 
@@ -34,9 +34,9 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
             const totalK = q.k1 + q.k2 + q.k3 + q.k4 + q.k5 + q.k6 + q.k7;
             const totalA = q.a1 + q.a2 + q.a3 + q.a4 + q.a5 + q.a6 + q.a7;
             const totalB = q.b1 + q.b2 + q.b3 + q.b4 + q.b5 + q.b6 + q.b7;
-            const scoreK = (totalK / 35) * 100;
-            const scoreA = (totalA / 35) * 100;
-            const scoreB = (totalB / 35) * 100;
+            const scoreK = totalK / 7; // Rata-rata dari 7 pertanyaan (skala 1-5)
+            const scoreA = totalA / 7;
+            const scoreB = totalB / 7;
             const avgScore = (scoreK + scoreA + scoreB) / 3;
 
             return {
@@ -242,10 +242,9 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
                                         </SelectTrigger>
                                         <SelectContent>
                                             {respondentsWithAvg.map((resp) => {
-                                                const avgKAB = (resp.avgScore / 100 * 5).toFixed(1);
                                                 return (
                                                     <SelectItem key={resp.id} value={resp.id.toString()}>
-                                                        {resp.employee?.name} - Avg: {avgKAB}
+                                                        {resp.employee?.name} - Avg: {resp.avgScore.toFixed(2)}
                                                     </SelectItem>
                                                 );
                                             })}
@@ -255,9 +254,9 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
                                         const resp = respondentsWithAvg.find(r => r.id === parseInt(selectedRespondents.low));
                                         return resp && (
                                             <div className="mt-2 text-xs text-gray-600">
-                                                <div>K: {(resp.scoreK / 100 * 5).toFixed(1)}</div>
-                                                <div>A: {(resp.scoreA / 100 * 5).toFixed(1)}</div>
-                                                <div>B: {(resp.scoreB / 100 * 5).toFixed(1)}</div>
+                                                <div>K: {resp.scoreK.toFixed(2)}</div>
+                                                <div>A: {resp.scoreA.toFixed(2)}</div>
+                                                <div>B: {resp.scoreB.toFixed(2)}</div>
                                             </div>
                                         );
                                     })()}
@@ -274,10 +273,9 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
                                         </SelectTrigger>
                                         <SelectContent>
                                             {respondentsWithAvg.map((resp) => {
-                                                const avgKAB = (resp.avgScore / 100 * 5).toFixed(1);
                                                 return (
                                                     <SelectItem key={resp.id} value={resp.id.toString()}>
-                                                        {resp.employee?.name} - Avg: {avgKAB}
+                                                        {resp.employee?.name} - Avg: {resp.avgScore.toFixed(2)}
                                                     </SelectItem>
                                                 );
                                             })}
@@ -287,9 +285,9 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
                                         const resp = respondentsWithAvg.find(r => r.id === parseInt(selectedRespondents.medium));
                                         return resp && (
                                             <div className="mt-2 text-xs text-gray-600">
-                                                <div>K: {(resp.scoreK / 100 * 5).toFixed(1)}</div>
-                                                <div>A: {(resp.scoreA / 100 * 5).toFixed(1)}</div>
-                                                <div>B: {(resp.scoreB / 100 * 5).toFixed(1)}</div>
+                                                <div>K: {resp.scoreK.toFixed(2)}</div>
+                                                <div>A: {resp.scoreA.toFixed(2)}</div>
+                                                <div>B: {resp.scoreB.toFixed(2)}</div>
                                             </div>
                                         );
                                     })()}
@@ -306,10 +304,9 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
                                         </SelectTrigger>
                                         <SelectContent>
                                             {respondentsWithAvg.map((resp) => {
-                                                const avgKAB = (resp.avgScore / 100 * 5).toFixed(1);
                                                 return (
                                                     <SelectItem key={resp.id} value={resp.id.toString()}>
-                                                        {resp.employee?.name} - Avg: {avgKAB}
+                                                        {resp.employee?.name} - Avg: {resp.avgScore.toFixed(2)}
                                                     </SelectItem>
                                                 );
                                             })}
@@ -319,9 +316,9 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
                                         const resp = respondentsWithAvg.find(r => r.id === parseInt(selectedRespondents.high));
                                         return resp && (
                                             <div className="mt-2 text-xs text-gray-600">
-                                                <div>K: {(resp.scoreK / 100 * 5).toFixed(1)}</div>
-                                                <div>A: {(resp.scoreA / 100 * 5).toFixed(1)}</div>
-                                                <div>B: {(resp.scoreB / 100 * 5).toFixed(1)}</div>
+                                                <div>K: {resp.scoreK.toFixed(2)}</div>
+                                                <div>A: {resp.scoreA.toFixed(2)}</div>
+                                                <div>B: {resp.scoreB.toFixed(2)}</div>
                                             </div>
                                         );
                                     })()}

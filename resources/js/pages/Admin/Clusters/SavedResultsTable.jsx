@@ -25,11 +25,8 @@ export default function SavedResultsTable({ savedResults }) {
                     </TableHeader>
                     <TableBody>
                         {savedResults.map((result, index) => {
-                            // Hitung rata-rata KAB dalam skala 1-5 (bukan persentase)
-                            // score_k, score_a, score_b dari database dalam bentuk persentase (0-100)
-                            // Konversi kembali ke skala 1-5: nilai_persen / 100 * 5
-                            const avgPercent = (parseFloat(result.score_k) + parseFloat(result.score_a) + parseFloat(result.score_b)) / 3;
-                            const avgKAB = (avgPercent / 100 * 5).toFixed(1);
+                            // score_k, score_a, score_b dari database sudah dalam skala 1-5
+                            const avgKAB = ((parseFloat(result.score_k) + parseFloat(result.score_a) + parseFloat(result.score_b)) / 3).toFixed(2);
 
                             return (
                                 <TableRow key={result.id}>

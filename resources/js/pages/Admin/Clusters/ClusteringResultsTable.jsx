@@ -41,10 +41,8 @@ export default function ClusteringResultsTable({ labeledClusters }) {
                     </TableHeader>
                     <TableBody>
                         {labeledClusters.map((res, index) => {
-                            // Hitung rata-rata KAB dalam skala 1-5 (bukan persentase)
-                            // scoreK, scoreA, scoreB sudah dalam bentuk persentase (0-100)
-                            // Konversi kembali ke skala 1-5: nilai_persen / 100 * 5
-                            const avgKAB = (((res.scoreK + res.scoreA + res.scoreB) / 3) / 100 * 5).toFixed(1);
+                            // scoreK, scoreA, scoreB sudah dalam skala 1-5
+                            const avgKAB = ((res.scoreK + res.scoreA + res.scoreB) / 3).toFixed(2);
 
                             // Array jarak [distanceToC0, distanceToC1, distanceToC2]
                             const distances = [res.distanceToC1, res.distanceToC2, res.distanceToC3];

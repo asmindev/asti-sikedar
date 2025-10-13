@@ -226,9 +226,9 @@ class ClusterController extends Controller
                 'E4' => 'Posisi',
                 'F4' => 'Kluster',
                 'G4' => 'Kategori',
-                'H4' => 'Skor Knowledge (%)',
-                'I4' => 'Skor Attitude (%)',
-                'J4' => 'Skor Behavior (%)',
+                'H4' => 'Skor Knowledge (1-5)',
+                'I4' => 'Skor Attitude (1-5)',
+                'J4' => 'Skor Behavior (1-5)',
             ];
 
             foreach ($headers as $cell => $value) {
