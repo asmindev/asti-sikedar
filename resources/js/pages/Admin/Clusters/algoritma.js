@@ -2,7 +2,7 @@ import { kmeans } from 'ml-kmeans';
 
 /**
  * Menghitung skor Knowledge, Attitude, Behavior dari data kuesioner
- * PERBAIKAN: Menggunakan rata-rata (1-5) seperti di foto, bukan persentase (0-100)
+ * Menggunakan rata-rata (1-7) sesuai dokumen penelitian
  * @param {Array} questionnaires - Data kuesioner
  * @returns {Array} Array berisi skor KAB untuk setiap kuesioner
  */
@@ -12,8 +12,8 @@ export const calculateKABScores = (questionnaires) => {
         const totalA = q.a1 + q.a2 + q.a3 + q.a4 + q.a5 + q.a6 + q.a7;
         const totalB = q.b1 + q.b2 + q.b3 + q.b4 + q.b5 + q.b6 + q.b7;
 
-        // PERBAIKAN: Gunakan rata-rata (1-5), bukan persentase
-        const scoreK = totalK / 7; // Rata-rata dari 7 pertanyaan
+        // Rata-rata dari 7 pertanyaan (skala 1-7)
+        const scoreK = totalK / 7;
         const scoreA = totalA / 7;
         const scoreB = totalB / 7;
 
@@ -22,82 +22,54 @@ export const calculateKABScores = (questionnaires) => {
 };
 
 /**
- * Normalisasi data menggunakan min-max scaling
- * @param {Array} arr - Array 2D data yang akan dinormalisasi
- * @param {Boolean} useFixedRange - Jika true, gunakan range 1-5 (default false)
- * @returns {Object} Object berisi data normalized dan parameter min/max
+ * NORMALISASI TIDAK DILAKUKAN
+ * Sesuai dokumen: "seluruh data memiliki skala yang sama sehingga proses normalisasi tidak dilakukan"
+ * Fungsi ini hanya untuk kompatibilitas dengan ml-kmeans
+ * @param {Array} arr - Array 2D data
+ * @returns {Object} Object berisi data (tidak dinormalisasi) dan parameter dummy
  */
-export const normalizeData = (arr, useFixedRange = false) => {
-    let min, max;
-
-    if (useFixedRange) {
-        // Gunakan fixed range 1-5 untuk konsistensi centroid manual (skala kuesioner)
-        min = 1;
-        max = 5;
-    } else {
-        // Gunakan range data aktual
-        const flat = arr.flat();
-        min = Math.min(...flat);
-        max = Math.max(...flat);
-    }
-
-    if (max === min) {
-        return {
-            normalized: arr.map(row => row.map(() => 0)),
-            min: min,
-            max: max
-        };
-    }
-
-    const normalized = arr.map(row => row.map(v => (v - min) / (max - min)));
-
+export const normalizeData = (arr) => {
+    // Tidak ada normalisasi, kembalikan data asli
     return {
-        normalized: normalized,
-        min: min,
-        max: max
+        normalized: arr, // Data asli tanpa normalisasi
+        min: 1, // Dummy value
+        max: 7  // Dummy value (skala kuesioner)
     };
 };
 
 /**
  * Melakukan K-Means clustering
- * @param {Array} normalizedData - Data yang sudah dinormalisasi
+ * @param {Array} data - Data yang TIDAK dinormalisasi (langsung dalam skala 1-7)
  * @param {number} k - Jumlah cluster (default: 3)
- * @param {Array} manualCentroids - Centroid manual (opsional), format: [[k1,a1,b1], [k2,a2,b2], [k3,a3,b3]]
- * @param {Object} normParams - Parameter normalisasi {min, max} untuk menormalisasi centroid manual
+ * @param {Array} manualCentroids - Centroid manual (wajib), format: [[k1,a1,b1], [k2,a2,b2], [k3,a3,b3]]
  * @returns {Object} Hasil clustering dari ml-kmeans
  */
-export const performKMeans = (normalizedData, k = 3, manualCentroids = null, normParams = null) => {
+export const performKMeans = (data, k = 3, manualCentroids = null) => {
     const options = {
         maxIterations: 100,
         seed: 42,
     };
 
-    // Jika ada centroid manual, normalisasi dengan parameter yang sama dengan data
-    if (manualCentroids && manualCentroids.length === k && normParams) {
-        const { min, max } = normParams;
-
-        // Normalisasi centroid manual dengan min-max scaling yang sama
-        const normalizedCentroids = manualCentroids.map(centroid =>
-            centroid.map(value => (value - min) / (max - min))
-        );
-
-        options.initialization = normalizedCentroids;
-        console.log('🎯 Centroid manual (original):', manualCentroids);
-        console.log('📊 Normalisasi params - Min:', min.toFixed(2), 'Max:', max.toFixed(2));
-        console.log('🎯 Centroid manual (normalized):', normalizedCentroids);
+    // Centroid manual (TIDAK perlu normalisasi karena data juga tidak dinormalisasi)
+    if (manualCentroids && manualCentroids.length === k) {
+        options.initialization = manualCentroids;
+        console.log('🎯 Menggunakan Centroid Manual (tanpa normalisasi):');
+        manualCentroids.forEach((c, i) => {
+            console.log(`   C${i + 1}: [K=${c[0].toFixed(2)}, A=${c[1].toFixed(2)}, B=${c[2].toFixed(2)}]`);
+        });
     } else {
         options.initialization = 'kmeans++';
         console.log('🔄 Menggunakan inisialisasi K-means++');
     }
 
-    return kmeans(normalizedData, k, options);
+    return kmeans(data, k, options);
 };
 
 /**
  * Menghitung jarak Euclidean antara dua titik
- * SESUAI DENGAN FOTO: d = √[(x₁-x₂)² + (y₁-y₂)² + (z₁-z₂)²]
- * @param {Array} point1 - Titik pertama [x, y, z]
- * @param {Array} point2 - Titik kedua [x, y, z]
+ * SESUAI DOKUMEN: d = √[(x₁-x₂)² + (y₁-y₂)² + (z₁-z₂)²]
+ * @param {Array} point1 - Titik pertama [K, A, B]
+ * @param {Array} point2 - Titik kedua [K, A, B]
  * @returns {number} Jarak Euclidean
  */
 const calculateEuclideanDistance = (point1, point2) => {
@@ -109,45 +81,60 @@ const calculateEuclideanDistance = (point1, point2) => {
 
 /**
  * Menggabungkan data asli dengan hasil clustering
- * PERBAIKAN: Menggunakan nilai rata-rata (1-5) untuk perhitungan jarak, sesuai foto
  * @param {Array} questionnaires - Data kuesioner asli
  * @param {Object} clusterResult - Hasil clustering
- * @param {Array} rawData - Data KAB yang belum dinormalisasi
+ * @param {Array} rawData - Data KAB (skala 1-7)
  * @returns {Array} Data yang sudah digabung dengan cluster
  */
 export const combineWithClusterResults = (questionnaires, clusterResult, rawData) => {
-    // Centroids sudah dalam bentuk denormalized (skala 1-5)
     const centroids = clusterResult.centroids;
+
+    console.log('\n📍 Centroids yang digunakan:');
+    centroids.forEach((c, i) => {
+        console.log(`   C${i + 1}: [K=${c[0].toFixed(2)}, A=${c[1].toFixed(2)}, B=${c[2].toFixed(2)}]`);
+    });
 
     return questionnaires.map((q, i) => {
         const totalK = q.k1 + q.k2 + q.k3 + q.k4 + q.k5 + q.k6 + q.k7;
         const totalA = q.a1 + q.a2 + q.a3 + q.a4 + q.a5 + q.a6 + q.a7;
         const totalB = q.b1 + q.b2 + q.b3 + q.b4 + q.b5 + q.b6 + q.b7;
 
-        // PERBAIKAN: Gunakan rata-rata (1-5), bukan persentase
+        // Rata-rata dari 7 pertanyaan (skala 1-7)
         const scoreK = totalK / 7;
         const scoreA = totalA / 7;
         const scoreB = totalB / 7;
         const avgScore = (scoreK + scoreA + scoreB) / 3;
 
-        // Data point saat ini (dalam skala 1-5)
+        // Data point saat ini (dalam skala 1-7)
         const currentPoint = [scoreK, scoreA, scoreB];
 
-        // Hitung jarak ke setiap centroid
-        // Sesuai dengan foto: d = |point - centroid|
-        const distances = centroids.map(centroid => {
-            return calculateEuclideanDistance(currentPoint, centroid);
+        // Hitung jarak ke setiap centroid menggunakan Euclidean Distance
+        const distances = centroids.map((centroid, cIdx) => {
+            const dist = calculateEuclideanDistance(currentPoint, centroid);
+
+            // Debug untuk data pertama (seperti di dokumen)
+            if (i < 3) {
+                console.log(`\n   d = |${i + 1} - ${cIdx + 1}|`);
+                console.log(`      = √[(${scoreK.toFixed(2)} - ${centroid[0].toFixed(2)})² + (${scoreA.toFixed(2)} - ${centroid[1].toFixed(2)})² + (${scoreB.toFixed(2)} - ${centroid[2].toFixed(2)})²]`);
+                const diff0 = scoreK - centroid[0];
+                const diff1 = scoreA - centroid[1];
+                const diff2 = scoreB - centroid[2];
+                console.log(`      = √[${diff0.toFixed(4)}² + ${diff1.toFixed(4)}² + ${diff2.toFixed(4)}²]`);
+                console.log(`      = √[${(diff0*diff0).toFixed(4)} + ${(diff1*diff1).toFixed(4)} + ${(diff2*diff2).toFixed(4)}]`);
+                console.log(`      = √${(diff0*diff0 + diff1*diff1 + diff2*diff2).toFixed(4)} = ${dist.toFixed(2)}`);
+            }
+
+            return dist;
         });
 
-        // Debug log untuk beberapa data pertama
+        // Log hasil untuk data pertama (sesuai dokumen)
         if (i < 3) {
-            console.log(`\n=== Employee ${i + 1}: ${q.employee?.name} ===`);
-            console.log(`Total K: ${totalK}, Score K: ${scoreK.toFixed(2)}`);
-            console.log(`Total A: ${totalA}, Score A: ${scoreA.toFixed(2)}`);
-            console.log(`Total B: ${totalB}, Score B: ${scoreB.toFixed(2)}`);
-            console.log(`Current Point: [${scoreK.toFixed(2)}, ${scoreA.toFixed(2)}, ${scoreB.toFixed(2)}]`);
-            console.log(`Distances to centroids:`, distances.map(d => d.toFixed(2)));
-            console.log(`Assigned to Cluster: ${clusterResult.clusters[i]}`);
+            console.log(`\n=== ${q.employee?.name || `Pegawai ${i + 1}`} ===`);
+            console.log(`Skor: K=${scoreK.toFixed(2)}, A=${scoreA.toFixed(2)}, B=${scoreB.toFixed(2)}`);
+            console.log(`Jarak ke C1 = ${distances[0].toFixed(2)}`);
+            console.log(`Jarak ke C2 = ${distances[1].toFixed(2)}`);
+            console.log(`Jarak ke C3 = ${distances[2].toFixed(2)}`);
+            console.log(`→ Masuk Cluster: C${clusterResult.clusters[i] + 1}`);
         }
 
         return {
@@ -205,15 +192,14 @@ export const labelClusters = (clusteredData) => {
         clusterToLabel[sortedClusters[0]] = 'Low';
         clusterToLabel[sortedClusters[1]] = 'High';
     } else {
-        // Jika hanya 1 cluster atau lebih dari 3, assign Medium
         sortedClusters.forEach(cluster => {
             clusterToLabel[cluster] = 'Medium';
         });
     }
 
-    console.log('\n=== Cluster Analysis ===');
-    console.log('Cluster Averages:', averageScores);
-    console.log('Cluster Mapping:', clusterToLabel);
+    console.log('\n=== Analisis Cluster ===');
+    console.log('Rata-rata per Cluster:', averageScores);
+    console.log('Pemetaan Label:', clusterToLabel);
 
     return clusteredData.map(item => ({
         ...item,
@@ -223,9 +209,10 @@ export const labelClusters = (clusteredData) => {
 
 /**
  * Fungsi utama untuk melakukan clustering lengkap
- * PERBAIKAN: Menggunakan skala 1-5 (rata-rata) sesuai foto, bukan persentase 0-100
+ * SESUAI DOKUMEN: Tanpa normalisasi, menggunakan centroid manual
  * @param {Array} questionnaires - Data kuesioner
- * @param {Array} manualCentroids - Centroid manual (opsional), format: [[k1,a1,b1], [k2,a2,b2], [k3,a3,b3]]
+ * @param {Array} manualCentroids - Centroid manual (WAJIB), format: [[k1,a1,b1], [k2,a2,b2], [k3,a3,b3]]
+ *                                  Contoh dari dokumen: [[4.71, 4.71, 4.86], [4.71, 4.43, 4.71], [4.29, 4.14, 4.14]]
  * @returns {Object} Hasil clustering dengan data yang sudah dilabel
  */
 export const performFullClustering = (questionnaires, manualCentroids = null) => {
@@ -234,50 +221,36 @@ export const performFullClustering = (questionnaires, manualCentroids = null) =>
     }
 
     console.log('\n========================================');
-    console.log('MEMULAI PROSES CLUSTERING (SKALA 1-5)');
-    console.log('========================================\n');
+    console.log('CLUSTERING K-MEANS (TANPA NORMALISASI)');
+    console.log('========================================');
+    console.log('Sesuai dokumen: "seluruh data memiliki skala yang sama');
+    console.log('sehingga proses normalisasi tidak dilakukan"\n');
 
-    // Hitung skor KAB (rata-rata 1-5)
+    // Hitung skor KAB (rata-rata 1-7, tanpa normalisasi)
     const data = calculateKABScores(questionnaires);
 
-    // Jika menggunakan centroid manual, gunakan fixed range 1-5 untuk konsistensi
-    // Jika auto, gunakan range data aktual untuk optimasi
-    const useFixedRange = manualCentroids !== null;
+    console.log('📊 Data range: Skala 1-7 (likert scale)');
+    console.log('📊 Normalisasi: TIDAK dilakukan');
 
-    // Normalisasi data dan simpan parameter normalisasi
-    const normalizationResult = normalizeData(data, useFixedRange);
-    const normalizedData = normalizationResult.normalized;
-    const normParams = { min: normalizationResult.min, max: normalizationResult.max };
+    // Validasi centroid manual
+    if (!manualCentroids || manualCentroids.length !== 3) {
+        console.warn('⚠️  PERINGATAN: Centroid manual tidak ditemukan atau tidak valid!');
+        console.warn('    Menggunakan K-means++ untuk inisialisasi centroid.');
+        console.warn('    Untuk hasil sesuai dokumen, gunakan centroid manual:');
+        console.warn('    [[4.71, 4.71, 4.86], [4.71, 4.43, 4.71], [4.29, 4.14, 4.14]]');
+    }
 
-    console.log('📊 Normalisasi mode:', useFixedRange ? 'Fixed Range (1-5)' : 'Data Range');
-    console.log('📊 Data range - Min:', normParams.min.toFixed(2), 'Max:', normParams.max.toFixed(2));
+    // Lakukan K-Means TANPA normalisasi (data langsung dalam skala 1-7)
+    const clusterResult = performKMeans(data, 3, manualCentroids);
 
-    // Lakukan K-Means (dengan atau tanpa centroid manual)
-    const clusterResult = performKMeans(normalizedData, 3, manualCentroids, normParams);
-
-    // Denormalisasi centroid untuk perhitungan jarak (kembali ke skala 1-5)
-    const { min, max } = normParams;
-    const denormalizedCentroids = clusterResult.centroids.map(centroid =>
-        centroid.map(value => value * (max - min) + min)
-    );
-
-    console.log('\n📍 Centroids (denormalized, skala 1-5):');
-    denormalizedCentroids.forEach((c, i) => {
+    console.log('\n📍 Centroids Final (skala 1-7):');
+    clusterResult.centroids.forEach((c, i) => {
         console.log(`   C${i + 1}: [K=${c[0].toFixed(2)}, A=${c[1].toFixed(2)}, B=${c[2].toFixed(2)}]`);
     });
 
-    // Replace centroids dengan versi denormalized
-    const clusterResultWithDenormalizedCentroids = {
-        ...clusterResult,
-        centroids: denormalizedCentroids
-    };
-
     // Gabungkan dengan hasil clustering
-    const clusteredData = combineWithClusterResults(
-        questionnaires,
-        clusterResultWithDenormalizedCentroids,
-        data
-    );
+    console.log('\n--- Perhitungan Jarak Euclidean ---');
+    const clusteredData = combineWithClusterResults(questionnaires, clusterResult, data);
 
     // Berikan label
     const labeledData = labelClusters(clusteredData);
@@ -290,8 +263,8 @@ export const performFullClustering = (questionnaires, manualCentroids = null) =>
         clusters: clusterResult,
         labeledClusters: labeledData,
         rawData: data,
-        normalizedData: normalizedData,
-        centroids: denormalizedCentroids,
-        normalizationParams: normParams
+        normalizedData: data, // Sama dengan rawData karena tidak ada normalisasi
+        centroids: clusterResult.centroids,
+        normalizationParams: { min: 1, max: 7 } // Dummy params
     };
 };

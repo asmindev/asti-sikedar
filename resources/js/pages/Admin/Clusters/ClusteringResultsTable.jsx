@@ -41,7 +41,7 @@ export default function ClusteringResultsTable({ labeledClusters }) {
                     </TableHeader>
                     <TableBody>
                         {labeledClusters.map((res, index) => {
-                            // scoreK, scoreA, scoreB sudah dalam skala 1-5
+                            // scoreK, scoreA, scoreB sudah dalam skala 1-7
                             const avgKAB = ((res.scoreK + res.scoreA + res.scoreB) / 3).toFixed(2);
 
                             // Array jarak [distanceToC0, distanceToC1, distanceToC2]

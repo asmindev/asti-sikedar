@@ -25,7 +25,7 @@ export default function SavedResultsTable({ savedResults }) {
                     </TableHeader>
                     <TableBody>
                         {savedResults.map((result, index) => {
-                            // score_k, score_a, score_b dari database sudah dalam skala 1-5
+                            // score_k, score_a, score_b dari database sudah dalam skala 1-7
                             const avgKAB = ((parseFloat(result.score_k) + parseFloat(result.score_a) + parseFloat(result.score_b)) / 3).toFixed(2);
 
                             return (

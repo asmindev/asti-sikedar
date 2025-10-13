@@ -99,12 +99,12 @@ class ClusterController extends Controller
             'results.*.employee_id' => 'required|integer|exists:employees,id',
             'results.*.cluster' => 'required|integer',
             'results.*.label' => 'required|string|in:Low,Medium,High',
-            'results.*.score_k' => 'required|numeric',
-            'results.*.score_a' => 'required|numeric',
-            'results.*.score_b' => 'required|numeric',
-            'results.*.distance_to_low' => 'nullable|numeric',
-            'results.*.distance_to_medium' => 'nullable|numeric',
-            'results.*.distance_to_high' => 'nullable|numeric',
+            'results.*.score_k' => 'required|numeric|min:1|max:7',
+            'results.*.score_a' => 'required|numeric|min:1|max:7',
+            'results.*.score_b' => 'required|numeric|min:1|max:7',
+            'results.*.distance_to_low' => 'nullable|numeric|min:0',
+            'results.*.distance_to_medium' => 'nullable|numeric|min:0',
+            'results.*.distance_to_high' => 'nullable|numeric|min:0',
         ]);
 
         try {
@@ -226,9 +226,9 @@ class ClusterController extends Controller
                 'E4' => 'Posisi',
                 'F4' => 'Kluster',
                 'G4' => 'Kategori',
-                'H4' => 'Skor Knowledge (1-5)',
-                'I4' => 'Skor Attitude (1-5)',
-                'J4' => 'Skor Behavior (1-5)',
+                'H4' => 'Skor Knowledge (1-7)',
+                'I4' => 'Skor Attitude (1-7)',
+                'J4' => 'Skor Behavior (1-7)',
             ];
 
             foreach ($headers as $cell => $value) {

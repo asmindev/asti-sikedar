@@ -26,7 +26,7 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
     });
     const breadcrumbs = [{ label: 'Dashboard', href: route('admin.dashboard') }, { label: 'Analisis Cluster' }];
 
-    // Hitung rata-rata KAB untuk setiap responden (skala 1-5)
+    // Hitung rata-rata KAB untuk setiap responden (skala 1-7)
     const respondentsWithAvg = useMemo(() => {
         if (!questionnaires || questionnaires.length === 0) return [];
 
@@ -34,7 +34,7 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
             const totalK = q.k1 + q.k2 + q.k3 + q.k4 + q.k5 + q.k6 + q.k7;
             const totalA = q.a1 + q.a2 + q.a3 + q.a4 + q.a5 + q.a6 + q.a7;
             const totalB = q.b1 + q.b2 + q.b3 + q.b4 + q.b5 + q.b6 + q.b7;
-            const scoreK = totalK / 7; // Rata-rata dari 7 pertanyaan (skala 1-5)
+            const scoreK = totalK / 7; // Rata-rata dari 7 pertanyaan (skala 1-7)
             const scoreA = totalA / 7;
             const scoreB = totalB / 7;
             const avgScore = (scoreK + scoreA + scoreB) / 3;
