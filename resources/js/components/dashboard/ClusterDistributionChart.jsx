@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Cell } from 'recharts';
 
 const COLORS = {
     Low: '#EF4444',     // Red
@@ -8,28 +8,31 @@ const COLORS = {
     High: '#10B981'     // Green
 };
 
-export default function ClusterDistributionChart({ clusterDistribution, chartType = 'pie' }) {
+export default function ClusterDistributionChart({ clusterDistribution }) {
     const data = [
         {
-            name: 'Klaster Rendah',
+            name: 'Rendah',
             value: clusterDistribution.low.count,
             percentage: clusterDistribution.low.percentage,
             color: COLORS.Low,
-            label: 'Low'
+            label: 'Low',
+            fullName: 'Klaster Rendah'
         },
         {
-            name: 'Klaster Sedang',
+            name: 'Sedang',
             value: clusterDistribution.medium.count,
             percentage: clusterDistribution.medium.percentage,
             color: COLORS.Medium,
-            label: 'Medium'
+            label: 'Medium',
+            fullName: 'Klaster Sedang'
         },
         {
-            name: 'Klaster Tinggi',
+            name: 'Tinggi',
             value: clusterDistribution.high.count,
             percentage: clusterDistribution.high.percentage,
             color: COLORS.High,
-            label: 'High'
+            label: 'High',
+            fullName: 'Klaster Tinggi'
         }
     ];
 
@@ -47,7 +50,7 @@ export default function ClusterDistributionChart({ clusterDistribution, chartTyp
             return (
                 <Card className="shadow-lg p-0">
                     <CardContent className="p-3">
-                        <p className="font-semibold text-gray-900 dark:text-white">{data.name}</p>
+                        <p className="font-semibold text-gray-900 dark:text-white">{data.fullName}</p>
                         <p className="text-sm text-gray-600 dark:text-gray-300">
                             Jumlah: <span className="font-medium">{data.value} pegawai</span>
                         </p>
@@ -86,68 +89,40 @@ export default function ClusterDistributionChart({ clusterDistribution, chartTyp
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={config} className="h-80 w-full">
-                    {chartType === 'pie' ? (
-                        <PieChart>
-                            <Pie
-                                data={filteredData}
-                                cx="50%"
-                                cy="50%"
-                                labelLine={false}
-                                label={({ name, percentage }) => `${name}: ${percentage}%`}
-                                outerRadius={100}
-                                fill="#8884d8"
-                                dataKey="value"
-                            >
-                                {filteredData.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={entry.color} />
-                                ))}
-                            </Pie>
-                            <ChartTooltip content={<CustomTooltip />} />
-                            <ChartLegend
-                                content={<ChartLegendContent />}
-                                formatter={(value, entry) => (
-                                    <span style={{ color: entry.color }}>
-                                        {entry.payload.name} ({entry.payload.value})
-                                    </span>
-                                )}
-                            />
-                        </PieChart>
-                    ) : (
-                        <BarChart data={filteredData}>
-                            <CartesianGrid strokeDasharray="3 3" className="stroke-gray-300 dark:stroke-gray-600" />
-                            <XAxis
-                                dataKey="name"
-                                tick={{ fontSize: 12, fill: 'currentColor' }}
-                                interval={0}
-                                angle={-45}
-                                textAnchor="end"
-                                height={80}
-                                className="text-gray-600 dark:text-gray-300"
-                            />
-                            <YAxis tick={{ fill: 'currentColor' }} className="text-gray-600 dark:text-gray-300" />
-                            <ChartTooltip content={<CustomTooltip />} />
-                            <Bar dataKey="value" fill="#8884d8">
-                                {filteredData.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={entry.color} />
-                                ))}
-                            </Bar>
-                        </BarChart>
-                    )}
+                <ChartContainer config={config} className="h-64 sm:h-80 w-full">
+                    <BarChart data={filteredData}>
+                        <CartesianGrid strokeDasharray="3 3" className="stroke-gray-300 dark:stroke-gray-600" />
+                        <XAxis
+                            dataKey="name"
+                            tick={{ fontSize: 11, fill: 'currentColor' }}
+                            interval={0}
+                            angle={0}
+                            textAnchor="middle"
+                            height={50}
+                            className="text-gray-600 dark:text-gray-300"
+                        />
+                        <YAxis tick={{ fill: 'currentColor' }} className="text-gray-600 dark:text-gray-300" />
+                        <ChartTooltip content={<CustomTooltip />} />
+                        <Bar dataKey="value" fill="#8884d8">
+                            {filteredData.map((entry, index) => (
+                                <Cell key={`cell-${index}`} fill={entry.color} />
+                            ))}
+                        </Bar>
+                    </BarChart>
                 </ChartContainer>
 
                 {/* Summary Statistics */}
-                <div className="mt-6 grid grid-cols-3 gap-4">
+                <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
                     {data.map((item) => (
                         <Card key={item.label} className="text-center p-0">
-                            <CardContent className="p-3">
+                            <CardContent className="p-2 sm:p-3">
                                 <div
-                                    className="text-2xl font-bold"
+                                    className="text-xl sm:text-2xl font-bold"
                                     style={{ color: item.color }}
                                 >
                                     {item.value}
                                 </div>
-                                <div className="text-sm text-gray-600 dark:text-gray-300">{item.name}</div>
+                                <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">{item.fullName}</div>
                                 <div className="text-xs text-gray-500 dark:text-gray-400">{item.percentage}%</div>
                             </CardContent>
                         </Card>

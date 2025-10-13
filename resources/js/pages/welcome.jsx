@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { initializeTheme } from '@/lib/theme';
 import { Head, Link } from '@inertiajs/react';
-import { ArrowRight, BarChart3, Shield, Sparkles, Users } from 'lucide-react';
+import { ArrowRight, BarChart3, Shield, Users } from 'lucide-react';
 import { useEffect } from 'react';
 
 export default function Welcome() {
@@ -49,11 +49,11 @@ export default function Welcome() {
                 <header className="relative z-10 p-4 md:p-6">
                     <div className="container mx-auto flex max-w-7xl items-center justify-between gap-4">
                         <div className="flex min-w-0 flex-1 items-center space-x-3">
-                            <div className="flex-shrink-0 rounded-xl bg-gradient-to-br from-primary to-primary/80 p-2">
-                                <Sparkles className="h-5 w-5 text-primary-foreground md:h-6 md:w-6" />
+                            <div className="flex-shrink-0 rounded-xl bg-white/10 backdrop-blur-sm p-2">
+                                <img src="/images/logo.png" alt="Logo Kejati" className="h-5 w-5 md:h-6 md:w-6 object-contain" />
                             </div>
                             <div className="min-w-0 flex-1">
-                                <h1 className="truncate text-lg font-bold text-foreground md:text-xl">ASTI Analytics</h1>
+                                <h1 className="truncate text-lg font-bold text-foreground md:text-xl">SIKEDAR</h1>
                                 <p className="truncate text-xs text-muted-foreground md:text-sm">Sistem Analisis Karyawan</p>
                             </div>
                         </div>
@@ -73,26 +73,28 @@ export default function Welcome() {
                 <main className="relative z-10 flex-1 px-6">
                     <div className="container mx-auto max-w-7xl">
                         {/* Hero Section */}
-                        <section className="py-20 text-center">
+                        <section className="relative py-20 text-center bg-cover bg-center bg-no-repeat bg-[url('/images/kejatii.jpg')] rounded-3xl overflow-hidden mx-auto max-w-6xl">
+                            <div className="absolute inset-0 bg-black/40"></div>
+                            <div className="relative z-10 p-8">
                             <div className="mx-auto max-w-4xl space-y-8">
                                 {/* Hero Icon */}
                                 <div className="flex justify-center">
                                     <div className="relative">
-                                        <div className="rounded-3xl bg-gradient-to-br from-primary via-primary to-primary/80 p-6 shadow-2xl">
-                                            <BarChart3 className="h-16 w-16 text-primary-foreground" />
+                                        <div className="rounded-3xl bg-white/20 backdrop-blur-sm p-6 shadow-2xl">
+                                            <img src="/images/logo.png" alt="Logo Kejati" className="h-16 w-16 object-contain" />
                                         </div>
-                                        <div className="absolute -inset-2 animate-pulse rounded-3xl bg-gradient-to-br from-primary/20 to-transparent blur"></div>
+                                        <div className="absolute -inset-2 animate-pulse rounded-3xl bg-white/10 blur"></div>
                                     </div>
                                 </div>
 
                                 {/* Hero Text */}
                                 <div className="space-y-6">
                                     <h1 className="text-5xl font-bold tracking-tight md:text-7xl">
-                                        <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
+                                        <span className="bg-gradient-to-r from-white via-white to-white bg-clip-text text-transparent">
                                             Analitik Cerdas
                                         </span>
                                     </h1>
-                                    <p className="mx-auto max-w-3xl text-xl leading-relaxed text-muted-foreground md:text-2xl">
+                                    <p className="mx-auto max-w-3xl text-xl leading-relaxed text-white/90 md:text-2xl">
                                         Sistem analisis perilaku karyawan canggih dengan algoritma pengelompokan yang kuat dan kemampuan manajemen data yang komprehensif.
                                     </p>
                                 </div>
@@ -113,6 +115,7 @@ export default function Welcome() {
                                         <Link href="/register">Buat Akun</Link>
                                     </Button> */}
                                 </div>
+                            </div>
                             </div>
                         </section>
 
@@ -187,8 +190,8 @@ export default function Welcome() {
                     <div className="container mx-auto max-w-7xl px-6 py-8">
                         <div className="flex flex-col items-center justify-between space-y-4 md:flex-row md:space-y-0">
                             <div className="flex items-center space-x-3">
-                                <div className="rounded-lg bg-gradient-to-br from-primary to-primary/80 p-1.5">
-                                    <Sparkles className="h-4 w-4 text-primary-foreground" />
+                                <div className="rounded-lg bg-white/10 backdrop-blur-sm p-1.5">
+                                    <img src="/images/logo.png" alt="Logo Kejati" className="h-4 w-4 object-contain" />
                                 </div>
                                 <span className="font-semibold text-foreground">ASTI Analytics</span>
                             </div>

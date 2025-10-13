@@ -114,7 +114,7 @@ export function AdminSidebar() {
                     </div>
                     <div>
                         <h2 className="text-sm font-semibold">Panel Admin</h2>
-                        <p className="text-xs text-muted-foreground">Sistem Manajemen</p>
+                        <p className="text-xs text-muted-foreground">Sikedar</p>
                     </div>
                 </div>
             </SidebarHeader>
