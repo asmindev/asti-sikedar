@@ -3,45 +3,45 @@ import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Cell } from 'recharts';
 
 const COLORS = {
-    Low: '#EF4444',     // Red
-    Medium: '#F59E0B',  // Yellow
-    High: '#10B981'     // Green
+    C3: '#EF4444',     // Red (Rendah)
+    C2: '#F59E0B',  // Yellow (Sedang)
+    C1: '#10B981'     // Green (Tinggi)
 };
 
 export default function ClusterDistributionChart({ clusterDistribution }) {
     const data = [
         {
-            name: 'Rendah',
+            name: 'C3 (Rendah)',
             value: clusterDistribution.low.count,
             percentage: clusterDistribution.low.percentage,
-            color: COLORS.Low,
-            label: 'Low',
-            fullName: 'Klaster Rendah'
+            color: COLORS.C3,
+            label: 'C3',
+            fullName: 'Cluster C3 (Rendah)'
         },
         {
-            name: 'Sedang',
+            name: 'C2 (Sedang)',
             value: clusterDistribution.medium.count,
             percentage: clusterDistribution.medium.percentage,
-            color: COLORS.Medium,
-            label: 'Medium',
-            fullName: 'Klaster Sedang'
+            color: COLORS.C2,
+            label: 'C2',
+            fullName: 'Cluster C2 (Sedang)'
         },
         {
-            name: 'Tinggi',
+            name: 'C1 (Tinggi)',
             value: clusterDistribution.high.count,
             percentage: clusterDistribution.high.percentage,
-            color: COLORS.High,
-            label: 'High',
-            fullName: 'Klaster Tinggi'
+            color: COLORS.C1,
+            label: 'C1',
+            fullName: 'Cluster C1 (Tinggi)'
         }
     ];
 
     const filteredData = data.filter(item => item.value > 0);
 
     const config = {
-        Low: { label: 'Klaster Rendah', color: COLORS.Low },
-        Medium: { label: 'Klaster Sedang', color: COLORS.Medium },
-        High: { label: 'Klaster Tinggi', color: COLORS.High },
+        C3: { label: 'Cluster C3 (Rendah)', color: COLORS.C3 },
+        C2: { label: 'Cluster C2 (Sedang)', color: COLORS.C2 },
+        C1: { label: 'Cluster C1 (Tinggi)', color: COLORS.C1 },
     };
 
     const CustomTooltip = ({ active, payload }) => {

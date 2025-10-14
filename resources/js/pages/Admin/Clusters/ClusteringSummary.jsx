@@ -15,21 +15,21 @@ export default function ClusteringSummary({ labeledClusters }) {
                 </div>
                 <div className="text-center">
                     <div className="text-2xl font-bold text-green-600">
-                        {labeledClusters.filter(c => c.label === 'High').length}
+                        {labeledClusters.filter(c => c.label === 'C1').length}
                     </div>
-                    <div className="text-sm text-gray-600">Performa Tinggi</div>
+                    <div className="text-sm text-gray-600">Cluster C1 (Tinggi)</div>
                 </div>
                 <div className="text-center">
                     <div className="text-2xl font-bold text-yellow-600">
-                        {labeledClusters.filter(c => c.label === 'Medium').length}
+                        {labeledClusters.filter(c => c.label === 'C2').length}
                     </div>
-                    <div className="text-sm text-gray-600">Performa Sedang</div>
+                    <div className="text-sm text-gray-600">Cluster C2 (Sedang)</div>
                 </div>
                 <div className="text-center">
                     <div className="text-2xl font-bold text-red-600">
-                        {labeledClusters.filter(c => c.label === 'Low').length}
+                        {labeledClusters.filter(c => c.label === 'C3').length}
                     </div>
-                    <div className="text-sm text-gray-600">Performa Rendah</div>
+                    <div className="text-sm text-gray-600">Cluster C3 (Rendah)</div>
                 </div>
             </div>
         </Card>

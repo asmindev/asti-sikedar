@@ -182,18 +182,18 @@ export const labelClusters = (clusteredData) => {
         .sort(([, a], [, b]) => a - b)
         .map(([cluster]) => parseInt(cluster));
 
-    // Assign label berdasarkan urutan: Low, Medium, High
+    // Assign label berdasarkan urutan: C3 (Low), C2 (Medium), C1 (High)
     const clusterToLabel = {};
     if (sortedClusters.length === 3) {
-        clusterToLabel[sortedClusters[0]] = 'Low';
-        clusterToLabel[sortedClusters[1]] = 'Medium';
-        clusterToLabel[sortedClusters[2]] = 'High';
+        clusterToLabel[sortedClusters[0]] = 'C3'; // Terendah
+        clusterToLabel[sortedClusters[1]] = 'C2'; // Sedang
+        clusterToLabel[sortedClusters[2]] = 'C1'; // Tertinggi
     } else if (sortedClusters.length === 2) {
-        clusterToLabel[sortedClusters[0]] = 'Low';
-        clusterToLabel[sortedClusters[1]] = 'High';
+        clusterToLabel[sortedClusters[0]] = 'C3'; // Terendah
+        clusterToLabel[sortedClusters[1]] = 'C1'; // Tertinggi
     } else {
         sortedClusters.forEach(cluster => {
-            clusterToLabel[cluster] = 'Medium';
+            clusterToLabel[cluster] = 'C2';
         });
     }
 

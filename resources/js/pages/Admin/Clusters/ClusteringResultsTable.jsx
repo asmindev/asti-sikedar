@@ -14,14 +14,14 @@ export default function ClusteringResultsTable({ labeledClusters }) {
         }
     });
 
-    // Buat array mapping [cluster, label] dan urutkan berdasarkan label (Low, Medium, High)
-    const labelOrder = { 'Low': 0, 'Medium': 1, 'High': 2 };
+    // Buat array mapping [cluster, label] dan urutkan berdasarkan label (C3, C2, C1)
+    const labelOrder = { 'C3': 0, 'C2': 1, 'C1': 2 };
     const sortedClusters = Object.entries(clusterToLabel)
         .sort(([, labelA], [, labelB]) => labelOrder[labelA] - labelOrder[labelB])
         .map(([cluster]) => parseInt(cluster));
 
-    // sortedClusters sekarang berisi [clusterLow, clusterMedium, clusterHigh]
-    // Misal: [2, 0, 1] berarti cluster 2=Low, cluster 0=Medium, cluster 1=High
+    // sortedClusters sekarang berisi [clusterC3, clusterC2, clusterC1]
+    // Misal: [2, 0, 1] berarti cluster 2=C3, cluster 0=C2, cluster 1=C1
 
     return (
         <>
@@ -33,10 +33,10 @@ export default function ClusteringResultsTable({ labeledClusters }) {
                             <TableHead>No</TableHead>
                             <TableHead>Karyawan</TableHead>
                             <TableHead>Nilai (total KAB)</TableHead>
-                            <TableHead>Jarak ke Low</TableHead>
-                            <TableHead>Jarak ke Medium</TableHead>
-                            <TableHead>Jarak ke High</TableHead>
-                            <TableHead>Klaster (Kategori)</TableHead>
+                            <TableHead>Jarak ke C3</TableHead>
+                            <TableHead>Jarak ke C2</TableHead>
+                            <TableHead>Jarak ke C1</TableHead>
+                            <TableHead>Cluster</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -48,25 +48,25 @@ export default function ClusteringResultsTable({ labeledClusters }) {
                             const distances = [res.distanceToC1, res.distanceToC2, res.distanceToC3];
 
                             // Mapping jarak ke label yang sesuai
-                            // sortedClusters[0] = cluster dengan label Low
-                            // sortedClusters[1] = cluster dengan label Medium
-                            // sortedClusters[2] = cluster dengan label High
-                            const distanceToLow = distances[sortedClusters[0]];
-                            const distanceToMedium = distances[sortedClusters[1]];
-                            const distanceToHigh = distances[sortedClusters[2]];
+                            // sortedClusters[0] = cluster dengan label C3
+                            // sortedClusters[1] = cluster dengan label C2
+                            // sortedClusters[2] = cluster dengan label C1
+                            const distanceToC3 = distances[sortedClusters[0]];
+                            const distanceToC2 = distances[sortedClusters[1]];
+                            const distanceToC1 = distances[sortedClusters[2]];
 
                             return (
                                 <TableRow key={index}>
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>{res.employee.name}</TableCell>
                                     <TableCell>{avgKAB}</TableCell>
-                                    <TableCell>{distanceToLow?.toFixed(2) || 'N/A'}</TableCell>
-                                    <TableCell>{distanceToMedium?.toFixed(2) || 'N/A'}</TableCell>
-                                    <TableCell>{distanceToHigh?.toFixed(2) || 'N/A'}</TableCell>
+                                    <TableCell>{distanceToC3?.toFixed(2) || 'N/A'}</TableCell>
+                                    <TableCell>{distanceToC2?.toFixed(2) || 'N/A'}</TableCell>
+                                    <TableCell>{distanceToC1?.toFixed(2) || 'N/A'}</TableCell>
                                     <TableCell>
                                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                            res.label === 'Low' ? 'bg-red-100 text-red-800 dark:bg-red-700 dark:text-red-300' :
-                                            res.label === 'Medium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-300' :
+                                            res.label === 'C3' ? 'bg-red-100 text-red-800 dark:bg-red-700 dark:text-red-300' :
+                                            res.label === 'C2' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-300' :
                                             'bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-300'
                                         }`}>
                                             {res.label}

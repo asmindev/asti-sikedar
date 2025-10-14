@@ -26,34 +26,34 @@ class DashboardController extends Controller
                 ->get()
                 ->keyBy('label');
 
-            $lowCount = $clusterStats->get('Low')?->count ?? 0;
-            $mediumCount = $clusterStats->get('Medium')?->count ?? 0;
-            $highCount = $clusterStats->get('High')?->count ?? 0;
+            $c3Count = $clusterStats->get('C3')?->count ?? 0;
+            $c2Count = $clusterStats->get('C2')?->count ?? 0;
+            $c1Count = $clusterStats->get('C1')?->count ?? 0;
 
             // Calculate percentages
-            $total = $lowCount + $mediumCount + $highCount;
+            $total = $c3Count + $c2Count + $c1Count;
             $clusterDistribution = [
                 'low' => [
-                    'count' => $lowCount,
-                    'percentage' => $total > 0 ? round(($lowCount / $total) * 100, 1) : 0,
+                    'count' => $c3Count,
+                    'percentage' => $total > 0 ? round(($c3Count / $total) * 100, 1) : 0,
                     'employees' => ClusterResult::with('employee')
-                        ->where('label', 'Low')
+                        ->where('label', 'C3')
                         ->get()
                         ->map(fn($cr) => $cr->employee)
                 ],
                 'medium' => [
-                    'count' => $mediumCount,
-                    'percentage' => $total > 0 ? round(($mediumCount / $total) * 100, 1) : 0,
+                    'count' => $c2Count,
+                    'percentage' => $total > 0 ? round(($c2Count / $total) * 100, 1) : 0,
                     'employees' => ClusterResult::with('employee')
-                        ->where('label', 'Medium')
+                        ->where('label', 'C2')
                         ->get()
                         ->map(fn($cr) => $cr->employee)
                 ],
                 'high' => [
-                    'count' => $highCount,
-                    'percentage' => $total > 0 ? round(($highCount / $total) * 100, 1) : 0,
+                    'count' => $c1Count,
+                    'percentage' => $total > 0 ? round(($c1Count / $total) * 100, 1) : 0,
                     'employees' => ClusterResult::with('employee')
-                        ->where('label', 'High')
+                        ->where('label', 'C1')
                         ->get()
                         ->map(fn($cr) => $cr->employee)
                 ]

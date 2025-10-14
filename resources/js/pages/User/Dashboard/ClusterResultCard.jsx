@@ -3,8 +3,8 @@ import { Badge } from '@/components/ui/badge';
 import { AlertTriangle, CheckCircle, TrendingUp, Trophy, Target } from 'lucide-react';
 
 const clusterConfig = {
-    Low: {
-        title: 'Klaster Rendah',
+    C3: {
+        title: 'Cluster C3 (Rendah)',
         icon: AlertTriangle,
         color: 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900 dark:text-red-200 dark:border-red-700',
         bgColor: 'bg-red-50 dark:bg-red-950',
@@ -12,8 +12,8 @@ const clusterConfig = {
         description: 'Anda memiliki pemahaman dasar tentang keamanan informasi yang masih perlu ditingkatkan.',
         message: 'Jangan khawatir! Dengan pelatihan yang tepat, Anda dapat meningkatkan kesadaran keamanan informasi.'
     },
-    Medium: {
-        title: 'Klaster Sedang',
+    C2: {
+        title: 'Cluster C2 (Sedang)',
         icon: TrendingUp,
         color: 'bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900 dark:text-yellow-200 dark:border-yellow-700',
         bgColor: 'bg-yellow-50 dark:bg-yellow-950',
@@ -21,8 +21,8 @@ const clusterConfig = {
         description: 'Anda sudah memiliki pemahaman yang cukup baik tentang keamanan informasi.',
         message: 'Bagus! Dengan sedikit peningkatan konsistensi, Anda dapat mencapai level yang lebih tinggi.'
     },
-    High: {
-        title: 'Klaster Tinggi',
+    C1: {
+        title: 'Cluster C1 (Tinggi)',
         icon: CheckCircle,
         color: 'bg-green-100 text-green-800 border-green-200 dark:bg-green-900 dark:text-green-200 dark:border-green-700',
         bgColor: 'bg-green-50 dark:bg-green-950',
@@ -109,8 +109,8 @@ export default function ClusterResultCard({ clusterResult }) {
                             <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                                 <div
                                     className={`h-3 rounded-full transition-all duration-300 ${
-                                        clusterResult.label === 'Low' ? 'bg-red-500 w-1/3' :
-                                        clusterResult.label === 'Medium' ? 'bg-yellow-500 w-2/3' :
+                                        clusterResult.label === 'C3' ? 'bg-red-500 w-1/3' :
+                                        clusterResult.label === 'C2' ? 'bg-yellow-500 w-2/3' :
                                         'bg-green-500 w-full'
                                     }`}
                                 ></div>

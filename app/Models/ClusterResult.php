@@ -57,9 +57,9 @@ class ClusterResult extends Model
     public function getLabelColorAttribute(): string
     {
         return match ($this->label) {
-            'High' => 'green',
-            'Medium' => 'yellow',
-            'Low' => 'red',
+            'C1' => 'green',  // Tinggi
+            'C2' => 'yellow', // Sedang
+            'C3' => 'red',    // Rendah
             default => 'gray',
         };
     }

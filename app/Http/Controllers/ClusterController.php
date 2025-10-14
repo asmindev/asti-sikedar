@@ -84,9 +84,9 @@ class ClusterController extends Controller
                 'totalSavedResults' => $totalSavedResults,
                 'lastAnalysisDate' => $lastAnalysisDate,
                 'clusterDistribution' => [
-                    'low' => $clusterDistribution->get('Low')?->count ?? 0,
-                    'medium' => $clusterDistribution->get('Medium')?->count ?? 0,
-                    'high' => $clusterDistribution->get('High')?->count ?? 0,
+                    'low' => $clusterDistribution->get('C3')?->count ?? 0,
+                    'medium' => $clusterDistribution->get('C2')?->count ?? 0,
+                    'high' => $clusterDistribution->get('C1')?->count ?? 0,
                 ]
             ]
         ]);
@@ -98,7 +98,7 @@ class ClusterController extends Controller
             'results' => 'required|array',
             'results.*.employee_id' => 'required|integer|exists:employees,id',
             'results.*.cluster' => 'required|integer',
-            'results.*.label' => 'required|string|in:Low,Medium,High',
+            'results.*.label' => 'required|string|in:C1,C2,C3',
             'results.*.score_k' => 'required|numeric|min:1|max:7',
             'results.*.score_a' => 'required|numeric|min:1|max:7',
             'results.*.score_b' => 'required|numeric|min:1|max:7',
@@ -151,7 +151,7 @@ class ClusterController extends Controller
         try {
             // Get all cluster results with employee details
             $results = ClusterResult::with('employee')
-                ->orderBy('label', 'desc') // High, Medium, Low
+                ->orderBy('label', 'asc') // C1, C2, C3
                 ->orderBy('score_k', 'desc')
                 ->get();
 
@@ -266,9 +266,9 @@ class ClusterController extends Controller
 
                 // Apply row style based on label
                 $labelColor = match ($result->label) {
-                    'High' => 'D1FAE5', // Green
-                    'Medium' => 'FEF3C7', // Yellow
-                    'Low' => 'FEE2E2', // Red
+                    'C1' => 'D1FAE5', // Green (Tinggi)
+                    'C2' => 'FEF3C7', // Yellow (Sedang)
+                    'C3' => 'FEE2E2', // Red (Rendah)
                     default => 'FFFFFF',
                 };
 
@@ -311,20 +311,20 @@ class ClusterController extends Controller
             ]);
 
             $row++;
-            $highCount = $results->where('label', 'High')->count();
-            $mediumCount = $results->where('label', 'Medium')->count();
-            $lowCount = $results->where('label', 'Low')->count();
+            $c1Count = $results->where('label', 'C1')->count();
+            $c2Count = $results->where('label', 'C2')->count();
+            $c3Count = $results->where('label', 'C3')->count();
 
             $sheet->setCellValue('A' . $row, 'Total Karyawan:');
             $sheet->setCellValue('B' . $row, $results->count());
-            $sheet->setCellValue('D' . $row, 'Performa Tinggi (High):');
-            $sheet->setCellValue('E' . $row, $highCount);
+            $sheet->setCellValue('D' . $row, 'Cluster C1 (Tinggi):');
+            $sheet->setCellValue('E' . $row, $c1Count);
             $row++;
-            $sheet->setCellValue('D' . $row, 'Performa Sedang (Medium):');
-            $sheet->setCellValue('E' . $row, $mediumCount);
+            $sheet->setCellValue('D' . $row, 'Cluster C2 (Sedang):');
+            $sheet->setCellValue('E' . $row, $c2Count);
             $row++;
-            $sheet->setCellValue('D' . $row, 'Performa Rendah (Low):');
-            $sheet->setCellValue('E' . $row, $lowCount);
+            $sheet->setCellValue('D' . $row, 'Cluster C3 (Rendah):');
+            $sheet->setCellValue('E' . $row, $c3Count);
 
             // Create response with Excel file
             $fileName = 'Hasil_Clustering_' . now()->format('Y-m-d_His') . '.xlsx';

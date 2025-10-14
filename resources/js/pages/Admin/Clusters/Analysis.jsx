@@ -11,7 +11,7 @@ import SavedResultsTable from './SavedResultsTable';
 import { saveClusterResults } from './clusterService';
 import { FileSpreadsheet, Settings, User } from 'lucide-react';
 import { Card } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Combobox } from '@/components/ui/combobox';
 
 export default function ClusterPage({ questionnaires, analysisStats, savedResults }) {
     const [clusters, setClusters] = useState(null);
@@ -231,25 +231,22 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
                             </p>
 
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                {/* Low Centroid */}
+                                {/* C3 Centroid */}
                                 <div className="border rounded-lg p-4 bg-red-50 dark:bg-red-900/20">
                                     <h4 className="font-semibold mb-3 text-red-700 dark:text-red-300">
-                                        Centroid 1 (Low Performance)
+                                        Centroid C3
                                     </h4>
-                                    <Select value={selectedRespondents.low} onValueChange={(value) => setSelectedRespondents({...selectedRespondents, low: value})}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Pilih responden..." />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {respondentsWithAvg.map((resp) => {
-                                                return (
-                                                    <SelectItem key={resp.id} value={resp.id.toString()}>
-                                                        {resp.employee?.name} - Avg: {resp.avgScore.toFixed(2)}
-                                                    </SelectItem>
-                                                );
-                                            })}
-                                        </SelectContent>
-                                    </Select>
+                                    <Combobox
+                                        value={selectedRespondents.low}
+                                        onValueChange={(value) => setSelectedRespondents({...selectedRespondents, low: value})}
+                                        options={respondentsWithAvg.map((resp) => ({
+                                            value: resp.id.toString(),
+                                            label: `${resp.employee?.name} - Avg: ${resp.avgScore.toFixed(2)}`
+                                        }))}
+                                        placeholder="Pilih responden..."
+                                        searchPlaceholder="Cari nama responden..."
+                                        emptyText="Responden tidak ditemukan."
+                                    />
                                     {selectedRespondents.low && (() => {
                                         const resp = respondentsWithAvg.find(r => r.id === parseInt(selectedRespondents.low));
                                         return resp && (
@@ -262,25 +259,22 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
                                     })()}
                                 </div>
 
-                                {/* Medium Centroid */}
+                                {/* C2 Centroid */}
                                 <div className="border rounded-lg p-4 bg-yellow-50 dark:bg-yellow-900/20">
                                     <h4 className="font-semibold mb-3 text-yellow-700 dark:text-yellow-300">
-                                        Centroid 2 (Medium Performance)
+                                        Centroid C2
                                     </h4>
-                                    <Select value={selectedRespondents.medium} onValueChange={(value) => setSelectedRespondents({...selectedRespondents, medium: value})}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Pilih responden..." />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {respondentsWithAvg.map((resp) => {
-                                                return (
-                                                    <SelectItem key={resp.id} value={resp.id.toString()}>
-                                                        {resp.employee?.name} - Avg: {resp.avgScore.toFixed(2)}
-                                                    </SelectItem>
-                                                );
-                                            })}
-                                        </SelectContent>
-                                    </Select>
+                                    <Combobox
+                                        value={selectedRespondents.medium}
+                                        onValueChange={(value) => setSelectedRespondents({...selectedRespondents, medium: value})}
+                                        options={respondentsWithAvg.map((resp) => ({
+                                            value: resp.id.toString(),
+                                            label: `${resp.employee?.name} - Avg: ${resp.avgScore.toFixed(2)}`
+                                        }))}
+                                        placeholder="Pilih responden..."
+                                        searchPlaceholder="Cari nama responden..."
+                                        emptyText="Responden tidak ditemukan."
+                                    />
                                     {selectedRespondents.medium && (() => {
                                         const resp = respondentsWithAvg.find(r => r.id === parseInt(selectedRespondents.medium));
                                         return resp && (
@@ -293,25 +287,22 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
                                     })()}
                                 </div>
 
-                                {/* High Centroid */}
+                                {/* C1 Centroid */}
                                 <div className="border rounded-lg p-4 bg-green-50 dark:bg-green-900/20">
                                     <h4 className="font-semibold mb-3 text-green-700 dark:text-green-300">
-                                        Centroid 3 (High Performance)
+                                        Centroid C1
                                     </h4>
-                                    <Select value={selectedRespondents.high} onValueChange={(value) => setSelectedRespondents({...selectedRespondents, high: value})}>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Pilih responden..." />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {respondentsWithAvg.map((resp) => {
-                                                return (
-                                                    <SelectItem key={resp.id} value={resp.id.toString()}>
-                                                        {resp.employee?.name} - Avg: {resp.avgScore.toFixed(2)}
-                                                    </SelectItem>
-                                                );
-                                            })}
-                                        </SelectContent>
-                                    </Select>
+                                    <Combobox
+                                        value={selectedRespondents.high}
+                                        onValueChange={(value) => setSelectedRespondents({...selectedRespondents, high: value})}
+                                        options={respondentsWithAvg.map((resp) => ({
+                                            value: resp.id.toString(),
+                                            label: `${resp.employee?.name} - Avg: ${resp.avgScore.toFixed(2)}`
+                                        }))}
+                                        placeholder="Pilih responden..."
+                                        searchPlaceholder="Cari nama responden..."
+                                        emptyText="Responden tidak ditemukan."
+                                    />
                                     {selectedRespondents.high && (() => {
                                         const resp = respondentsWithAvg.find(r => r.id === parseInt(selectedRespondents.high));
                                         return resp && (

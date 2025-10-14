@@ -16,10 +16,10 @@ export default function SavedResultsTable({ savedResults }) {
                             <TableHead>No</TableHead>
                             <TableHead>Karyawan</TableHead>
                             <TableHead>Nilai (total KAB)</TableHead>
-                            <TableHead>Jarak ke Low</TableHead>
-                            <TableHead>Jarak ke Medium</TableHead>
-                            <TableHead>Jarak ke High</TableHead>
-                            <TableHead>Klaster (Kategori)</TableHead>
+                            <TableHead>Jarak ke C3</TableHead>
+                            <TableHead>Jarak ke C2</TableHead>
+                            <TableHead>Jarak ke C1</TableHead>
+                            <TableHead>Cluster</TableHead>
                             <TableHead>Tanggal Update</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -38,8 +38,8 @@ export default function SavedResultsTable({ savedResults }) {
                                     <TableCell>{result.distance_to_high ? parseFloat(result.distance_to_high).toFixed(2) : 'N/A'}</TableCell>
                                     <TableCell>
                                         <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                            result.label === 'Low' ? 'bg-red-100 text-red-800 dark:bg-red-700 dark:text-red-300' :
-                                            result.label === 'Medium' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-300' :
+                                            result.label === 'C3' ? 'bg-red-100 text-red-800 dark:bg-red-700 dark:text-red-300' :
+                                            result.label === 'C2' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-700 dark:text-yellow-300' :
                                             'bg-green-100 text-green-800 dark:bg-green-700 dark:text-green-300'
                                         }`}>
                                             {result.label}

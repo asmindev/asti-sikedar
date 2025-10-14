@@ -24,8 +24,8 @@ export const saveClusterResults = async (labeledClusters, setIsSaving) => {
             }
         });
 
-        // Buat array mapping [cluster, label] dan urutkan berdasarkan label (Low, Medium, High)
-        const labelOrder = { 'Low': 0, 'Medium': 1, 'High': 2 };
+        // Buat array mapping [cluster, label] dan urutkan berdasarkan label (C3, C2, C1)
+        const labelOrder = { 'C3': 0, 'C2': 1, 'C1': 2 };
         const sortedClusters = Object.entries(clusterToLabel)
             .sort(([, labelA], [, labelB]) => labelOrder[labelA] - labelOrder[labelB])
             .map(([cluster]) => parseInt(cluster));
