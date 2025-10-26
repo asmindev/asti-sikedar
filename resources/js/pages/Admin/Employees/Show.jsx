@@ -75,6 +75,15 @@ export default function EmployeeShow({ employee }) {
                                     <p className="text-sm font-medium text-muted-foreground">Jenis Kelamin</p>
                                     <p className="text-lg">{employee.gender}</p>
                                 </div>
+
+                                <div>
+                                    <p className="text-sm font-medium text-muted-foreground">Tingkat Pendidikan</p>
+                                    {employee.education_level ? (
+                                        <Badge variant="outline" className="text-base">{employee.education_level}</Badge>
+                                    ) : (
+                                        <p className="text-sm text-muted-foreground">Belum diisi</p>
+                                    )}
+                                </div>
                             </div>
 
                             <Separator />

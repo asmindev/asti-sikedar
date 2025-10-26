@@ -23,6 +23,7 @@ export default function EmployeeEdit({ employee }) {
         name: employee.name || '',
         position: employee.position || '',
         gender: employee.gender || '',
+        education_level: employee.education_level || '',
         create_user_account: !!employee.user,
         email: employee.user?.email || null,
         password: null,
@@ -144,6 +145,32 @@ export default function EmployeeEdit({ employee }) {
                                             </SelectContent>
                                         </Select>
                                         {errors.gender && <p className="text-sm text-red-500">{errors.gender}</p>}
+                                    </div>
+
+                                    {/* Education Level */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="education_level">
+                                            Tingkat Pendidikan
+                                        </Label>
+                                        <Select value={data.education_level} onValueChange={(value) => setData('education_level', value)}>
+                                            <SelectTrigger className={errors.education_level ? 'border-red-500' : ''}>
+                                                <SelectValue placeholder="Pilih tingkat pendidikan" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="Tidak Tamat SD/Sederajat">Tidak Tamat SD/Sederajat</SelectItem>
+                                                <SelectItem value="SD/Sederajat">SD/Sederajat</SelectItem>
+                                                <SelectItem value="SMP/Sederajat">SMP/Sederajat</SelectItem>
+                                                <SelectItem value="SMA/Sederajat">SMA/Sederajat</SelectItem>
+                                                <SelectItem value="SMK/Sederajat">SMK/Sederajat</SelectItem>
+                                                <SelectItem value="Diploma I (D1)">Diploma I (D1)</SelectItem>
+                                                <SelectItem value="Diploma II (D2)">Diploma II (D2)</SelectItem>
+                                                <SelectItem value="Diploma III (D3)">Diploma III (D3)</SelectItem>
+                                                <SelectItem value="Sarjana (S1)">Sarjana (S1)</SelectItem>
+                                                <SelectItem value="Magister (S2)">Magister (S2)</SelectItem>
+                                                <SelectItem value="Doktor (S3)">Doktor (S3)</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.education_level && <p className="text-sm text-red-500">{errors.education_level}</p>}
                                     </div>
 
                                     {/* Birth Date */}

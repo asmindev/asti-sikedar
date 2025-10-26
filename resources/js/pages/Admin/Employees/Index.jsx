@@ -164,6 +164,7 @@ export default function Employee({ employees, departments, filters }) {
                                             <TableHead>Nama</TableHead>
                                             <TableHead>Umur</TableHead>
                                             <TableHead>Jenis Kelamin</TableHead>
+                                            <TableHead>Pendidikan</TableHead>
                                             <TableHead>Posisi</TableHead>
                                             <TableHead>Akun Pengguna</TableHead>
                                             <TableHead className="text-right">Aksi</TableHead>
@@ -175,6 +176,13 @@ export default function Employee({ employees, departments, filters }) {
                                                 <TableCell className="font-medium">{employee.name}</TableCell>
                                                 <TableCell>{employee.age}</TableCell>
                                                 <TableCell>{employee.gender}</TableCell>
+                                                <TableCell>
+                                                    {employee.education_level ? (
+                                                        <Badge variant="outline">{employee.education_level}</Badge>
+                                                    ) : (
+                                                        <span className="text-xs text-muted-foreground">-</span>
+                                                    )}
+                                                </TableCell>
                                                 <TableCell>{employee.position}</TableCell>
                                                 <TableCell>
                                                     {employee.user ? (

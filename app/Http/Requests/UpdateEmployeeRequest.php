@@ -43,6 +43,24 @@ class UpdateEmployeeRequest extends FormRequest
                 Rule::in(['Laki-laki', 'Perempuan'])
             ],
 
+            'education_level' => [
+                'nullable',
+                'string',
+                Rule::in([
+                    'Tidak Tamat SD/Sederajat',
+                    'SD/Sederajat',
+                    'SMP/Sederajat',
+                    'SMA/Sederajat',
+                    'SMK/Sederajat',
+                    'Diploma I (D1)',
+                    'Diploma II (D2)',
+                    'Diploma III (D3)',
+                    'Sarjana (S1)',
+                    'Magister (S2)',
+                    'Doktor (S3)'
+                ])
+            ],
+
             // User account creation/update fields (conditional)
             'create_user_account' => [
                 'boolean'
@@ -83,6 +101,7 @@ class UpdateEmployeeRequest extends FormRequest
             'position.required' => 'The position is required.',
             'gender.required' => 'The gender is required.',
             'gender.in' => 'Gender must be either Laki-laki or Perempuan.',
+            'education_level.in' => 'Education level must be a valid education level.',
             'email.required_if' => 'Email is required when creating a user account.',
             'password.min' => 'Password must be at least 8 characters.',
             'password.confirmed' => 'Password confirmation does not match.',
