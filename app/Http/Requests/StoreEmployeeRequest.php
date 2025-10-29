@@ -59,6 +59,11 @@ class StoreEmployeeRequest extends FormRequest
                 ])
             ],
 
+            'department_id' => [
+                'nullable',
+                'exists:departments,id'
+            ],
+
             // User account creation fields (conditional)
             'create_user_account' => [
                 'boolean'

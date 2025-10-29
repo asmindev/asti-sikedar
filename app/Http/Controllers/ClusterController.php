@@ -195,7 +195,7 @@ class ClusterController extends Controller
 
             // Set title
             $sheet->setCellValue('A1', 'HASIL ANALISIS CLUSTERING K-MEANS');
-            $sheet->mergeCells('A1:J1');
+            $sheet->mergeCells('A1:K1');
             $sheet->getStyle('A1')->applyFromArray([
                 'font' => [
                     'bold' => true,
@@ -211,7 +211,7 @@ class ClusterController extends Controller
 
             // Set subtitle with date
             $sheet->setCellValue('A2', 'Tanggal Export: ' . now()->format('d/m/Y H:i:s'));
-            $sheet->mergeCells('A2:J2');
+            $sheet->mergeCells('A2:K2');
             $sheet->getStyle('A2')->applyFromArray([
                 'font' => ['italic' => true, 'size' => 10],
                 'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER],
@@ -220,49 +220,52 @@ class ClusterController extends Controller
             // Set headers
             $headers = [
                 'A4' => 'No',
-                'B4' => 'Kode Karyawan',
-                'C4' => 'Nama Karyawan',
-                'D4' => 'Departemen',
-                'E4' => 'Posisi',
-                'F4' => 'Kluster',
-                'G4' => 'Kategori',
-                'H4' => 'Skor Knowledge (1-7)',
-                'I4' => 'Skor Attitude (1-7)',
-                'J4' => 'Skor Behavior (1-7)',
+                'B4' => 'Nama Karyawan',
+                'C4' => 'Usia',
+                'D4' => 'Jenis Kelamin',
+                'E4' => 'Tingkat Pendidikan',
+                'F4' => 'Posisi',
+                'G4' => 'Kluster',
+                'H4' => 'Kategori',
+                'I4' => 'Skor Knowledge (1-7)',
+                'J4' => 'Skor Attitude (1-7)',
+                'K4' => 'Skor Behavior (1-7)',
             ];
 
             foreach ($headers as $cell => $value) {
                 $sheet->setCellValue($cell, $value);
             }
-            $sheet->getStyle('A4:J4')->applyFromArray($headerStyle);
+            $sheet->getStyle('A4:K4')->applyFromArray($headerStyle);
             $sheet->getRowDimension('4')->setRowHeight(25);
 
             // Set column widths
             $sheet->getColumnDimension('A')->setWidth(6);
-            $sheet->getColumnDimension('B')->setWidth(18);
-            $sheet->getColumnDimension('C')->setWidth(25);
-            $sheet->getColumnDimension('D')->setWidth(20);
-            $sheet->getColumnDimension('E')->setWidth(25);
-            $sheet->getColumnDimension('F')->setWidth(10);
-            $sheet->getColumnDimension('G')->setWidth(12);
-            $sheet->getColumnDimension('H')->setWidth(20);
+            $sheet->getColumnDimension('B')->setWidth(25);
+            $sheet->getColumnDimension('C')->setWidth(8);
+            $sheet->getColumnDimension('D')->setWidth(15);
+            $sheet->getColumnDimension('E')->setWidth(22);
+            $sheet->getColumnDimension('F')->setWidth(25);
+            $sheet->getColumnDimension('G')->setWidth(10);
+            $sheet->getColumnDimension('H')->setWidth(12);
             $sheet->getColumnDimension('I')->setWidth(20);
             $sheet->getColumnDimension('J')->setWidth(20);
+            $sheet->getColumnDimension('K')->setWidth(20);
 
             // Fill data
             $row = 5;
             $no = 1;
             foreach ($results as $result) {
                 $sheet->setCellValue('A' . $row, $no++);
-                $sheet->setCellValue('B' . $row, $result->employee->employee_code ?? 'N/A');
-                $sheet->setCellValue('C' . $row, $result->employee->name ?? 'N/A');
-                $sheet->setCellValue('D' . $row, $result->employee->department ?? 'N/A');
-                $sheet->setCellValue('E' . $row, $result->employee->position ?? 'N/A');
-                $sheet->setCellValue('F' . $row, $result->cluster);
-                $sheet->setCellValue('G' . $row, $result->label);
-                $sheet->setCellValue('H' . $row, number_format((float)$result->score_k, 2));
-                $sheet->setCellValue('I' . $row, number_format((float)$result->score_a, 2));
-                $sheet->setCellValue('J' . $row, number_format((float)$result->score_b, 2));
+                $sheet->setCellValue('B' . $row, $result->employee->name ?? 'N/A');
+                $sheet->setCellValue('C' . $row, $result->employee->age ?? '-');
+                $sheet->setCellValue('D' . $row, $result->employee->gender ?? 'N/A');
+                $sheet->setCellValue('E' . $row, $result->employee->education_level ?? '-');
+                $sheet->setCellValue('F' . $row, $result->employee->position ?? 'N/A');
+                $sheet->setCellValue('G' . $row, $result->cluster);
+                $sheet->setCellValue('H' . $row, $result->label);
+                $sheet->setCellValue('I' . $row, number_format((float)$result->score_k, 2));
+                $sheet->setCellValue('J' . $row, number_format((float)$result->score_a, 2));
+                $sheet->setCellValue('K' . $row, number_format((float)$result->score_b, 2));
 
                 // Apply row style based on label
                 $labelColor = match ($result->label) {
@@ -272,7 +275,7 @@ class ClusterController extends Controller
                     default => 'FFFFFF',
                 };
 
-                $sheet->getStyle('A' . $row . ':J' . $row)->applyFromArray([
+                $sheet->getStyle('A' . $row . ':K' . $row)->applyFromArray([
                     'fill' => [
                         'fillType' => Fill::FILL_SOLID,
                         'startColor' => ['rgb' => $labelColor],
@@ -290,9 +293,10 @@ class ClusterController extends Controller
 
                 // Center align for certain columns
                 $sheet->getStyle('A' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                $sheet->getStyle('F' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('C' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('G' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
-                $sheet->getStyle('H' . $row . ':J' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
+                $sheet->getStyle('H' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('I' . $row . ':K' . $row)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
 
                 $row++;
             }
@@ -300,7 +304,7 @@ class ClusterController extends Controller
             // Add summary statistics
             $row += 2;
             $sheet->setCellValue('A' . $row, 'RINGKASAN STATISTIK');
-            $sheet->mergeCells('A' . $row . ':J' . $row);
+            $sheet->mergeCells('A' . $row . ':K' . $row);
             $sheet->getStyle('A' . $row)->applyFromArray([
                 'font' => ['bold' => true, 'size' => 12],
                 'alignment' => ['horizontal' => Alignment::HORIZONTAL_CENTER],

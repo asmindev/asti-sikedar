@@ -61,6 +61,11 @@ class UpdateEmployeeRequest extends FormRequest
                 ])
             ],
 
+            'department_id' => [
+                'nullable',
+                'exists:departments,id'
+            ],
+
             // User account creation/update fields (conditional)
             'create_user_account' => [
                 'boolean'

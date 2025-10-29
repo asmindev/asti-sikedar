@@ -10,7 +10,7 @@ import { ArrowLeft, Save, UserCheck } from 'lucide-react';
 import { useState } from 'react';
 
 export default function EmployeeEdit({ employee }) {
-    const { flash } = usePage().props;
+    const { flash, departments } = usePage().props;
     const breadcrumbs = [
         { label: 'Dasbor', href: route('admin.dashboard') },
         { label: 'Manajemen Karyawan', href: route('admin.employees.index') },
@@ -24,6 +24,7 @@ export default function EmployeeEdit({ employee }) {
         position: employee.position || '',
         gender: employee.gender || '',
         education_level: employee.education_level || '',
+        department_id: employee.department_id?.toString() || '',
         create_user_account: !!employee.user,
         email: employee.user?.email || null,
         password: null,
@@ -202,6 +203,26 @@ export default function EmployeeEdit({ employee }) {
                                             className={errors.position ? 'border-red-500' : ''}
                                         />
                                         {errors.position && <p className="text-sm text-red-500">{errors.position}</p>}
+                                    </div>
+
+                                    {/* Department */}
+                                    <div className="space-y-2">
+                                        <Label htmlFor="department_id">
+                                            Bagian
+                                        </Label>
+                                        <Select value={data.department_id} onValueChange={(value) => setData('department_id', value)}>
+                                            <SelectTrigger className={errors.department_id ? 'border-red-500' : ''}>
+                                                <SelectValue placeholder="Pilih bagian (opsional)" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {departments?.map((dept) => (
+                                                    <SelectItem key={dept.id} value={dept.id.toString()}>
+                                                        {dept.name}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        {errors.department_id && <p className="text-sm text-red-500">{errors.department_id}</p>}
                                     </div>
                                 </div>
                             </CardContent>

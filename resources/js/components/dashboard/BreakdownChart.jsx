@@ -28,10 +28,10 @@ export default function BreakdownChart({ data, type, title }) {
                 name: ageGroup,
                 ...data[ageGroup]
             }));
-        } else if (type === 'education') {
+        } else if (type === 'education' || type === 'department') {
             // Transform: { 'SD/Sederajat': { C1: 2, C2: 3, C3: 1 }, ... }
             // To: [{ name: 'SD/Sederajat', C1: 2, C2: 3, C3: 1 }, ...]
-            // Filter out education levels with no data
+            // Filter out education levels/departments with no data
             return Object.keys(data)
                 .filter(level => {
                     const total = data[level].C1 + data[level].C2 + data[level].C3;
@@ -97,17 +97,17 @@ export default function BreakdownChart({ data, type, title }) {
                     Tidak ada data untuk ditampilkan
                 </div>
             ) : (
-                <ResponsiveContainer width="100%" height={type === 'education' ? 400 : 300}>
+                <ResponsiveContainer width="100%" height={type === 'education' || type === 'department' ? 400 : 300}>
                     <BarChart
                         data={chartData}
-                        margin={{ top: 20, right: 30, left: 20, bottom: type === 'education' ? 80 : 20 }}
+                        margin={{ top: 20, right: 30, left: 20, bottom: (type === 'education' || type === 'department') ? 80 : 20 }}
                     >
                         <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                         <XAxis
                             dataKey="name"
-                            angle={type === 'education' ? -45 : 0}
-                            textAnchor={type === 'education' ? 'end' : 'middle'}
-                            height={type === 'education' ? 100 : 30}
+                            angle={(type === 'education' || type === 'department') ? -45 : 0}
+                            textAnchor={(type === 'education' || type === 'department') ? 'end' : 'middle'}
+                            height={(type === 'education' || type === 'department') ? 100 : 30}
                             tickFormatter={getLabel}
                             className="text-xs"
                         />

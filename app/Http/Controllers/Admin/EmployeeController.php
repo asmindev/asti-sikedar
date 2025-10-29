@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
+use App\Models\Department;
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -22,7 +23,7 @@ class EmployeeController extends Controller
      */
     public function index(Request $request): Response
     {
-        $query = Employee::with(['user'])
+        $query = Employee::with(['user', 'department'])
             ->when($request->search, function ($query, $search) {
                 return $query->where('name', 'like', "%{$search}%")
                     ->orWhere('position', 'like', "%{$search}%");
@@ -53,7 +54,11 @@ class EmployeeController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Admin/Employees/Create');
+        $departments = Department::all();
+
+        return Inertia::render('Admin/Employees/Create', [
+            'departments' => $departments,
+        ]);
     }
 
     /**
@@ -70,7 +75,8 @@ class EmployeeController extends Controller
                 'position',
                 'gender',
                 'education_level',
-                'birth_date'
+                'birth_date',
+                'department_id'
             ]));
 
             // Create user account if requested
@@ -120,10 +126,12 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee): Response
     {
-        $employee->load(['user']);
+        $employee->load(['user', 'department']);
+        $departments = Department::all();
 
         return Inertia::render('Admin/Employees/Edit', [
             'employee' => $employee,
+            'departments' => $departments,
         ]);
     }
 
@@ -147,7 +155,8 @@ class EmployeeController extends Controller
                 'position',
                 'gender',
                 'education_level',
-                'birth_date'
+                'birth_date',
+                'department_id'
             ]));
 
             // Log after update

@@ -70,6 +70,9 @@ class DashboardController extends Controller
         // Get breakdown by education level
         $educationBreakdown = $this->getClusterBreakdownByEducation();
 
+        // Get breakdown by department
+        $departmentBreakdown = $this->getClusterBreakdownByDepartment();
+
         return Inertia::render('Admin/Dashboard/Index', [
             'user' => $request->user(),
             'stats' => [
@@ -81,6 +84,7 @@ class DashboardController extends Controller
             'genderBreakdown' => $genderBreakdown,
             'ageBreakdown' => $ageBreakdown,
             'educationBreakdown' => $educationBreakdown,
+            'departmentBreakdown' => $departmentBreakdown,
         ]);
     }
 
@@ -179,6 +183,34 @@ class DashboardController extends Controller
         foreach ($breakdown as $item) {
             if (isset($result[$item->education_level][$item->label])) {
                 $result[$item->education_level][$item->label] = $item->count;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get cluster breakdown by department
+     */
+    private function getClusterBreakdownByDepartment(): array
+    {
+        $breakdown = ClusterResult::join('employees', 'cluster_results.employee_id', '=', 'employees.id')
+            ->join('departments', 'employees.department_id', '=', 'departments.id')
+            ->selectRaw('cluster_results.label, departments.name as department_name, COUNT(*) as count')
+            ->groupBy('cluster_results.label', 'departments.name')
+            ->get();
+
+        // Get all departments
+        $departments = \App\Models\Department::pluck('name');
+
+        $result = [];
+        foreach ($departments as $dept) {
+            $result[$dept] = ['C1' => 0, 'C2' => 0, 'C3' => 0];
+        }
+
+        foreach ($breakdown as $item) {
+            if (isset($result[$item->department_name][$item->label])) {
+                $result[$item->department_name][$item->label] = $item->count;
             }
         }
 

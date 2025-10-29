@@ -163,8 +163,9 @@ export default function Employee({ employees, departments, filters }) {
                                         <TableRow>
                                             <TableHead>Nama</TableHead>
                                             <TableHead>Umur</TableHead>
-                                            <TableHead>Jenis Kelamin</TableHead>
+                                            <TableHead className="w-64">Jenis Kelamin</TableHead>
                                             <TableHead>Pendidikan</TableHead>
+                                            <TableHead>Bagian</TableHead>
                                             <TableHead>Posisi</TableHead>
                                             <TableHead>Akun Pengguna</TableHead>
                                             <TableHead className="text-right">Aksi</TableHead>
@@ -173,9 +174,9 @@ export default function Employee({ employees, departments, filters }) {
                                     <TableBody>
                                         {employees.data.map((employee) => (
                                             <TableRow key={employee.id}>
-                                                <TableCell className="font-medium">{employee.name}</TableCell>
+                                                <TableCell className="font-medium block w-64">{employee.name}</TableCell>
                                                 <TableCell>{employee.age}</TableCell>
-                                                <TableCell>{employee.gender}</TableCell>
+                                                <TableCell className="capitalize block w-32">{employee.gender}</TableCell>
                                                 <TableCell>
                                                     {employee.education_level ? (
                                                         <Badge variant="outline">{employee.education_level}</Badge>
@@ -183,7 +184,14 @@ export default function Employee({ employees, departments, filters }) {
                                                         <span className="text-xs text-muted-foreground">-</span>
                                                     )}
                                                 </TableCell>
-                                                <TableCell>{employee.position}</TableCell>
+                                                <TableCell>
+                                                    {employee.department ? (
+                                                        <Badge variant="secondary">{employee.department.name}</Badge>
+                                                    ) : (
+                                                        <span className="text-xs text-muted-foreground">-</span>
+                                                    )}
+                                                </TableCell>
+                                                <TableCell className="block w-64">{employee.position}</TableCell>
                                                 <TableCell>
                                                     {employee.user ? (
                                                         <div className="flex items-center gap-2">

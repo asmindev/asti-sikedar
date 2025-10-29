@@ -8,7 +8,7 @@ import ClusterDetails from '@/components/dashboard/ClusterDetails';
 import BreakdownChart from '@/components/dashboard/BreakdownChart';
 import { Head } from '@inertiajs/react';
 
-export default function AdminDashboard({ user, stats, clusterDistribution, genderBreakdown, ageBreakdown, educationBreakdown }) {
+export default function AdminDashboard({ user, stats, clusterDistribution, genderBreakdown, ageBreakdown, educationBreakdown, departmentBreakdown }) {
     return (
         <AdminLayout>
             <Head title="Admin Dashboard" />
@@ -43,11 +43,12 @@ export default function AdminDashboard({ user, stats, clusterDistribution, gende
                     </CardHeader>
                     <CardContent>
                         <Tabs defaultValue="overview" className="w-full">
-                            <TabsList className="grid w-full grid-cols-4">
+                            <TabsList className="grid w-full grid-cols-5">
                                 <TabsTrigger value="overview">Overview</TabsTrigger>
                                 <TabsTrigger value="gender">Jenis Kelamin</TabsTrigger>
                                 <TabsTrigger value="age">Usia</TabsTrigger>
                                 <TabsTrigger value="education">Pendidikan</TabsTrigger>
+                                <TabsTrigger value="department">Bagian</TabsTrigger>
                             </TabsList>
                             <TabsContent value="overview" className="mt-6">
                                 <ClusterDistributionChart
@@ -73,6 +74,13 @@ export default function AdminDashboard({ user, stats, clusterDistribution, gende
                                     data={educationBreakdown}
                                     type="education"
                                     title="Distribusi Cluster Berdasarkan Tingkat Pendidikan"
+                                />
+                            </TabsContent>
+                            <TabsContent value="department" className="mt-6">
+                                <BreakdownChart
+                                    data={departmentBreakdown}
+                                    type="department"
+                                    title="Distribusi Cluster Berdasarkan Bagian"
                                 />
                             </TabsContent>
                         </Tabs>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Employee extends Model
@@ -20,7 +21,8 @@ class Employee extends Model
         'position',
         'gender',
         'education_level',
-        'birth_date'
+        'birth_date',
+        'department_id'
     ];
 
     /**
@@ -48,6 +50,14 @@ class Employee extends Model
             return null;
         }
         return \Carbon\Carbon::parse($this->birth_date)->age;
+    }
+
+    /**
+     * Get the department that owns the employee.
+     */
+    public function department(): BelongsTo
+    {
+        return $this->belongsTo(Department::class);
     }
 
     /**
