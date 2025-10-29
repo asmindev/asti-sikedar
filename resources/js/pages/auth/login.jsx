@@ -128,7 +128,7 @@ export default function Login({ status, canResetPassword }) {
                     </div> */}
 
                     {/* Demo Credentials */}
-                    <div className="mt-4 border-t pt-2">
+                    {/* <div className="mt-4 border-t pt-2">
                         <p className="mb-1 text-center text-[10px] text-muted-foreground">Kredensial Demo:</p>
                         <div className="grid grid-cols-2 gap-1.5 text-[10px]">
                             <div className="rounded bg-blue-50 dark:bg-blue-900/30 p-1.5">
@@ -142,7 +142,7 @@ export default function Login({ status, canResetPassword }) {
                                 <p>user123</p>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                 </CardContent>
             </Card>
         </div>
