@@ -18,7 +18,7 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
     const [labeledClusters, setLabeledClusters] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
-    const [centroidMode, setCentroidMode] = useState('auto'); // 'auto' or 'respondent'
+    const [centroidMode, setCentroidMode] = useState('respondent'); // 'auto' or 'respondent'
     const [selectedRespondents, setSelectedRespondents] = useState({
         low: '',
         medium: '',
@@ -195,13 +195,13 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
                             <h3 className="text-lg font-semibold">Pengaturan Centroid</h3>
                         </div>
                         <div className="flex gap-2">
-                            <Button
+                            {/* <Button
                                 variant={centroidMode === 'auto' ? 'default' : 'outline'}
                                 size="sm"
                                 onClick={() => setCentroidMode('auto')}
                             >
                                 Auto (K-means++)
-                            </Button>
+                            </Button> */}
                             <Button
                                 variant={centroidMode === 'respondent' ? 'default' : 'outline'}
                                 size="sm"
