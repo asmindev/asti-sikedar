@@ -48,6 +48,7 @@ export const performKMeans = (data, k = 3, manualCentroids = null) => {
     const options = {
         maxIterations: 100,
         seed: 42,
+        tolerance: 1e-6, // Threshold untuk konvergensi
     };
 
     // Centroid manual (TIDAK perlu normalisasi karena data juga tidak dinormalisasi)
@@ -62,7 +63,19 @@ export const performKMeans = (data, k = 3, manualCentroids = null) => {
         console.log('🔄 Menggunakan inisialisasi K-means++');
     }
 
-    return kmeans(data, k, options);
+    const result = kmeans(data, k, options);
+
+    // Log detail hasil clustering
+    console.log('\n📊 Hasil Clustering:');
+    console.log('   Iterasi:', result.iterations);
+    console.log('   Converged:', result.converged);
+    if (result.converged) {
+        console.log('   ✅ Algoritma konvergen dengan sukses');
+    } else {
+        console.log('   ⚠️ Algoritma mencapai maksimum iterasi tanpa konvergen');
+    }
+
+    return result;
 };
 
 /**
@@ -247,6 +260,8 @@ export const performFullClustering = (questionnaires, manualCentroids = null) =>
     clusterResult.centroids.forEach((c, i) => {
         console.log(`   C${i + 1}: [K=${c[0].toFixed(2)}, A=${c[1].toFixed(2)}, B=${c[2].toFixed(2)}]`);
     });
+    console.log(`\n🔄 Total Iterasi: ${clusterResult.iterations}`);
+    console.log(`📊 Status Konvergensi: ${clusterResult.converged ? '✅ Konvergen' : '⚠️ Tidak Konvergen (Max Iterasi)'}`);
 
     // Gabungkan dengan hasil clustering
     console.log('\n--- Perhitungan Jarak Euclidean ---');
@@ -257,6 +272,8 @@ export const performFullClustering = (questionnaires, manualCentroids = null) =>
 
     console.log('\n========================================');
     console.log('CLUSTERING SELESAI');
+    console.log(`Total Iterasi: ${clusterResult.iterations}`);
+    console.log(`Konvergensi: ${clusterResult.converged ? 'YA' : 'TIDAK'}`);
     console.log('========================================\n');
 
     return {
@@ -265,6 +282,8 @@ export const performFullClustering = (questionnaires, manualCentroids = null) =>
         rawData: data,
         normalizedData: data, // Sama dengan rawData karena tidak ada normalisasi
         centroids: clusterResult.centroids,
+        iterations: clusterResult.iterations, // Tambahkan jumlah iterasi
+        converged: clusterResult.converged, // Status konvergensi
         normalizationParams: { min: 1, max: 7 } // Dummy params
     };
 };

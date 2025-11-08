@@ -16,6 +16,8 @@ import { Combobox } from '@/components/ui/combobox';
 export default function ClusterPage({ questionnaires, analysisStats, savedResults }) {
     const [clusters, setClusters] = useState(null);
     const [labeledClusters, setLabeledClusters] = useState([]);
+    const [iterations, setIterations] = useState(null);
+    const [converged, setConverged] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [centroidMode, setCentroidMode] = useState('respondent'); // 'auto' or 'respondent'
@@ -98,6 +100,8 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
             const result = performFullClustering(questionnaires, centroids);
             setClusters(result.clusters);
             setLabeledClusters(result.labeledClusters);
+            setIterations(result.iterations);
+            setConverged(result.converged);
             toast.success('Analisis pengelompokan berhasil diselesaikan!');
         } catch (error) {
             toast.error('Gagal melakukan analisis pengelompokan.');
@@ -340,7 +344,7 @@ export default function ClusterPage({ questionnaires, analysisStats, savedResult
                 )}
 
                 {/* Clustering Summary */}
-                <ClusteringSummary labeledClusters={labeledClusters} />
+                <ClusteringSummary labeledClusters={labeledClusters} iterations={iterations} converged={converged} />
 
                 {/* Clustering Results Table */}
                 <ClusteringResultsTable labeledClusters={labeledClusters} />
