@@ -29,7 +29,8 @@ class QuizManagementController extends Controller
     public function update(Request $request, QuizQuestion $quizManagement)
     {
         $validated = $request->validate([
-            'question' => 'required|string|max:1000'
+            'question' => 'required|string|max:1000',
+            'is_reversed' => 'boolean'
         ]);
 
         $quizManagement->update($validated);
@@ -40,7 +41,8 @@ class QuizManagementController extends Controller
     public function updateQuestion(Request $request, QuizQuestion $question)
     {
         $validated = $request->validate([
-            'question' => 'required|string|max:1000'
+            'question' => 'required|string|max:1000',
+            'is_reversed' => 'boolean'
         ]);
 
         $question->update($validated);

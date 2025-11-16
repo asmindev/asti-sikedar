@@ -11,9 +11,18 @@ const clusterConfig = {
         bgColor: 'bg-red-50 dark:bg-red-950/50',
         borderColor: 'border-red-200 dark:border-red-800',
         characteristics: [
-            'Masih kurang memahami pentingnya keamanan informasi',
-            'Sikap abai terhadap protokol keamanan',
-            'Perilaku berisiko tinggi dalam penggunaan teknologi'
+            {
+                title: 'Pengetahuan Keamanan Terbatas',
+                description: 'Pemahaman dasar tentang keamanan informasi masih kurang, seperti cara membuat password yang kuat atau mengenali email phishing'
+            },
+            {
+                title: 'Sikap Kurang Peduli',
+                description: 'Cenderung mengabaikan protokol keamanan dan menganggap keamanan informasi bukan prioritas penting'
+            },
+            {
+                title: 'Perilaku Berisiko Tinggi',
+                description: 'Sering melakukan tindakan yang membahayakan keamanan, seperti membagikan password atau mengklik link mencurigakan'
+            }
         ],
         recommendations: [
             'Jadwalkan pelatihan dasar keamanan informasi',
@@ -28,9 +37,18 @@ const clusterConfig = {
         bgColor: 'bg-yellow-50 dark:bg-yellow-950/50',
         borderColor: 'border-yellow-200 dark:border-yellow-800',
         characteristics: [
-            'Sudah punya pemahaman cukup tentang keamanan informasi',
-            'Sikap dan perilaku belum konsisten',
-            'Memerlukan pengingat dan penguatan rutin'
+            {
+                title: 'Pengetahuan Dasar Tersedia',
+                description: 'Sudah memiliki pemahaman cukup tentang konsep keamanan informasi, namun belum mendalam pada praktik lanjutan'
+            },
+            {
+                title: 'Sikap Positif Namun Inkonsisten',
+                description: 'Terkadang peduli dengan keamanan, tetapi belum menjadi kebiasaan yang konsisten dalam aktivitas sehari-hari'
+            },
+            {
+                title: 'Perilaku Perlu Penguatan',
+                description: 'Sudah mulai menerapkan praktik keamanan, namun masih memerlukan pengingat dan pendampingan rutin'
+            }
         ],
         recommendations: [
             'Adakan workshop lanjutan tentang best practices',
@@ -45,9 +63,18 @@ const clusterConfig = {
         bgColor: 'bg-green-50 dark:bg-green-950/50',
         borderColor: 'border-green-200 dark:border-green-800',
         characteristics: [
-            'Pengetahuan baik tentang keamanan informasi',
-            'Sikap positif dan proaktif',
-            'Perilaku patuh terhadap standar keamanan informasi'
+            {
+                title: 'Pengetahuan Sangat Baik',
+                description: 'Memahami dengan baik berbagai aspek keamanan informasi, dari konsep dasar hingga ancaman terkini'
+            },
+            {
+                title: 'Sikap Proaktif',
+                description: 'Aktif mempromosikan keamanan informasi dan memberi contoh baik kepada rekan kerja lainnya'
+            },
+            {
+                title: 'Perilaku Patuh dan Teladan',
+                description: 'Konsisten menerapkan standar keamanan informasi dan dapat menjadi role model bagi pegawai lain'
+            }
         ],
         recommendations: [
             'Libatkan sebagai mentor untuk pegawai lain',
@@ -114,11 +141,20 @@ export default function ClusterDetails({ clusterDistribution }) {
                                                 <Users className="h-4 w-4" />
                                                 Karakteristik
                                             </h4>
-                                            <ul className="space-y-2">
+                                            <ul className="space-y-3">
                                                 {config.characteristics.map((char, index) => (
-                                                    <li key={index} className="flex items-start gap-2 text-sm text-gray-700 dark:text-gray-300">
-                                                        <div className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mt-2 flex-shrink-0"></div>
-                                                        {char}
+                                                    <li key={index} className="space-y-1">
+                                                        <div className="flex items-start gap-2">
+                                                            <div className="w-1.5 h-1.5 bg-gray-400 dark:bg-gray-500 rounded-full mt-2 flex-shrink-0"></div>
+                                                            <div>
+                                                                <p className="font-medium text-sm text-gray-900 dark:text-white">
+                                                                    {char.title}
+                                                                </p>
+                                                                <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">
+                                                                    {char.description}
+                                                                </p>
+                                                            </div>
+                                                        </div>
                                                     </li>
                                                 ))}
                                             </ul>

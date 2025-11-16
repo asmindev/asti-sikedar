@@ -6,6 +6,7 @@ import { AlertCircle, FileText } from 'lucide-react';
 import ClusterResultCard from './ClusterResultCard';
 import KABScoreCard from './KABScoreCard';
 import PersonalRecommendations from './PersonalRecommendations';
+import CharacteristicsCard from './CharacteristicsCard';
 
 export default function Index({ auth, clusterResult, questionnaire }) {
     const breadcrumbs = [
@@ -99,9 +100,10 @@ export default function Index({ auth, clusterResult, questionnaire }) {
 
                 {/* Dashboard Content Tabs */}
                 <Tabs defaultValue="overview" className="w-full">
-                    <TabsList className="grid w-full grid-cols-4">
+                    <TabsList className="grid w-full grid-cols-5">
                         <TabsTrigger value="overview">Overview</TabsTrigger>
                         <TabsTrigger value="cluster">Hasil Cluster</TabsTrigger>
+                        <TabsTrigger value="characteristics">Karakteristik</TabsTrigger>
                         <TabsTrigger value="scores">Skor KAB</TabsTrigger>
                         <TabsTrigger value="recommendations">Rekomendasi</TabsTrigger>
                     </TabsList>
@@ -112,17 +114,26 @@ export default function Index({ auth, clusterResult, questionnaire }) {
                                 clusterResult={clusterResult}
                                 questionnaire={questionnaire}
                             />
-                            <KABScoreCard
+                            <CharacteristicsCard
                                 clusterResult={clusterResult}
-                                questionnaire={questionnaire}
                             />
                         </div>
+                        <KABScoreCard
+                            clusterResult={clusterResult}
+                            questionnaire={questionnaire}
+                        />
                     </TabsContent>
 
                     <TabsContent value="cluster" className="mt-6">
                         <ClusterResultCard
                             clusterResult={clusterResult}
                             questionnaire={questionnaire}
+                        />
+                    </TabsContent>
+
+                    <TabsContent value="characteristics" className="mt-6">
+                        <CharacteristicsCard
+                            clusterResult={clusterResult}
                         />
                     </TabsContent>
 

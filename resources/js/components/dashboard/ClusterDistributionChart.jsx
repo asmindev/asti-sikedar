@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Cell } from 'recharts';
+import { PieChart, Pie, Cell, Legend, ResponsiveContainer } from 'recharts';
 
 const COLORS = {
     C3: '#EF4444',     // Red (Rendah)
@@ -64,6 +64,26 @@ export default function ClusterDistributionChart({ clusterDistribution }) {
         return null;
     };
 
+    const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+        const RADIAN = Math.PI / 180;
+        const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+        const x = cx + radius * Math.cos(-midAngle * RADIAN);
+        const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+        return (
+            <text
+                x={x}
+                y={y}
+                fill="white"
+                textAnchor={x > cx ? 'start' : 'end'}
+                dominantBaseline="central"
+                className="font-bold text-sm"
+            >
+                {`${(percent * 100).toFixed(0)}%`}
+            </text>
+        );
+    };
+
     if (filteredData.length === 0) {
         return (
             <Card>
@@ -89,26 +109,31 @@ export default function ClusterDistributionChart({ clusterDistribution }) {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <ChartContainer config={config} className="h-64 sm:h-80 w-full">
-                    <BarChart data={filteredData}>
-                        <CartesianGrid strokeDasharray="3 3" className="stroke-gray-300 dark:stroke-gray-600" />
-                        <XAxis
-                            dataKey="name"
-                            tick={{ fontSize: 11, fill: 'currentColor' }}
-                            interval={0}
-                            angle={0}
-                            textAnchor="middle"
-                            height={50}
-                            className="text-gray-600 dark:text-gray-300"
-                        />
-                        <YAxis tick={{ fill: 'currentColor' }} className="text-gray-600 dark:text-gray-300" />
-                        <ChartTooltip content={<CustomTooltip />} />
-                        <Bar dataKey="value" fill="#8884d8">
+                <ChartContainer config={config} className="h-96 w-full">
+                    <PieChart>
+                        <Pie
+                            data={filteredData}
+                            cx="50%"
+                            cy="50%"
+                            labelLine={false}
+                            label={renderCustomLabel}
+                            outerRadius={150}
+                            fill="#8884d8"
+                            dataKey="value"
+                        >
                             {filteredData.map((entry, index) => (
                                 <Cell key={`cell-${index}`} fill={entry.color} />
                             ))}
-                        </Bar>
-                    </BarChart>
+                        </Pie>
+                        <ChartTooltip content={<CustomTooltip />} />
+                        <Legend
+                            verticalAlign="bottom"
+                            height={36}
+                            formatter={(value, entry) => (
+                                <span className="text-gray-700 dark:text-gray-300">{entry.payload.fullName}</span>
+                            )}
+                        />
+                    </PieChart>
                 </ChartContainer>
 
                 {/* Summary Statistics */}

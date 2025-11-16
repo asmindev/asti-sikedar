@@ -10,11 +10,13 @@ class QuizQuestion extends Model
         'aspect',
         'question',
         'order',
-        'is_active'
+        'is_active',
+        'is_reversed'
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'is_reversed' => 'boolean',
         'order' => 'integer'
     ];
 
@@ -44,7 +46,13 @@ class QuizQuestion extends Model
             ->get()
             ->groupBy('aspect')
             ->map(function ($questions) {
-                return $questions->pluck('question')->toArray();
+                return $questions->map(function ($q) {
+                    return [
+                        'id' => $q->id,
+                        'question' => $q->question,
+                        'is_reversed' => $q->is_reversed
+                    ];
+                })->toArray();
             });
     }
 

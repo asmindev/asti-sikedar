@@ -1,7 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, ArrowLeftRight } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 
 export default function QuestionCard({
     currentAspect,
@@ -13,9 +14,25 @@ export default function QuestionCard({
     aspectTitles
 }) {
     // Fallback to prevent errors if data is not loaded yet
-    const currentQuestionText = quizData?.[currentAspect]?.[currentQuestion] || 'Loading...';
+    const currentQuestionData = quizData?.[currentAspect]?.[currentQuestion];
+    const currentQuestionText = typeof currentQuestionData === 'object'
+        ? currentQuestionData.question
+        : currentQuestionData || 'Loading...';
+    const isReversed = currentQuestionData?.is_reversed || false;
     const currentAspectTitle = aspectTitles?.[currentAspect] || 'Loading...';
     const totalQuestionsInAspect = quizData?.[currentAspect]?.length || 7;
+
+    // Reverse the display order and values for reversed questions
+    const displayScale = isReversed
+        ? likertScale.map(option => ({
+            ...option,
+            value: option.value, // Keep original value for submission
+            displayValue: 6 - parseInt(option.value), // Show reversed value: 5->1, 4->2, etc
+        })).sort((a, b) => b.displayValue - a.displayValue) // Sort by displayValue descending
+        : likertScale.map(option => ({
+            ...option,
+            displayValue: parseInt(option.value)
+        }));
 
     return (
         <Card className="shadow-lg">
@@ -33,6 +50,7 @@ export default function QuestionCard({
                     <h1 className='text-3xl font-semibold text-black dark:text-white leading-relaxed'>
                         {currentQuestionText}
                     </h1>
+
                 </CardDescription>
             </CardHeader>
 
@@ -44,7 +62,7 @@ export default function QuestionCard({
                     </Label>
 
                     <div className="space-y-3">
-                        {likertScale.map((option) => (
+                        {displayScale.map((option) => (
                             <div
                                 key={option.value}
                                 className={`flex items-center space-x-3 p-3 rounded-lg border-2 transition-all duration-200 cursor-pointer hover:bg-primary/5 ${
@@ -81,7 +99,7 @@ export default function QuestionCard({
                                             </span>
                                         </div>
                                         <span className="text-sm text-gray-500 dark:text-gray-400">
-                                            ({option.value})
+                                            ({option.displayValue} poin)
                                         </span>
                                     </div>
                                 </div>

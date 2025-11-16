@@ -22,6 +22,7 @@ export default function PersonalRecommendations({ clusterResult, questionnaire }
                         type: 'training',
                         title: 'Workshop Dasar Keamanan Informasi',
                         description: 'Ikuti pelatihan dasar keamanan informasi yang diadakan oleh IT Security team setiap bulan',
+                        detail: 'Pelatihan ini akan membantu Anda memahami konsep dasar seperti password yang aman, mengenali phishing, dan praktik browsing yang aman.',
                         priority: 'Tinggi',
                         timeframe: '1-2 minggu'
                     },
@@ -29,6 +30,7 @@ export default function PersonalRecommendations({ clusterResult, questionnaire }
                         type: 'reading',
                         title: 'Panduan Keamanan Password',
                         description: 'Pelajari cara membuat dan mengelola password yang kuat untuk semua akun digital',
+                        detail: 'Password yang kuat minimal 12 karakter, kombinasi huruf besar-kecil, angka, dan simbol. Hindari menggunakan password yang sama untuk berbeda akun.',
                         priority: 'Tinggi',
                         timeframe: '1 hari'
                     },
@@ -36,6 +38,7 @@ export default function PersonalRecommendations({ clusterResult, questionnaire }
                         type: 'practice',
                         title: 'Aktivasi 2FA pada Akun Penting',
                         description: 'Aktifkan two-factor authentication pada email, sistem internal, dan aplikasi penting lainnya',
+                        detail: 'Two-Factor Authentication (2FA) menambah lapisan keamanan ekstra. Bahkan jika password Anda bocor, akun tetap aman dengan kode verifikasi kedua.',
                         priority: 'Sedang',
                         timeframe: '3 hari'
                     },
@@ -43,6 +46,7 @@ export default function PersonalRecommendations({ clusterResult, questionnaire }
                         type: 'awareness',
                         title: 'Quiz Keamanan Mingguan',
                         description: 'Ikuti quiz keamanan informasi mingguan untuk meningkatkan awareness',
+                        detail: 'Quiz rutin membantu menguji pemahaman dan mengingat kembali praktik keamanan yang benar secara konsisten.',
                         priority: 'Sedang',
                         timeframe: 'Mingguan'
                     }
@@ -58,6 +62,7 @@ export default function PersonalRecommendations({ clusterResult, questionnaire }
                         type: 'advanced_training',
                         title: 'Workshop Lanjutan Cyber Security',
                         description: 'Tingkatkan skill dengan mengikuti workshop advanced cyber security dan threat detection',
+                        detail: 'Pelatihan lanjutan mencakup teknik deteksi ancaman, incident response, dan cara melindungi data sensitif dari serangan canggih.',
                         priority: 'Sedang',
                         timeframe: '2-3 minggu'
                     },
@@ -65,6 +70,7 @@ export default function PersonalRecommendations({ clusterResult, questionnaire }
                         type: 'practice',
                         title: 'Implementasi Security Tools',
                         description: 'Gunakan security tools seperti password manager dan VPN untuk keamanan maksimal',
+                        detail: 'Password manager membantu menyimpan password dengan aman, VPN melindungi koneksi internet Anda terutama saat menggunakan WiFi publik.',
                         priority: 'Sedang',
                         timeframe: '1 minggu'
                     },
@@ -72,6 +78,7 @@ export default function PersonalRecommendations({ clusterResult, questionnaire }
                         type: 'sharing',
                         title: 'Berbagi Pengetahuan',
                         description: 'Bantu rekan kerja yang masih membutuhkan peningkatan awareness keamanan',
+                        detail: 'Dengan berbagi pengetahuan, Anda tidak hanya membantu orang lain tetapi juga memperdalam pemahaman Anda sendiri.',
                         priority: 'Rendah',
                         timeframe: 'Berkelanjutan'
                     },
@@ -79,6 +86,7 @@ export default function PersonalRecommendations({ clusterResult, questionnaire }
                         type: 'update',
                         title: 'Update Berkala Knowledge',
                         description: 'Ikuti webinar bulanan tentang trend dan threat terbaru di dunia cyber security',
+                        detail: 'Ancaman siber terus berkembang. Mengikuti update terbaru memastikan Anda selalu siap menghadapi ancaman baru.',
                         priority: 'Sedang',
                         timeframe: 'Bulanan'
                     }
@@ -94,6 +102,7 @@ export default function PersonalRecommendations({ clusterResult, questionnaire }
                         type: 'leadership',
                         title: 'Menjadi Security Champion',
                         description: 'Bergabung dengan tim Security Champion untuk membantu meningkatkan awareness di divisi',
+                        detail: 'Security Champion adalah agen perubahan yang membantu menyebarkan budaya keamanan informasi di organisasi.',
                         priority: 'Sedang',
                         timeframe: '1 bulan'
                     },
@@ -101,6 +110,7 @@ export default function PersonalRecommendations({ clusterResult, questionnaire }
                         type: 'certification',
                         title: 'Sertifikasi Cyber Security',
                         description: 'Ambil sertifikasi profesional seperti CISSP, CISM, atau CompTIA Security+',
+                        detail: 'Sertifikasi internasional akan meningkatkan kredibilitas dan membuka peluang karir di bidang cyber security.',
                         priority: 'Rendah',
                         timeframe: '6-12 bulan'
                     },
@@ -108,6 +118,7 @@ export default function PersonalRecommendations({ clusterResult, questionnaire }
                         type: 'contribution',
                         title: 'Kontribusi Policy Security',
                         description: 'Berpartisipasi dalam review dan pengembangan kebijakan keamanan organisasi',
+                        detail: 'Expertise Anda dapat membantu membuat kebijakan yang lebih efektif dan applicable untuk semua pegawai.',
                         priority: 'Rendah',
                         timeframe: 'Berkelanjutan'
                     },
@@ -115,6 +126,7 @@ export default function PersonalRecommendations({ clusterResult, questionnaire }
                         type: 'innovation',
                         title: 'Penelitian Security Innovation',
                         description: 'Lakukan penelitian atau project inovasi untuk meningkatkan security posture organisasi',
+                        detail: 'Inovasi baru dapat membantu organisasi tetap selangkah lebih maju dari ancaman cyber yang terus berkembang.',
                         priority: 'Rendah',
                         timeframe: '3-6 bulan'
                     }
@@ -226,8 +238,11 @@ export default function PersonalRecommendations({ clusterResult, questionnaire }
                                         <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-1">
                                             {rec.title}
                                         </h4>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                                        <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
                                             {rec.description}
+                                        </p>
+                                        <p className="text-xs text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-800 p-2 rounded">
+                                            💡 {rec.detail}
                                         </p>
                                     </div>
                                     <div className="flex items-center gap-2 ml-4">

@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { AlertTriangle, CheckCircle, TrendingUp, Trophy, Target } from 'lucide-react';
+import { AlertTriangle, CheckCircle, TrendingUp, Trophy, Target, Users } from 'lucide-react';
 
 const clusterConfig = {
     C3: {
@@ -9,8 +9,22 @@ const clusterConfig = {
         color: 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900 dark:text-red-200 dark:border-red-700',
         bgColor: 'bg-red-50 dark:bg-red-950',
         borderColor: 'border-red-200 dark:border-red-700',
-        description: 'Anda memiliki pemahaman dasar tentang keamanan informasi yang masih perlu ditingkatkan.',
-        message: 'Jangan khawatir! Dengan pelatihan yang tepat, Anda dapat meningkatkan kesadaran keamanan informasi.'
+        description: 'Anda berada di tingkat kesadaran keamanan informasi yang masih perlu ditingkatkan.',
+        message: 'Jangan khawatir! Dengan pelatihan yang tepat, Anda dapat meningkatkan kemampuan keamanan informasi Anda.',
+        characteristics: [
+            {
+                aspect: 'Pengetahuan (Knowledge)',
+                point: 'Pemahaman Anda tentang keamanan informasi masih terbatas. Misalnya cara membuat password yang kuat atau mengenali email phishing.'
+            },
+            {
+                aspect: 'Sikap (Attitude)',
+                point: 'Anda mungkin masih kurang peduli terhadap protokol keamanan dan menganggap keamanan informasi bukan prioritas penting.'
+            },
+            {
+                aspect: 'Perilaku (Behavior)',
+                point: 'Terkadang Anda melakukan tindakan berisiko seperti membagikan password atau mengklik link mencurigakan tanpa verifikasi.'
+            }
+        ]
     },
     C2: {
         title: 'Cluster C2 (Sedang)',
@@ -19,7 +33,21 @@ const clusterConfig = {
         bgColor: 'bg-yellow-50 dark:bg-yellow-950',
         borderColor: 'border-yellow-200 dark:border-yellow-700',
         description: 'Anda sudah memiliki pemahaman yang cukup baik tentang keamanan informasi.',
-        message: 'Bagus! Dengan sedikit peningkatan konsistensi, Anda dapat mencapai level yang lebih tinggi.'
+        message: 'Bagus! Dengan sedikit peningkatan konsistensi, Anda dapat mencapai level yang lebih tinggi.',
+        characteristics: [
+            {
+                aspect: 'Pengetahuan (Knowledge)',
+                point: 'Anda sudah memiliki pemahaman cukup tentang konsep keamanan informasi, namun belum mendalam pada praktik lanjutan.'
+            },
+            {
+                aspect: 'Sikap (Attitude)',
+                point: 'Anda terkadang peduli dengan keamanan, tetapi belum menjadi kebiasaan yang konsisten dalam aktivitas sehari-hari.'
+            },
+            {
+                aspect: 'Perilaku (Behavior)',
+                point: 'Anda sudah mulai menerapkan praktik keamanan, namun masih memerlukan pengingat dan pendampingan rutin.'
+            }
+        ]
     },
     C1: {
         title: 'Cluster C1 (Tinggi)',
@@ -28,7 +56,21 @@ const clusterConfig = {
         bgColor: 'bg-green-50 dark:bg-green-950',
         borderColor: 'border-green-200 dark:border-green-700',
         description: 'Selamat! Anda memiliki tingkat kesadaran keamanan informasi yang sangat baik.',
-        message: 'Excellent! Anda dapat menjadi contoh bagi rekan kerja lainnya dalam praktik keamanan informasi.'
+        message: 'Excellent! Anda dapat menjadi contoh bagi rekan kerja lainnya dalam praktik keamanan informasi.',
+        characteristics: [
+            {
+                aspect: 'Pengetahuan (Knowledge)',
+                point: 'Anda memahami dengan baik berbagai aspek keamanan informasi, dari konsep dasar hingga ancaman terkini.'
+            },
+            {
+                aspect: 'Sikap (Attitude)',
+                point: 'Anda aktif mempromosikan keamanan informasi dan memberi contoh baik kepada rekan kerja lainnya.'
+            },
+            {
+                aspect: 'Perilaku (Behavior)',
+                point: 'Anda konsisten menerapkan standar keamanan informasi dan dapat menjadi role model bagi pegawai lain.'
+            }
+        ]
     }
 };
 
@@ -91,6 +133,26 @@ export default function ClusterResultCard({ clusterResult }) {
                         <p className="text-sm font-medium text-gray-800 dark:text-gray-200 bg-gray-50 dark:bg-gray-800 p-3 rounded-lg">
                             {config.message}
                         </p>
+                    </div>
+                </div>
+
+                {/* Karakteristik Detail */}
+                <div className="mb-6">
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                        <Users className="h-4 w-4" />
+                        Apa Artinya Bagi Anda?
+                    </h4>
+                    <div className="space-y-3">
+                        {config.characteristics.map((char, index) => (
+                            <div key={index} className="bg-gray-50 dark:bg-gray-800 rounded-lg p-3">
+                                <p className="font-medium text-sm text-gray-900 dark:text-white mb-1">
+                                    {char.aspect}
+                                </p>
+                                <p className="text-xs text-gray-600 dark:text-gray-400">
+                                    {char.point}
+                                </p>
+                            </div>
+                        ))}
                     </div>
                 </div>
 

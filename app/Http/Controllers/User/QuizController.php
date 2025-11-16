@@ -38,19 +38,19 @@ class QuizController extends Controller
             'knowledge' => QuizQuestion::active()
                 ->forAspect('knowledge')
                 ->ordered()
-                ->get(['id', 'question', 'order'])
+                ->get(['id', 'question', 'order', 'is_reversed'])
                 ->values()
                 ->toArray(),
             'attitude' => QuizQuestion::active()
                 ->forAspect('attitude')
                 ->ordered()
-                ->get(['id', 'question', 'order'])
+                ->get(['id', 'question', 'order', 'is_reversed'])
                 ->values()
                 ->toArray(),
             'behavior' => QuizQuestion::active()
                 ->forAspect('behavior')
                 ->ordered()
-                ->get(['id', 'question', 'order'])
+                ->get(['id', 'question', 'order', 'is_reversed'])
                 ->values()
                 ->toArray(),
         ];
@@ -111,6 +111,25 @@ class QuizController extends Controller
         }
 
         try {
+            // Get all questions with their is_reversed flag
+            $questions = QuizQuestion::active()->get()->keyBy(function ($q) {
+                return strtolower($q->aspect)[0] . $q->order; // k1, a2, b3, etc
+            });
+
+            // Reverse values for reversed questions
+            $aspects = ['k', 'a', 'b'];
+            foreach ($aspects as $aspect) {
+                for ($i = 1; $i <= 7; $i++) {
+                    $key = $aspect . $i;
+                    $question = $questions->get($key);
+
+                    if ($question && $question->is_reversed) {
+                        // Reverse the scale: 1→5, 2→4, 3→3, 4→2, 5→1
+                        $validated[$key] = 6 - $validated[$key];
+                    }
+                }
+            }
+
             Questionnaire::create($validated);
 
             return redirect()->route('user.results')
@@ -158,33 +177,36 @@ class QuizController extends Controller
             'knowledge' => QuizQuestion::active()
                 ->forAspect('knowledge')
                 ->ordered()
-                ->get(['id', 'question', 'order'])
+                ->get(['id', 'question', 'order', 'is_reversed'])
                 ->map(function ($q, $index) {
                     return [
                         'key' => 'k' . ($index + 1),
-                        'text' => $q->question
+                        'text' => $q->question,
+                        'is_reversed' => $q->is_reversed
                     ];
                 })
                 ->toArray(),
             'attitude' => QuizQuestion::active()
                 ->forAspect('attitude')
                 ->ordered()
-                ->get(['id', 'question', 'order'])
+                ->get(['id', 'question', 'order', 'is_reversed'])
                 ->map(function ($q, $index) {
                     return [
                         'key' => 'a' . ($index + 1),
-                        'text' => $q->question
+                        'text' => $q->question,
+                        'is_reversed' => $q->is_reversed
                     ];
                 })
                 ->toArray(),
             'behavior' => QuizQuestion::active()
                 ->forAspect('behavior')
                 ->ordered()
-                ->get(['id', 'question', 'order'])
+                ->get(['id', 'question', 'order', 'is_reversed'])
                 ->map(function ($q, $index) {
                     return [
                         'key' => 'b' . ($index + 1),
-                        'text' => $q->question
+                        'text' => $q->question,
+                        'is_reversed' => $q->is_reversed
                     ];
                 })
                 ->toArray(),

@@ -11,7 +11,8 @@ import {
     User,
     Brain,
     Heart,
-    Activity
+    Activity,
+    ArrowLeftRight
 } from 'lucide-react';
 
 export default function QuizResult({ employee, questionnaire, questions }) {
@@ -59,11 +60,11 @@ export default function QuizResult({ employee, questionnaire, questions }) {
 
     const getLikertText = (value) => {
         const likertScale = {
-            1: 'Sangat Tidak Setuju',
-            2: 'Tidak Setuju',
-            3: 'Netral',
+            5: 'Sangat Setuju',
             4: 'Setuju',
-            5: 'Sangat Setuju'
+            3: 'Cukup Setuju',
+            2: 'Tidak Setuju',
+            1: 'Sangat Tidak Setuju'
         };
         return likertScale[value] || 'N/A';
     };
@@ -224,15 +225,23 @@ export default function QuizResult({ employee, questionnaire, questions }) {
                             <CardContent className="space-y-4">
                                 {questions.knowledge.map((q, index) => (
                                     <div key={q.key} className="border-b border-gray-200 dark:border-gray-700 pb-3 last:border-b-0">
-                                        <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
-                                            {index + 1}. {q.text}
-                                        </p>
+                                        <div className="flex items-start justify-between mb-2">
+                                            <p className="text-sm text-gray-700 dark:text-gray-300 flex-1">
+                                                {index + 1}. {q.text}
+                                            </p>
+                                            {q.is_reversed && (
+                                                <Badge variant="outline" className="ml-2 text-xs border-orange-500 text-orange-700 dark:text-orange-400 shrink-0">
+                                                    <ArrowLeftRight className="h-3 w-3 mr-1" />
+                                                    Reversed
+                                                </Badge>
+                                            )}
+                                        </div>
                                         <div className="flex items-center justify-between">
                                             <span className={`text-sm font-medium ${getLikertColor(questionnaire[q.key])}`}>
                                                 {getLikertText(questionnaire[q.key])}
                                             </span>
                                             <Badge variant="outline" className="ml-2">
-                                                {questionnaire[q.key]}/5
+                                                Skor: {questionnaire[q.key]}/5
                                             </Badge>
                                         </div>
                                     </div>
@@ -253,15 +262,23 @@ export default function QuizResult({ employee, questionnaire, questions }) {
                             <CardContent className="space-y-4">
                                 {questions.attitude.map((q, index) => (
                                     <div key={q.key} className="border-b border-gray-200 dark:border-gray-700 pb-3 last:border-b-0">
-                                        <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
-                                            {index + 1}. {q.text}
-                                        </p>
+                                        <div className="flex items-start justify-between mb-2">
+                                            <p className="text-sm text-gray-700 dark:text-gray-300 flex-1">
+                                                {index + 1}. {q.text}
+                                            </p>
+                                            {q.is_reversed && (
+                                                <Badge variant="outline" className="ml-2 text-xs border-orange-500 text-orange-700 dark:text-orange-400 shrink-0">
+                                                    <ArrowLeftRight className="h-3 w-3 mr-1" />
+                                                    Reversed
+                                                </Badge>
+                                            )}
+                                        </div>
                                         <div className="flex items-center justify-between">
                                             <span className={`text-sm font-medium ${getLikertColor(questionnaire[q.key])}`}>
                                                 {getLikertText(questionnaire[q.key])}
                                             </span>
                                             <Badge variant="outline" className="ml-2">
-                                                {questionnaire[q.key]}/5
+                                                Skor: {questionnaire[q.key]}/5
                                             </Badge>
                                         </div>
                                     </div>
@@ -282,15 +299,23 @@ export default function QuizResult({ employee, questionnaire, questions }) {
                             <CardContent className="space-y-4">
                                 {questions.behavior.map((q, index) => (
                                     <div key={q.key} className="border-b border-gray-200 dark:border-gray-700 pb-3 last:border-b-0">
-                                        <p className="text-sm text-gray-700 dark:text-gray-300 mb-2">
-                                            {index + 1}. {q.text}
-                                        </p>
+                                        <div className="flex items-start justify-between mb-2">
+                                            <p className="text-sm text-gray-700 dark:text-gray-300 flex-1">
+                                                {index + 1}. {q.text}
+                                            </p>
+                                            {q.is_reversed && (
+                                                <Badge variant="outline" className="ml-2 text-xs border-orange-500 text-orange-700 dark:text-orange-400 shrink-0">
+                                                    <ArrowLeftRight className="h-3 w-3 mr-1" />
+                                                    Reversed
+                                                </Badge>
+                                            )}
+                                        </div>
                                         <div className="flex items-center justify-between">
                                             <span className={`text-sm font-medium ${getLikertColor(questionnaire[q.key])}`}>
                                                 {getLikertText(questionnaire[q.key])}
                                             </span>
                                             <Badge variant="outline" className="ml-2">
-                                                {questionnaire[q.key]}/5
+                                                Skor: {questionnaire[q.key]}/5
                                             </Badge>
                                         </div>
                                     </div>
